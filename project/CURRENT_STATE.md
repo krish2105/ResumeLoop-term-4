@@ -2,6 +2,9 @@
 
 Last updated: **22 October 2026**. User requested initial GitHub publication to `https://github.com/krish2105/ResumeLoop-term-4` and one progress/run guide: **`PROGRESS.md`**.
 
+## Publication status
+Initial project commit `29dfb5c6e20659ced07cf12736a6ddc1cdf63c6c` was pushed to the public GitHub repository's `main` branch on 22 October 2026. `git ls-remote` returned the identical SHA and GitHub reports `main` as the default branch. No force push was used. This final continuity update is a follow-up commit.
+
 ## Completed and verified this session
 - Original ZIP located beside the project, extracted separately, all 58 files byte-matched to the starting workspace. Original course DOCX retained unchanged locally. Baseline hashes saved.
 - Read original outline and every specification/source file. Confirmed 10/10/40/40 assessment weights, conflicting participation/group schedules, erroneous reflection section cross-reference and lack of a model-training requirement. Exact dates and solo permission remain unknown.
@@ -26,7 +29,7 @@ Last updated: **22 October 2026**. User requested initial GitHub publication to 
 | Playwright CLI `scripts/browser-smoke.js` on built application | **23 checks passed**, including lost save response/retry, drafts, history, reviews, themes, keyboard and 320/390/768/1440px overflow checks |
 | Playwright CLI + axe `scripts/accessibility-smoke.js` | Light/dark at desktop/320px; scope and remaining manual checks in published accessibility summary |
 | `/api/health` on 8014 | `ok:true`, mode `LOCAL_SYNTHETIC_DEMO` |
-| GitHub remote inspection | Target is an empty public repository; write permission available; initialized local main branch for user-authorized push |
+| GitHub publication | Initial SHA `29dfb5c6e20659ced07cf12736a6ddc1cdf63c6c` matched `origin/main`; GitHub default branch `main` |
 
 Full raw logs remain local under `evidence/2026-10-22/`; sanitized verification, browser/accessibility summaries and original checksums are published. Screenshots under `output/playwright/`. Original failed browser attempts are retained locally: selector mismatch, focus loss (fixed), and latest-receipt selection in the harness (corrected). A final 320px screenshot exposed grid-item expansion from the preview table; the import panels now set `min-width: 0`, and the strengthened browser check passed after waiting for resized layouts to settle. Transient theme scans were rerun after styles settled. See `docs/AUDIT_2026-10-22.md` for findings.
 
