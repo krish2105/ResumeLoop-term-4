@@ -1,0 +1,1 @@
+session_id,participant_code,consent_reference,protocol_version,build_version,scenario_hash,condition,order,task_id,device,success_unaided,elapsed_seconds,timed_out,wrong_actions,assistance_count,source_comprehension,lost_work_events,support_requests,ease_1_to_7,evidence_id,exclusion_reason

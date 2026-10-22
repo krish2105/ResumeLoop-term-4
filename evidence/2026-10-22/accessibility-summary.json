@@ -1,0 +1,160 @@
+{
+  "kind": "AUTOMATED ACCESSIBILITY CHECK; NOT WCAG CERTIFICATION",
+  "results": [
+    {
+      "mode": "light",
+      "width": 1440,
+      "violations": [],
+      "incomplete": [],
+      "passes": 21
+    },
+    {
+      "mode": "light",
+      "width": 320,
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "nodes": [
+            {
+              "target": [
+                "section:nth-child(1) > p:nth-child(3)"
+              ],
+              "summary": "Fix any of the following:\n  Element's background color could not be determined because it partially overlaps other elements"
+            },
+            {
+              "target": [
+                ".sourceNote > p"
+              ],
+              "summary": "Fix any of the following:\n  Element's background color could not be determined because it partially overlaps other elements"
+            },
+            {
+              "target": [
+                "#csv-help"
+              ],
+              "summary": "Fix any of the following:\n  Element's background color could not be determined because it partially overlaps other elements"
+            },
+            {
+              "target": [
+                "section[aria-label=\"Validated preview\"] > p:nth-child(3)"
+              ],
+              "summary": "Fix any of the following:\n  Element's background color could not be determined because it partially overlaps other elements"
+            },
+            {
+              "target": [
+                "th:nth-child(3)"
+              ],
+              "summary": "Fix any of the following:\n  Element's background color could not be determined because it partially overlaps other elements"
+            },
+            {
+              "target": [
+                "td:nth-child(3)"
+              ],
+              "summary": "Fix any of the following:\n  Element's background color could not be determined because it partially overlaps other elements"
+            }
+          ]
+        }
+      ],
+      "passes": 21
+    },
+    {
+      "mode": "dark",
+      "width": 1440,
+      "violations": [],
+      "incomplete": [],
+      "passes": 21
+    },
+    {
+      "mode": "dark",
+      "width": 320,
+      "violations": [],
+      "incomplete": [
+        {
+          "id": "color-contrast",
+          "nodes": [
+            {
+              "target": [
+                "section:nth-child(1) > p:nth-child(3)"
+              ],
+              "summary": "Fix any of the following:\n  Element's background color could not be determined because it partially overlaps other elements"
+            },
+            {
+              "target": [
+                ".sourceNote > p"
+              ],
+              "summary": "Fix any of the following:\n  Element's background color could not be determined because it partially overlaps other elements"
+            },
+            {
+              "target": [
+                "#csv-help"
+              ],
+              "summary": "Fix any of the following:\n  Element's background color could not be determined because it partially overlaps other elements"
+            },
+            {
+              "target": [
+                "section[aria-label=\"Validated preview\"] > p:nth-child(3)"
+              ],
+              "summary": "Fix any of the following:\n  Element's background color could not be determined because it partially overlaps other elements"
+            },
+            {
+              "target": [
+                "th:nth-child(3)"
+              ],
+              "summary": "Fix any of the following:\n  Element's background color could not be determined because it partially overlaps other elements"
+            },
+            {
+              "target": [
+                "td:nth-child(3)"
+              ],
+              "summary": "Fix any of the following:\n  Element's background color could not be determined because it partially overlaps other elements"
+            }
+          ]
+        }
+      ],
+      "passes": 21
+    }
+  ],
+  "token_contrast": [
+    {
+      "foreground": "#55646e",
+      "background": "#ffffff",
+      "ratio": 6.11
+    },
+    {
+      "foreground": "#55646e",
+      "background": "#f7f7fc",
+      "ratio": 5.73
+    },
+    {
+      "foreground": "#a2b6bd",
+      "background": "#182328",
+      "ratio": 7.61
+    },
+    {
+      "foreground": "#a2b6bd",
+      "background": "#0e1020",
+      "ratio": 8.95
+    },
+    {
+      "foreground": "#ffffff",
+      "background": "#6c5ce7",
+      "ratio": 4.86
+    },
+    {
+      "foreground": "#071719",
+      "background": "#b0a5ff",
+      "ratio": 8.44
+    },
+    {
+      "foreground": "#78858f",
+      "background": "#ffffff",
+      "ratio": 3.78
+    },
+    {
+      "foreground": "#71868e",
+      "background": "#182328",
+      "ratio": 4.2
+    }
+  ],
+  "limitations": "No full WCAG claim. Mobile scan has incomplete background/overlap contrast estimates. Token contrast and viewport screenshots inspected; screen-reader, real-device and cross-browser checks remain."
+}

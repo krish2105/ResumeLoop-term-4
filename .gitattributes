@@ -1,0 +1,8 @@
+# Preserve supplied CSV line endings while treating carriage returns as valid EOL.
+*.csv text eol=crlf
+*.md text eol=lf
+*.py text eol=lf
+*.ts text eol=lf
+*.tsx text eol=lf
+*.css text eol=lf
+*.json text eol=lf

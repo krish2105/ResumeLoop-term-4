@@ -1,0 +1,43 @@
+# Client datasets / secrets / generated artifacts
+.env
+.env.*
+!.env.example
+!.gitkeep
+.venv/
+__pycache__/
+.pytest_cache/
+*.pyc
+node_modules/
+.next/
+services/api/.state/
+data/raw/*
+!data/raw/.gitkeep
+data/interim/*
+!data/interim/.gitkeep
+data/processed/*
+!data/processed/.gitkeep
+research/experiments/*
+!research/experiments/.gitkeep
+**/*.joblib
+**/*.pt
+**/*.pth
+.DS_Store
+# Private supplied coursework and participant material must not be published.
+course/*.docx
+evidence/**/outline-extracted.txt
+research/private/
+.playwright-cli/
+*.tsbuildinfo
+# Keep full machine logs and private outline extraction local; publish concise evidence only.
+evidence/*
+!evidence/2026-10-22/
+evidence/2026-10-22/*
+!evidence/2026-10-22/verification.json
+!evidence/2026-10-22/browser-checks.json
+!evidence/2026-10-22/accessibility-summary.json
+!evidence/2026-10-22/starter-checksums.json
+output/playwright/*
+!output/playwright/import-desktop-light-viewport.png
+!output/playwright/import-desktop-dark-viewport.png
+!output/playwright/import-mobile-dark-viewport.png
+!output/playwright/recovery-empty-desktop-viewport.png

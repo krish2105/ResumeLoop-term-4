@@ -1,0 +1,6 @@
+name,url,version,access_date,license,sha256,allowed_use,notes
+Synthetic starter cases,data/sample/demo_cases.csv,starter-2026-10-22,2026-10-22,Supplied fictional fixture; external publication rights not declared,d8c96a79f87a3b310d7c3e90e08f9a40cc6c1b41598f29c7bcbd14c46cbec4ad,Local synthetic development,No real learner data; original unchanged
+Supplied course outline,course/outline.docx,starter-2026-10-22,2026-10-22,User-supplied private course material; not a public distribution license,9dc244376b8a8d4acb3f98ef47f8dffce20475598e45939801bdb8348e4d00cf,Private assessment planning,No real learner data; original unchanged
+IDEO.org Interview,https://www.designkit.org/methods/interview.html,Web reference inspected,2026-10-22,No redistribution license verified,NOT_DOWNLOADED,Citation and original paraphrase only,Replaces starter /resources/1 link which returned 404; not a dataset
+Kara et al. 2019,https://files.eric.ed.gov/fulltext/EJ1213733.pdf,DOI 10.5944/openpraxis.11.1.929,2026-10-22,No commercial dataset license verified,NOT_DOWNLOADED,Secondary literature citation,Review of 36 studies; not local participant evidence
+ResumeLoop participant research,NOT_COLLECTED,Protocol draft v1,NOT_COLLECTED,Consent and faculty process pending,NOT_COLLECTED,None until approved,Header-only templates; zero participant records

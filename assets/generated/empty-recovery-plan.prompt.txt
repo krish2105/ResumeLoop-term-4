@@ -1,0 +1,6 @@
+Generation: built-in image_gen, 22 October 2026. No reference images.
+Source: assets/IMAGE_GENERATION_PROMPTS.md, prompt 02; transparent background for both themes.
+
+Use case: stylized-concept. Asset type: ResumeLoop empty recovery plan illustration. Create a 1024x1024 square premium clean vector-style illustration. Central concept: Open notebook and three friendly waypoints with lots of negative space. Palette anchored in #6C5CE7 with balanced neutral creams, soft slate, precise dark outlining if needed. One focal object, restrained ornament, generous safe margins, no text, no numbers, no brand marks, no human faces, no UI screenshot, no gradient-heavy 3D, no watermark. Crisp scalable composition suitable for a calm student learning application. Keep the subject clear at 128px. Transparent background.
+
+Visual inspection: notebook and three waypoints; no text, faces, numbers or UI metrics. Decorative only, empty alt text. Actual output dimensions are recorded in the evidence manifest; requested dimensions are not an assertion of delivered dimensions. No external copyrighted reference supplied. Commercial rights review remains part of the future release gate.

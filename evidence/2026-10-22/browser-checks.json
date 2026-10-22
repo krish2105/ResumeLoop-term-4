@@ -1,0 +1,28 @@
+{
+  "kind": "SYNTHETIC ENGINEERING VERIFICATION",
+  "checks": [
+    "Extra CSV cell rejected with row reference",
+    "Preview enables explicit save",
+    "Editing invalidates preview",
+    "Saved outcome has reconciled row totals",
+    "Draft survives refresh",
+    "Receipt and source snapshot survive refresh",
+    "Exact retry returns original receipt",
+    "Lost save response recovered by identical retry",
+    "Network failure preserves draft",
+    "Preview retry succeeds after network recovery",
+    "Dark theme survives refresh",
+    "No page overflow at 320px",
+    "No page overflow at 390px",
+    "No page overflow at 768px",
+    "No page overflow at 1440px",
+    "System theme responds to media changes",
+    "Keyboard reaches preview from editor",
+    "Keyboard focus ring visible",
+    "Keyboard focus moves to validation result",
+    "Generated illustration loads on honest planned-state view",
+    "Existing review journey persists after refresh",
+    "Queue empty state works",
+    "Clear draft persists"
+  ]
+}

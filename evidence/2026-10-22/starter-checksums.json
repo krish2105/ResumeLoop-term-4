@@ -1,0 +1,296 @@
+{
+  "archive": "ResumeLoop_MAIB_STARTER_PACK.zip",
+  "sha256": "fbac66ecd84bca0513159bc3feade83435f0e84a7981af5ac8b28149d35e1d5b",
+  "files": [
+    {
+      "path": ".gitignore",
+      "sha256": "58ee8d25d9ca1fe71f023ae6cb399a5ee25c3e6f92a15e80465135c1e2ba1b7f",
+      "matches_workspace": true
+    },
+    {
+      "path": "AGENTS.md",
+      "sha256": "2bd21455ed0bd693de59f2a83d46225fb51cf412d897b60820b65c8aa0a23424",
+      "matches_workspace": true
+    },
+    {
+      "path": "COURSE_REFERENCE_AND_STATUS.md",
+      "sha256": "a8bdd25b78ae498b84742c4e5f96d5bebf8e5f5fcd633fb82b979af5042ccaf7",
+      "matches_workspace": true
+    },
+    {
+      "path": "README.md",
+      "sha256": "8ecbb23f4cbe774ef1feafad69464a33fde16a41b214285b396978b0d225157b",
+      "matches_workspace": true
+    },
+    {
+      "path": "START_HERE.md",
+      "sha256": "ea4ed817277a4250c737918aed3a674458ef3db3635f2628977f07f1fc488d3e",
+      "matches_workspace": true
+    },
+    {
+      "path": "apps/web/.env.example",
+      "sha256": "bd4d67ffb4406b3cc618b8c2678c7aeec2d5a1a806ed63e19090eb04a14e31c0",
+      "matches_workspace": true
+    },
+    {
+      "path": "apps/web/app/globals.css",
+      "sha256": "575bfbfbab74a6c9d7ab4c8e239fb78ac4915d06ce1fc887fcf73d1c6e4e43e2",
+      "matches_workspace": true
+    },
+    {
+      "path": "apps/web/app/layout.tsx",
+      "sha256": "70d9b88633c8fab438a72a1d3a0aadda1cd8ae177639a4e71e0af6fbcce8aba4",
+      "matches_workspace": true
+    },
+    {
+      "path": "apps/web/app/page.tsx",
+      "sha256": "c8ee8a7f5e5f6b6c532854a808423cd591530caba9b9812370fa7febd8008e7c",
+      "matches_workspace": true
+    },
+    {
+      "path": "apps/web/next-env.d.ts",
+      "sha256": "ddad87af552175dd0b7db21ba44712ed2be5e84e8e2582ee546c19ccd3ba1ecd",
+      "matches_workspace": true
+    },
+    {
+      "path": "apps/web/package.json",
+      "sha256": "37b809bc57a6edfe3d2b2d82b9b1c625568e5326a2295a3684b4646531ace314",
+      "matches_workspace": true
+    },
+    {
+      "path": "apps/web/tsconfig.json",
+      "sha256": "455483702965181e80c3e2d99e787d8593aa1ea7d58339341b5c5773e21bc762",
+      "matches_workspace": true
+    },
+    {
+      "path": "assets/IMAGE_GENERATION_PROMPTS.md",
+      "sha256": "08288be9dcd09aa8c7586b2d5791c25e9ab88444cd5f98fff609ca03c4d5fd91",
+      "matches_workspace": true
+    },
+    {
+      "path": "assets/generated/.gitkeep",
+      "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "matches_workspace": true
+    },
+    {
+      "path": "assets/generated/README.md",
+      "sha256": "5dfa4774868fe4c036d461aa34fbef39daee1507a3cece7425ee8e0af7ac1f0c",
+      "matches_workspace": true
+    },
+    {
+      "path": "course/outline.docx",
+      "sha256": "9dc244376b8a8d4acb3f98ef47f8dffce20475598e45939801bdb8348e4d00cf",
+      "matches_workspace": true
+    },
+    {
+      "path": "data/README.md",
+      "sha256": "c297481cf21a23158145081f7b9ee3c875e8ac66c296ef0846442b520da049e2",
+      "matches_workspace": true
+    },
+    {
+      "path": "data/interim/.gitkeep",
+      "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "matches_workspace": true
+    },
+    {
+      "path": "data/processed/.gitkeep",
+      "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "matches_workspace": true
+    },
+    {
+      "path": "data/raw/.gitkeep",
+      "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "matches_workspace": true
+    },
+    {
+      "path": "data/sample/demo_cases.csv",
+      "sha256": "d8c96a79f87a3b310d7c3e90e08f9a40cc6c1b41598f29c7bcbd14c46cbec4ad",
+      "matches_workspace": true
+    },
+    {
+      "path": "docs/ARCHITECTURE.md",
+      "sha256": "4badcde9f986c189ab28506896c7c069aa994e8f59e6cef3038383b615f3cb80",
+      "matches_workspace": true
+    },
+    {
+      "path": "docs/ASSESSMENT.md",
+      "sha256": "343ecd15a53f15b77699542c84a1fb12bbc9c913c1660b32500c05da62a53d64",
+      "matches_workspace": true
+    },
+    {
+      "path": "docs/DATA_AND_RESEARCH.md",
+      "sha256": "b348186058c774ff3a6fbf6b1e810c79df83aa61a2a516e9b6cd9b1211b98106",
+      "matches_workspace": true
+    },
+    {
+      "path": "docs/GO_TO_MARKET.md",
+      "sha256": "6fc8b7e67e1254a0888b93dadad6a9f0cccb2f86e9be7aa56bcdd028a9f920e8",
+      "matches_workspace": true
+    },
+    {
+      "path": "docs/PIPELINE.md",
+      "sha256": "0ad09832e4d17d8af371d4e33dc0986613a72d7cb17c422069627648452ef91b",
+      "matches_workspace": true
+    },
+    {
+      "path": "docs/PRD.md",
+      "sha256": "010ae50ab8ad090523c89fd6bc763ec6e27aa0055a2dabb48242f78ceaf544d6",
+      "matches_workspace": true
+    },
+    {
+      "path": "docs/ROADMAP.md",
+      "sha256": "09ba244e398d025602210b79ebba5256f5b76755b219d33987ae9cb48aa81801",
+      "matches_workspace": true
+    },
+    {
+      "path": "docs/SECURITY_AND_SAAS.md",
+      "sha256": "c73d880528756612399ef2d5df760cefab1bb2d8520ba52a7ced8e19d0294cf4",
+      "matches_workspace": true
+    },
+    {
+      "path": "docs/SOURCES.md",
+      "sha256": "58acd016f3846b580eff26cbee3549c1a06464a8c271c46c4340c2154c48bd04",
+      "matches_workspace": true
+    },
+    {
+      "path": "docs/TEST_PLAN.md",
+      "sha256": "d064add6b180bef2ea58992e7df153ca0ae4e733637a6e49cb5294debf4992e2",
+      "matches_workspace": true
+    },
+    {
+      "path": "docs/UX_DESIGN_SYSTEM.md",
+      "sha256": "d2d025f1e646c5d4f582227050931fc8b3982efb94df3721dae8e12d51d8a23f",
+      "matches_workspace": true
+    },
+    {
+      "path": "docs/VIVA_AND_SUBMISSION.md",
+      "sha256": "1c516520d030b5b711216a6badfb13c8c7f28ec5cd6f2351f0a6fd8de85b83ab",
+      "matches_workspace": true
+    },
+    {
+      "path": "project/BLOCKERS.md",
+      "sha256": "1c71b0bc3254ed3777adf48c48eb29938c586c594950d166010d3c9bb19e0018",
+      "matches_workspace": true
+    },
+    {
+      "path": "project/CURRENT_STATE.md",
+      "sha256": "2dbdc1bfa25199b5a529e51deb692ca7219f315920169fb73b2df04d0c4d44b5",
+      "matches_workspace": true
+    },
+    {
+      "path": "project/DATA_SOURCE_REGISTER.csv",
+      "sha256": "f4fe313dacfcfa5ba5f447c79f51e7a50d184e59f843e5047673552b65927e76",
+      "matches_workspace": true
+    },
+    {
+      "path": "project/DECISIONS.md",
+      "sha256": "4e7202c35051526aac2d5091d7533994fde62a9c8fe9b20080e6a234b77ea489",
+      "matches_workspace": true
+    },
+    {
+      "path": "project/NEXT_ACTIONS.md",
+      "sha256": "2594fa29a3250f47a6d4e0adcecbaaf1ebdd5cf37994f8a6715ead95e10b8e4d",
+      "matches_workspace": true
+    },
+    {
+      "path": "project/SESSION_LOG.md",
+      "sha256": "cf4fa22ca56cb647278741dcda76ceb8d83b469e8b96f4becc8b5597acfb97d3",
+      "matches_workspace": true
+    },
+    {
+      "path": "prompts/00_MASTER_WORK_PROMPT.md",
+      "sha256": "34b96813c08b080e794503b60f0be21744cad30864dd03b03bcb9f3e0b53d5ec",
+      "matches_workspace": true
+    },
+    {
+      "path": "prompts/01_DATA_AUDIT.md",
+      "sha256": "8a007485cfdf877f7dd29ea249dede2edd8b78edadee721254a6049cf7967dad",
+      "matches_workspace": true
+    },
+    {
+      "path": "prompts/02_EXPERIMENTS.md",
+      "sha256": "bfeea3f25fdd4e8a6ca6206969c566f9998e5c1c84157074cc7e52e71f5cddd3",
+      "matches_workspace": true
+    },
+    {
+      "path": "prompts/03_UI_BUILD.md",
+      "sha256": "0a98e59cd29b736ff622d191835b8dc57e6963da3353453b3f5fbadc7541a61e",
+      "matches_workspace": true
+    },
+    {
+      "path": "prompts/04_BACKEND.md",
+      "sha256": "10aaf2343a0248e8c669ec69df6df441d96b796d44cbbb3f25b7b3b4c05a8f67",
+      "matches_workspace": true
+    },
+    {
+      "path": "prompts/05_RAG_AGENT.md",
+      "sha256": "762418590d04202354b61fe4c8f1abb566bcd3ef28670accc2dc8246527b666d",
+      "matches_workspace": true
+    },
+    {
+      "path": "prompts/06_QA_RELEASE.md",
+      "sha256": "446b7760e0982206748215d8ea58fdc5c22c2ea0de9f45a7d916a0bbe4d63236",
+      "matches_workspace": true
+    },
+    {
+      "path": "prompts/07_ACADEMIC.md",
+      "sha256": "fed7b061aa76216b3693b6a4b38e568c02103543473b93e19444bb7eff2c013d",
+      "matches_workspace": true
+    },
+    {
+      "path": "prompts/08_PILOT_BUSINESS.md",
+      "sha256": "61ba8520f875e69ba38e8ed470ea1ed01983908791e41af6fb20b37b5781533e",
+      "matches_workspace": true
+    },
+    {
+      "path": "prompts/09_CONTINUE_NEW_SESSION.md",
+      "sha256": "54ca39c339d730557bae4a0055a7c5c48bf823b76b3689528ffa422a58c37604",
+      "matches_workspace": true
+    },
+    {
+      "path": "research/experiments/.gitkeep",
+      "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "matches_workspace": true
+    },
+    {
+      "path": "research/figures/.gitkeep",
+      "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "matches_workspace": true
+    },
+    {
+      "path": "services/api/app/__init__.py",
+      "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "matches_workspace": true
+    },
+    {
+      "path": "services/api/app/domain.py",
+      "sha256": "eca753884dbf2c57c13df98abe5d94e393c07f3064ad5aa6b61be8aa6af8eeb5",
+      "matches_workspace": true
+    },
+    {
+      "path": "services/api/app/main.py",
+      "sha256": "3247c3e09940eada75c1b0624323a8bd21ce1a8b5d403627416adc38226f9a30",
+      "matches_workspace": true
+    },
+    {
+      "path": "services/api/requirements.txt",
+      "sha256": "4ff5d4e9a51218b400245497a7f3710c95f887d0a75bdac85be95313c479cb66",
+      "matches_workspace": true
+    },
+    {
+      "path": "services/api/tests/conftest.py",
+      "sha256": "8d98cc98dd2fb1593274f7f5e5aa97b5ed5ad703a3614fafbb0c95bbacd384a9",
+      "matches_workspace": true
+    },
+    {
+      "path": "services/api/tests/test_api.py",
+      "sha256": "bb80f9e6ca257e6b3ade5c5ce9ee61ec3bd9cf69d020a6f7ecb6034825faa766",
+      "matches_workspace": true
+    },
+    {
+      "path": "services/api/tests/test_domain.py",
+      "sha256": "c009648bdd2c68cae448cf1525901024aaea45423f2450aae0e586df7553e91a",
+      "matches_workspace": true
+    }
+  ]
+}

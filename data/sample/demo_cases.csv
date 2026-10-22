@@ -1,0 +1,4 @@
+id,title,subtitle,metric_value,metric_label,status,evidence
+D-RL-001,Missed session: design sprint,Learner paused after Session 2,25,minutes planned,needs-review,Synthetic timetable: resume with recap before exercise
+D-RL-002,Upcoming reflection task,Due date verified by coordinator,3,tasks remaining,ready,Synthetic assignment index: official deadline reference
+D-RL-003,Request mentor guidance,Needs coordinator response,1,open request,blocked,Synthetic handoff ticket linked to missed class

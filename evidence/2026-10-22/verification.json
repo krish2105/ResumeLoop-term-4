@@ -1,0 +1,51 @@
+{
+  "date": "2026-10-22",
+  "classification": "VERIFIED OBSERVATION of SYNTHETIC DEMO engineering checks",
+  "starter_files": 58,
+  "starter_matches": 58,
+  "archive_sha256": "fbac66ecd84bca0513159bc3feade83435f0e84a7981af5ac8b28149d35e1d5b",
+  "tests": {
+    "baseline_passed": 6,
+    "final_passed": 24,
+    "warnings": 1,
+    "warning": "Starlette TestClient httpx deprecation"
+  },
+  "frontend": {
+    "build": "passed",
+    "typecheck": "passed",
+    "next": "15.5.28",
+    "postcss_override": "8.5.31",
+    "node": "26.10.0",
+    "npm": "11.19.1"
+  },
+  "python": "3.14.7",
+  "platform": "macOS arm64",
+  "browser_checks": 23,
+  "dependency_audit": {
+    "npm_known_vulnerabilities": 0,
+    "python_known_vulnerabilities": 0
+  },
+  "accessibility": "0 reported violations across four scans; mobile incomplete contrast checks remain; see accessibility-summary.json",
+  "ml_model": "none; deterministic demo; no training/splits/seed applicable",
+  "participant_count": 0,
+  "official_deadlines_verified": 0,
+  "production_ready": false,
+  "private_files_not_published": [
+    "course/outline.docx",
+    "extracted course text",
+    "local environment",
+    "SQLite database",
+    "full machine logs"
+  ],
+  "recorded_at": "2026-10-22T20:39:55+05:30",
+  "artifacts": {
+    "services/api/app/imports.py": "1073e92168ef9dd2003fbbccaea6296e6c0373549f0dec06f8fca7c3dc975d9c",
+    "services/api/app/main.py": "e3922d73e94d2a8abb4068671e44f44bcbfe1a32c7a6d3733dd576121ef86143",
+    "apps/web/app/ImportPanel.tsx": "e7feb38457be7ea7dbd88a4abc12b8624eebcc1dac3f191f2834cc1702863074",
+    "apps/web/app/page.tsx": "08eac625cd2fd161179f7b6a1216231c5d3661e34519f7b537d5b802c1d2beec",
+    "apps/web/app/globals.css": "91f7e797b26e03785642a5c7a5b6493478b163318ceefbec5f1a716be31225d2",
+    "apps/web/package-lock.json": "1ac6c677af00cc5e42a15701721660c54ed0b8f65042053abb1a9608c0fed715",
+    "services/api/requirements.lock.txt": "a1d348ca7eb6726b68a01ae80f71de257b7909ac0d0687b8525cb37881171594",
+    "assets/generated/empty-recovery-plan.png": "8427676039cf99e7af6ff37e5271e9d531047e259b9d6cdad7ae4894107b9676"
+  }
+}
