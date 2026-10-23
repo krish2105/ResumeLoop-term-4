@@ -1,6 +1,6 @@
 # Open blockers and risk ownership
 
-Updated 22 October 2026.
+Updated 23 October 2026.
 
 | Blocker / verified gap | Impact | Owner / next action |
 |---|---|---|
@@ -15,5 +15,6 @@ Updated 22 October 2026.
 | Original Design Kit resource link returned 404 | Starter source pointer stale | Resolved for method research using verified primary method pages; no dataset downloaded |
 | Port 8000 belongs to another service on this machine | Default launch fails | Resolved locally with port 8014 and explicit environment configuration |
 | Public repository excludes the private course outline | Fresh clone cannot inspect original curriculum | Student: restore authorized local copy to course/outline.docx for private academic work |
+| A different account may not inherit GitHub access, files, or chat history | Continuation can miss rubric evidence or trust stale summaries | Owner: provide repository link or ZIP, attach the authorized outline privately, and paste `prompts/10_NEW_ACCOUNT_HANDOFF.md` |
 
 Dependency scans found no known remaining advisories at this run. The TestClient/httpx deprecation warning remains a maintenance item, not a failed test. GitHub publication is explicitly user-authorized; no deployment, email, purchase, grading or real coordinator approval is authorized or performed by this session.

@@ -1,6 +1,6 @@
 # Priority backlog — ResumeLoop
 
-Updated 22 October 2026. Four project hours/week is the default; all five projects share 20 hours. `PROGRESS.md` is the single completed/remaining/run guide.
+Updated 23 October 2026. Four project hours/week is the default; all five projects share 20 hours. `PROGRESS.md` is the single completed/remaining/run guide.
 
 ## M0 — verified starter and source-import slice
 - [x] Extract original ZIP separately, checksum all 58 files, inspect outline/spec/code.
@@ -13,6 +13,7 @@ Updated 22 October 2026. Four project hours/week is the default; all five projec
 - [x] Prepare original research instruments and separate hypotheses from findings.
 - [x] Update continuity files and root `PROGRESS.md`.
 - [x] Prepare user-authorized initial Git publication to the provided empty repository; use Git history/remote state to verify publication, not this checkbox alone.
+- [x] Add a repository-backed new-account handoff guide, private attachment checklist and copy-ready continuation prompt.
 
 ## M1 — next executable slice and research access
 - [ ] **NEXT:** Define typed synthetic course-action input with explicit duration, ID, prerequisites, completed state and source/version. Add tests for missing/unknown/duplicate/cyclic prerequisites and bounds.

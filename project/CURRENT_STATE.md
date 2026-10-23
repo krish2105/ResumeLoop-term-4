@@ -1,6 +1,16 @@
 # Current verified state — ResumeLoop
 
-Last updated: **22 October 2026**. User requested initial GitHub publication to `https://github.com/krish2105/ResumeLoop-term-4` and one progress/run guide: **`PROGRESS.md`**.
+Last updated: **23 October 2026**. User requested a complete cross-account continuation package and publication to `https://github.com/krish2105/ResumeLoop-term-4`. **`PROGRESS.md`** remains the status/run authority; **`NEW_ACCOUNT_HANDOFF.md`** and **`prompts/10_NEW_ACCOUNT_HANDOFF.md`** provide the transfer checklist and paste-ready prompt.
+
+## Cross-account handoff milestone
+
+- Added a two-route attachment checklist: repository URL for an account with GitHub access, or the GitHub source ZIP when direct access is unavailable.
+- The authorized original `course/outline.docx` must be attached separately in a private workspace because it is intentionally excluded from the public repository.
+- The continuation prompt requires fresh Git/test/build verification, course-rubric review, M1 planner/schema work, authentic-research rules, and the mandatory exit protocol.
+- No application source or behavior changed in this documentation-only milestone. Previously recorded application test/build/browser results were not rerun and remain historical evidence dated 22 October 2026.
+- Changed files in this milestone: `NEW_ACCOUNT_HANDOFF.md`, `prompts/10_NEW_ACCOUNT_HANDOFF.md`, `README.md`, `PROGRESS.md`, `project/SESSION_PLAN.md`, `project/CURRENT_STATE.md`, `project/SESSION_LOG.md`, `project/DECISIONS.md`, `project/BLOCKERS.md`, and `project/NEXT_ACTIONS.md`.
+- Documentation validation commands and their observed results are recorded in the 23 October entry of `project/SESSION_LOG.md`.
+- The commit containing this entry is the user-authorized cross-account handoff publication. Verify its identity with `git rev-parse HEAD` and `git ls-remote origin refs/heads/main`; do not rely on a self-referential hash in this file.
 
 ## Publication status
 Initial project commit `29dfb5c6e20659ced07cf12736a6ddc1cdf63c6c` was pushed to the public GitHub repository's `main` branch on 22 October 2026. `git ls-remote` returned the identical SHA and GitHub reports `main` as the default branch. No force push was used. This final continuity update is a follow-up commit.

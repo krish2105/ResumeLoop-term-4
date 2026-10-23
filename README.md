@@ -1,6 +1,6 @@
 # ResumeLoop — Design Thinking (MAIB MGT 204)
 
-**Current handoff:** [PROGRESS.md](PROGRESS.md) contains completed work, verified checks, the remaining end-to-end roadmap and setup/run instructions. Start there.
+**Current handoff:** [PROGRESS.md](PROGRESS.md) contains completed work, verified checks, the remaining end-to-end roadmap and setup/run instructions. For a different ChatGPT/Codex account, use [NEW_ACCOUNT_HANDOFF.md](NEW_ACCOUNT_HANDOFF.md) and the copy-ready prompt in [prompts/10_NEW_ACCOUNT_HANDOFF.md](prompts/10_NEW_ACCOUNT_HANDOFF.md).
 
 **Pack type:** research + product + engineering STARTER KIT. **Not:** a completed trained model, proven customer product, or deployed SaaS. The included API, dashboard, sample data, calculation and tests form a demo vertical slice.
 

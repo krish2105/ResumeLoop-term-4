@@ -24,3 +24,17 @@ Recorded evidence window: 10:04–10:26 IST on 22 October 2026 (0.37 elapsed hou
 Final publication verification at 20:39 IST found a 320px grid-item overflow in the screenshot despite the earlier timing-sensitive width assertion. Added explicit zero minimum widths to the import grid/panels and made the browser test wait for resized layout frames. Rebuilt and reran all 23 production-browser checks successfully; final mobile screenshot is 320px wide with wrapped content and contained horizontal table scrolling. Accessibility rerun reports no automated violations in four scans, with mobile table contrast left as an incomplete manual check because hidden columns are partially obscured by the intentional scroller.
 
 Initial Git publication completed: root commit `29dfb5c6e20659ced07cf12736a6ddc1cdf63c6c` (`feat: establish ResumeLoop audited prototype`) pushed to `origin/main`. Remote SHA matched local SHA, GitHub default branch is `main`, and no force push occurred. Private curriculum, extracted course text, local SQLite/environment and full machine logs stayed ignored as documented in `PROGRESS.md` and `course/README.md`.
+
+### 2026-10-23 — Cross-account continuation package
+
+**User steering:** The owner will use another account and requested a prompt, attachment instructions, a status/progress file, and a GitHub push.
+
+**Plan and acceptance:** Updated `project/SESSION_PLAN.md` before implementation. Required a self-contained recovery order, two attachment routes, explicit private-course handling, current status, exact next milestone, non-fabrication constraints, continuity protocol, link/file validation, and remote SHA verification.
+
+**VERIFIED OBSERVATION:** The worktree began clean at commit `6d5df0bcf2ffda7e1c3813cec9ded913d9ec56ef`, with `origin` set to `https://github.com/krish2105/ResumeLoop-term-4.git`. The public repository omits `course/outline.docx` as intended. Existing `PROGRESS.md` already contains the complete run guide, verified M0 status, remaining end-to-end roadmap, known defects, and untested scope.
+
+**Implementation:** Added root `NEW_ACCOUNT_HANDOFF.md` with repository/ZIP attachment routes, privacy exclusions, source-of-truth order, run pointer, current verified/synthetic/TODO distinctions, and the next M1 acceptance criteria. Added `prompts/10_NEW_ACCOUNT_HANDOFF.md` as a complete paste-ready prompt. Linked the package from README and progress/state records. Recorded the decision and new cross-account access risk without copying the private curriculum.
+
+**Verification:** This was a documentation-only milestone. `git diff --check` passed and every named handoff/continuity file was confirmed present. Application tests, build, and browser journeys were not rerun because application code did not change; the 22 October results remain historical evidence. The GitHub push and remote SHA comparison are the final checks for the commit containing this entry.
+
+**Untested and next:** Whether the other account has GitHub access and can read the private DOCX cannot be tested from this account. No application behavior, new research evidence, course date, or production control was added. The next runnable engineering task remains the typed synthetic course-action schema and deterministic planner repairs in M1.
