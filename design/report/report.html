@@ -1,0 +1,456 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<title>ResumeLoop: Project Report</title>
+<style>
+  @page { size: A4; margin: 20mm 18mm 22mm 18mm; }
+  @page :first { margin: 0; }
+  :root { --paper:#FAF6F0; --raised:#F2EBE2; --ink:#22160F; --ink2:#3B2A20; --muted:#62544B; --ember:#B5401F; --emberText:#8F2F14;
+          --wash:#FBE6DE; --moss:#1D7A4F; --amber:#8A5A00; --line:#E6DCD0; }
+  * { box-sizing: border-box; }
+  html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  body { margin: 0; color: var(--ink); font: 10.5pt/1.55 "Avenir Next", "Helvetica Neue", Arial, sans-serif; background: #fff; }
+  h1, h2, h3 { font-family: "Iowan Old Style", "Palatino", Georgia, serif; color: var(--ink); line-height: 1.2; }
+  h1 { font-size: 22pt; margin: 0 0 6mm; }
+  h2 { font-size: 15pt; margin: 8mm 0 3mm; break-after: avoid; }
+  h3 { font-size: 11.5pt; margin: 5mm 0 2mm; break-after: avoid; }
+  p { margin: 0 0 3mm; }
+  ul, ol { margin: 0 0 3mm; padding-left: 5mm; }
+  li { margin: 0 0 1.2mm; }
+  a { color: var(--emberText); text-decoration: none; }
+  .eyebrow { font: 600 8pt/1 "Avenir Next", Arial, sans-serif; letter-spacing: .18em; text-transform: uppercase; color: var(--ember); }
+  .lead { font-size: 12pt; color: var(--ink2); }
+  .muted { color: var(--muted); }
+  .small { font-size: 9pt; }
+  section.chapter { break-before: page; }
+  figure { margin: 4mm 0 5mm; break-inside: avoid; }
+  figure img { display: block; width: 100%; border-radius: 3mm; border: 0.3mm solid var(--line); }
+  figcaption { font-size: 8.5pt; color: var(--muted); margin-top: 1.6mm; }
+  .two { display: grid; grid-template-columns: 1fr 1fr; gap: 6mm; align-items: start; }
+  .two.wide-left { grid-template-columns: 1.35fr 1fr; }
+  .callout { background: var(--raised); border-radius: 3mm; padding: 4mm 5mm; margin: 4mm 0; break-inside: avoid; }
+  .callout.warn { background: #FFF1D6; }
+  .callout strong:first-child { color: var(--emberText); }
+  table { width: 100%; border-collapse: collapse; margin: 2mm 0 5mm; font-size: 9.5pt; break-inside: avoid; }
+  th { text-align: left; font-weight: 600; color: var(--ink2); background: var(--raised); padding: 2mm 2.5mm; }
+  td { padding: 2mm 2.5mm; border-bottom: 0.3mm solid var(--line); vertical-align: top; }
+  .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 4mm; margin: 3mm 0; }
+  .stat { background: var(--raised); border-radius: 3mm; padding: 4mm; }
+  .stat b { display: block; font: 700 20pt/1.1 "Iowan Old Style", Georgia, serif; color: var(--ember); }
+  .stat.ok b { color: var(--moss); }
+  .stat span { font-size: 8.5pt; color: var(--muted); }
+  .tag { display: inline-block; font: 600 7.5pt/1 "Avenir Next", Arial, sans-serif; letter-spacing: .08em; text-transform: uppercase;
+         padding: 1.4mm 2.4mm; border-radius: 9mm; background: var(--wash); color: var(--emberText); }
+  .tag.amber { background: #FFF1D6; color: var(--amber); }
+  .tag.moss { background: #E3F3EA; color: var(--moss); }
+  figure.hero img { width: 84%; margin: 0 auto; }
+  figure.band img { height: 62mm; object-fit: cover; }
+  .refs p { padding-left: 7mm; text-indent: -7mm; font-size: 9.5pt; }
+  .toc { list-style: none; padding: 0; columns: 2; column-gap: 10mm; }
+  .toc li { margin: 0 0 2mm; }
+  /* Cover */
+  .cover { height: 297mm; display: grid; grid-template-rows: 1fr auto; background: var(--ink); color: #fff; break-after: page; }
+  .cover .art { background: url("img/stop-cover.jpg") center/cover; }
+  .cover .text { padding: 14mm 18mm 16mm; }
+  .cover h1 { color: #fff; font-size: 40pt; margin: 3mm 0 3mm; }
+  .cover .eyebrow { color: #FF8E6B; }
+  .cover p { color: #F2EBE2; }
+  .cover .meta { margin-top: 7mm; font-size: 10pt; color: #F2EBE2; }
+  .cover .meta b { color: #FF8E6B; }
+</style>
+</head>
+<body>
+
+<div class="cover">
+  <div class="art" role="img" aria-label="Paper-cut ember path winding over hills past six waymarkers"></div>
+  <div class="text">
+    <div class="eyebrow">MAIB MGT 204 · Design Thinking · Project report</div>
+    <h1>ResumeLoop</h1>
+    <p class="lead" style="color:#F2EBE2">Helping working learners find the one right next task after a missed class.<br>
+      An AI-assisted design thinking solution for UN Sustainable Development Goal 4, Quality Education.</p>
+    <div class="meta">
+      Krishna Mathur · Master of AI in Business, SP Jain School of Global Management, Dubai · Unit coordinator: Dr Christopher Abraham<br>
+      Report dated 1 November 2026 · <b>Live prototype:</b> resumeloop-demo.vercel.app · <b>Code:</b> github.com/krish2105/ResumeLoop-term-4
+    </div>
+  </div>
+</div>
+
+<section>
+  <div class="eyebrow">Contents</div>
+  <h1>About this report</h1>
+  <ol class="toc">
+    <li>1. Executive summary</li><li>2. The problem and its context</li><li>3. Alignment with SDG 4</li>
+    <li>4. Design thinking framework</li><li>5. Empathise: research design</li><li>6. Define and ideate</li>
+    <li>7. The prototype</li><li>8. The AI coach: design and evaluation</li><li>9. Testing plan and browser pilot</li>
+    <li>10. Ethics, privacy and security</li><li>11. Engineering quality</li><li>12. Limitations</li>
+    <li>13. Recommendation and next steps</li><li>References</li><li>Appendix A: Screens of the live prototype</li><li>Appendix B: Running the project</li>
+  </ol>
+  <div class="callout warn">
+    <strong>Evidence boundary.</strong> Every screen, number and example in this report comes from a working prototype running
+    on a <em>fictional</em> course. No interviews, observations, usability sessions or pilot have been carried out yet, and nothing here
+    is presented as a finding about real learners. Statements about learners are hypotheses, labelled as such. The fieldwork that
+    would test them is planned in section 13.
+  </div>
+
+</section>
+
+<section class="chapter">
+  <h2 style="margin-top:0">1. Executive summary</h2>
+  <p>Working learners miss sessions. When they return, the course has moved on: tasks have been added, a deadline has changed, and two
+    sources disagree. Rebuilding "what should I do now, with the time I have?" costs effort, and some learners quietly fall behind.
+    ResumeLoop is a design thinking response to that moment.</p>
+  <p>The prototype has three parts, all live on the public site:</p>
+  <ul>
+    <li><b>A learner journey:</b> the course drawn as a 3D road where completed tasks sit behind you and the next feasible task glows.
+      It is re-planned instantly around the minutes available, by a deterministic planner that respects prerequisites.</li>
+    <li><b>A grounded coach:</b> answers come only from the course notes, with a citation for every claim; otherwise it declines and
+      offers to ask the coordinator.</li>
+    <li><b>A design studio:</b> runs the course's own process from consented interviews to a printable Week 12 deck, keeping every
+      design decision traceable to evidence.</li>
+  </ul>
+  <p>On a 59-question test set over the fictional course, the coach answered 97.6% of answerable questions, cited the right passage
+    97.5% of the time, and declined every out-of-scope question and prompt injection. The software is tested by 107 API tests, 146
+    browser checks in three browser engines, and 112 accessibility scans with no violations.</p>
+  <p><b>Recommendation:</b> test before building more. Approve consented fieldwork and a two-week browser pilot with one coordinator and
+    three to five learners. Judge ResumeLoop on two measures: time to the first correct task, and questions the coordinator no longer
+    has to answer.</p>
+</section>
+
+<section class="chapter">
+  <h2 style="margin-top:0">2. The problem and its context</h2>
+  <div class="two wide-left">
+    <div>
+      <p>The starting observation is common to anyone who studies while working. A single missed session creates a small but real
+        recovery task: find out what changed, decide which task fits the time available, and know whom to ask when sources
+        disagree. The project frames this recovery moment as the design problem.</p>
+      <h3>Hypotheses to test, not findings</h3>
+      <ol>
+        <li><b>H1.</b> Returning learners spend effort reconstructing what changed across several sources.</li>
+        <li><b>H2.</b> Source-backed, time-bounded next actions reduce uncertainty.</li>
+        <li><b>H3.</b> Preserving unfinished work helps people resume.</li>
+        <li><b>H4.</b> Coordinators value fewer repetitive clarification requests.</li>
+        <li><b>H5.</b> A simpler checklist in the existing LMS may solve the problem without a separate tool.</li>
+      </ol>
+      <p>The research is designed to look for evidence <em>against</em> each hypothesis, including H5, which would make the tool
+        unnecessary.</p>
+    </div>
+    <figure>
+      <img src="img/initial-hero-dusk-road-concept.jpg" alt="A learner with a backpack looks along a path of stones">
+      <figcaption>Illustration of the recovery moment. Illustrations in this report were generated with ChatGPT and are not research photos.</figcaption>
+    </figure>
+  </div>
+  <h3>What the literature supports</h3>
+  <p>Tinto (1975) models dropout from higher education as the outcome of how well a student is integrated, academically and socially,
+    over time. A missed session is a small break in that integration, and the recovery after it is a moment an institution can design
+    for. Kara, Erdoğdu, Kokoç and Cagiltay (2019) reviewed 36 studies of adult learners in distance education and found internal,
+    external and programme-related challenges that interact and vary with age, skills and study context. Neither source shows that
+    missed sessions are common in this programme or that ResumeLoop would help. They justify asking the question, and they argue for
+    interviewing working learners instead of assuming their circumstances.</p>
+
+  <h2>3. Alignment with SDG 4</h2>
+  <div class="two">
+    <figure>
+      <img src="img/sdg4-lifelong-learning.jpg" alt="Learners of different ages walk their own paths towards one open book">
+      <figcaption>Lifelong learning across ages: the project's own illustration, not the UN emblem or SDG icon.</figcaption>
+    </figure>
+    <div>
+      <p>The Week 12 brief asks for AI-driven solutions to the UN Sustainable Development Goals using design thinking frameworks.
+        ResumeLoop sits under SDG 4, Quality Education, and two of its targets (United Nations, 2015):</p>
+      <ul>
+        <li><b>Target 4.3:</b> equal access for all women and men to affordable, quality technical, vocational and tertiary
+          education, including university.</li>
+        <li><b>Target 4.4:</b> by 2030, substantially increase the number of youth and adults who have relevant skills for
+          employment, decent jobs and entrepreneurship.</li>
+      </ul>
+      <div class="callout"><strong>Impact hypothesis.</strong> A learner who can recover from an interruption is more likely to stay
+        in tertiary education (4.3) and to finish the skills it builds (4.4). This is a hypothesis; the pilot in section 9 is how it
+        would be measured. No SDG impact is claimed.</div>
+    </div>
+  </div>
+</section>
+
+<section class="chapter">
+  <h2 style="margin-top:0">4. Design thinking framework</h2>
+  <p>Brown (2008) describes design thinking as matching people's needs with what is technically feasible and viable for an
+    organisation, moving between inspiration, ideation and implementation rather than in a straight line. IDEO.org's Field Guide
+    (2015) turns this into a human-centred practice with concrete methods; this project adapts four of them: interviews, guided tours,
+    journey maps and getting feedback. Liedtka (2018) argues that the method works because its structure counters predictable biases,
+    such as projecting our own views onto users and settling on the first idea. ResumeLoop builds in two of those counters: personas
+    stay labelled as assumptions until linked to evidence, and the cheapest alternative stays in every comparison.</p>
+  <table>
+    <tr><th style="width:17%">Stop</th><th>Method</th><th style="width:22%">Where in the app</th><th style="width:17%">Status</th></tr>
+    <tr><td><b>Empathise</b></td><td>Consented interviews and guided tours of today's catch-up, including an extreme user</td><td>Research ops, Observe, Empathy studio</td><td><span class="tag amber">Ready to run</span></td></tr>
+    <tr><td><b>Define</b></td><td>Thematic analysis; points of view; storyboards</td><td>Synthesis board, Define</td><td><span class="tag">Built</span></td></tr>
+    <tr><td><b>Ideate</b></td><td>Hills, How might we, Crazy 8s, one vote each, three alternatives scored</td><td>Envision, Ideate</td><td><span class="tag">Built</span></td></tr>
+    <tr><td><b>Prototype</b></td><td>The journey, coach, studio and pilot; a version log with feedback</td><td>Live site; Prototype log</td><td><span class="tag moss">Live</span></td></tr>
+    <tr><td><b>Test</b></td><td>Frozen protocol; paired tasks in rounds of five</td><td>Experiment lab</td><td><span class="tag amber">Ready to run</span></td></tr>
+    <tr><td><b>Impact</b></td><td>SDG 4 hypothesis, measured by a browser pilot</td><td>Course hub, Browser pilot</td><td><span class="tag amber">Next</span></td></tr>
+  </table>
+  <h3>Mapping to the unit outcomes</h3>
+  <table>
+    <tr><th style="width:30%">Outcome</th><th>How the project addresses it</th></tr>
+    <tr><td>A. Design thinking concepts and tools</td><td>Each stop above is a working tool with its method stated on screen</td></tr>
+    <tr><td>B. The IDEO ethnographic approach</td><td>Interview and observation guides adapted from the IDEO.org Field Guide, with consent rules</td></tr>
+    <tr><td>C. Analyse qualitative data</td><td>Reflexive thematic analysis (Braun &amp; Clarke, 2006) with an evidence trace from theme to quote</td></tr>
+    <tr><td>D. Solve sustainably</td><td>SDG 4 framing; a pilot that runs without servers or personal data</td></tr>
+    <tr><td>E. Collaborative alternatives</td><td>A co-design session scores three alternatives, including improving the existing LMS</td></tr>
+  </table>
+</section>
+
+<section class="chapter">
+  <h2 style="margin-top:0">5. Empathise: research design</h2>
+  <div class="two wide-left">
+    <div>
+      <p><b>Research question.</b> Does a co-designed recovery workflow help working learners identify and begin the correct next
+        task with fewer errors and less effort than their existing process?</p>
+      <h3>Participants</h3>
+      <p>A first round of four working learners, including at least one who recently missed a session, and two coordinators or
+        tutors. This purposive sample is exploratory, not representative. Adults only; participation is voluntary and unrelated to grades.</p>
+      <h3>Methods</h3>
+      <ul>
+        <li>A 25-minute interview that starts broad, then walks through the most recent catch-up.</li>
+        <li>A 15-minute guided tour in which the participant shows, with private details hidden, how they find the next task today.</li>
+        <li>Separate consent choices: participation, anonymised notes, screen observation, quotation, and future contact. Audio and
+          video are off by default.</li>
+      </ul>
+      <h3>Safeguards built into the tools</h3>
+      <ul>
+        <li>An interview becomes research data only after consent is recorded.</li>
+        <li>Notes that contain email addresses or phone numbers are refused.</li>
+        <li>AI may suggest codes; a person accepts or rejects every one, and only exact quotes can be coded.</li>
+      </ul>
+    </div>
+    <figure>
+      <img src="../../submissions/screenshots/05-empathy-studio.jpg" alt="Empathy studio with notes, codes and an empathy map">
+      <figcaption>The empathy studio on the live site, with clearly labelled fictional examples.</figcaption>
+    </figure>
+  </div>
+  <div class="callout warn"><strong>Status.</strong> The instruments are written and the tools are live, but the fieldwork has not
+    been run. It waits on the faculty's ethics guidance and on recruitment.</div>
+
+  <h2>6. Define and ideate</h2>
+  <div class="two">
+    <div>
+      <h3>Define: from quotes to points of view</h3>
+      <p>Analysis follows the six phases of reflexive thematic analysis (Braun &amp; Clarke, 2006): familiarise, code, search for
+        themes, review, define and name, and write up. The synthesis board lets codes be dragged into themes, and keeps an evidence
+        trace from theme to code to quote to participant. It flags weak evidence, such as a theme that rests on one person, and keeps
+        negative cases visible. Points of view and Hill statements are written only after synthesis and each links to its evidence.</p>
+    </div>
+    <figure>
+      <img src="../../submissions/screenshots/06-synthesis.jpg" alt="Synthesis board">
+      <figcaption>Synthesis board with the evidence trace and evidence-quality checks.</figcaption>
+    </figure>
+  </div>
+  <h3>Ideate: three alternatives, scored by participants</h3>
+  <table>
+    <tr><th style="width:24%">Alternative</th><th>For</th><th>Against</th></tr>
+    <tr><td><b>Improve the LMS checklist</b></td><td>Cheapest; already where learners are</td><td>Cannot plan around the time a learner has or show what changed</td></tr>
+    <tr><td><b>Coordinator recovery brief</b></td><td>Human, trusted and flexible</td><td>Takes coordinator time for every learner; does not scale</td></tr>
+    <tr><td><b>ResumeLoop plan</b></td><td>Plans to the learner's time, shows changes, cites sources</td><td>A new tool to adopt; needs authorised course data</td></tr>
+  </table>
+  <p>The co-design session uses How might we questions, Crazy 8s and one vote each, and participants score all three alternatives. If
+    the checklist wins, that is a valid and useful result.</p>
+</section>
+
+<section class="chapter">
+  <h2 style="margin-top:0">7. The prototype</h2>
+  <figure class="hero">
+    <img src="../../submissions/screenshots/01-journey-3d.jpg" alt="The 3D journey with the next task glowing">
+    <figcaption>The learner journey on the live site: completed tasks behind, the next feasible task glowing, and the time-budget
+      panel on the right.</figcaption>
+  </figure>
+  <div class="two">
+    <div>
+      <h3>For a returning learner</h3>
+      <ul>
+        <li><b>Journey and plan.</b> Set the minutes available and the plan re-orders. The planner excludes completed tasks, unlocks
+          dependants, validates the prerequisite graph, and declines to guess when a duration is unknown.</li>
+        <li><b>What changed.</b> Every change between course versions is computed from the data; AI may only re-word it.</li>
+        <li><b>Coach.</b> Course-grounded answers with citations, or an offer to ask the coordinator (section 8).</li>
+        <li><b>Accessible by default.</b> The same plan as a list, by keyboard, in light or dark, from phone to desktop.</li>
+      </ul>
+    </div>
+    <div>
+      <h3>For the design team and the coordinator</h3>
+      <ul>
+        <li><b>Studio</b> for every stop of the process, ending in a printable 16:9 Week 12 deck built from live evidence counts.</li>
+        <li><b>Reflection journal</b> that assembles a draft paper only from the student's own entries.</li>
+        <li><b>Coordinator workspace</b> to import and version a course package, check it before learners see it, and revert.</li>
+        <li><b>Browser pilot</b> on the public site (section 9).</li>
+      </ul>
+    </div>
+  </div>
+  <div class="callout"><strong>Two modes, one codebase.</strong> Run locally, the web app talks to a FastAPI service and a local open
+    model through Ollama; no cloud AI and no API key. The public Vercel build runs entirely in the browser from bundled data, with a
+    TypeScript planner checked case by case against the Python one.</div>
+</section>
+
+<section class="chapter">
+  <h2 style="margin-top:0">8. The AI coach: design and evaluation</h2>
+  <div class="two wide-left">
+    <div>
+      <p>The guiding rule is that the model only phrases and suggests; code decides what is true. Each answer passes these checks
+        before a learner sees it:</p>
+      <table>
+        <tr><th style="width:30%">Guard</th><th>What it does</th></tr>
+        <tr><td>Retrieval threshold</td><td>No passage close enough means no answer, only an offer to ask the coordinator</td></tr>
+        <tr><td>Citation check</td><td>Every cited source must be one that was retrieved</td></tr>
+        <tr><td>Facts guard</td><td>Dates and durations must appear in the cited passages, including written-out numbers</td></tr>
+        <tr><td>Status guard</td><td>Words that change obligations (cancelled, optional, extension, version) need a source that says so</td></tr>
+        <tr><td>Task change log</td><td>"What changed about this task?" is answered from a log computed from the versions</td></tr>
+        <tr><td>Logging</td><td>Every call is logged with a hash of the prompt, never its text</td></tr>
+      </table>
+    </div>
+    <figure>
+      <img src="../../submissions/screenshots/04-coach.jpg" alt="The coach answering with a cited passage">
+      <figcaption>The coach on the live site answering with a citation.</figcaption>
+    </figure>
+  </div>
+  <h3>Evaluation</h3>
+  <p>A gold set of 59 questions over the fictional course: 41 answerable, 10 outside the course, and 8 prompt-injection attempts.
+    Live model qwen2.5:7b with bge-m3 embeddings, run through Ollama on a laptop, at temperature 0 with a fixed seed; two runs gave
+    identical results.</p>
+  <div class="stats">
+    <div class="stat"><b>97.6%</b><span>answerable questions answered (40 of 41)</span></div>
+    <div class="stat"><b>97.5%</b><span>answers citing the right passage</span></div>
+    <div class="stat ok"><b>100%</b><span>out-of-scope questions declined (10 of 10)</span></div>
+    <div class="stat ok"><b>100%</b><span>injection attempts resisted (8 of 8)</span></div>
+  </div>
+  <p>No answer among the 41 was wrong; one correct answer cites a neighbouring passage. Testing exposed three real failures (a date
+    planted in a question was repeated, a quiz was called cancelled, and a version change was invented); each was fixed with a
+    deterministic guard, and CI replays the recorded run. <b>Limits:</b> the set is small and fictional; real learners' questions will
+    come from the fieldwork.</p>
+</section>
+
+<section class="chapter">
+  <h2 style="margin-top:0">9. Testing plan and browser pilot</h2>
+  <h3>Usability testing</h3>
+  <p>Nielsen (2000) recommends several small rounds of about five users, fixing problems between rounds, over one large study. The
+    plan follows that:</p>
+  <ol>
+    <li><b>Freeze</b> the tasks, answer key and success rules, fingerprinted with SHA-256 before any session, so the test cannot be
+      tuned afterwards.</li>
+    <li><b>Round 1:</b> five people do the same two tasks with their current method and with ResumeLoop, in alternating order.</li>
+    <li><b>Fix</b> only what round 1 found, logging each version and the feedback behind it.</li>
+    <li><b>Round 2</b> with five more people.</li>
+  </ol>
+  <p>Measures: unaided success, seconds to complete, wrong actions, help needed, and ease on a 1 to 7 scale. Results are reported as
+    medians, ranges and failures, with an exact sign test and its small-sample caveat; five people cannot show statistical significance.</p>
+  <h3>The browser pilot</h3>
+  <div class="two">
+    <figure>
+      <img src="img/pilot-how-it-works.jpg" alt="A coordinator shares one course file with three learners; progress files come back">
+      <figcaption>How the pilot moves information: one course file out, progress files back.</figcaption>
+    </figure>
+    <div>
+      <p>The pilot runs on the public site with no server. The coordinator loads a course file they are allowed to share. It is
+        checked with the same rules as the server import and fingerprinted, and the coordinator confirms permission. Learners load the
+        same file on their own devices and plan their catch-up there. When asked, they download a progress file under a code such as
+        L03, never a name, and send it to the coordinator, who combines the files into a class view and a CSV summary.</p>
+      <p><b>Plan:</b> three to five learners for one to two weeks. <b>Measures:</b> time to the first correct task, and questions the
+        coordinator no longer had to answer.</p>
+    </div>
+  </div>
+
+  <h2>10. Ethics, privacy and security</h2>
+  <table>
+    <tr><th style="width:26%">Principle</th><th>How it is enforced</th></tr>
+    <tr><td>Consent first</td><td>Interview material becomes data only after recorded consent; withdrawal is tracked</td></tr>
+    <tr><td>No personal data in notes</td><td>Email addresses and phone numbers are refused at save time</td></tr>
+    <tr><td>Humans decide</td><td>AI suggestions need a person's acceptance; messages to coordinators need the learner's approval and are never sent automatically</td></tr>
+    <tr><td>Transparent AI</td><td>An ethics screen shows the model, what it may and may not do, and the log of AI calls</td></tr>
+    <tr><td>Separated data</td><td>Optional accounts with organisations and roles; every query scoped to the organisation, with cross-tenant denial tests</td></tr>
+    <tr><td>Secure by default</td><td>Content-Security-Policy and security headers, a 1 MB request limit, hashed sessions and a persistent sign-in limit; dependency audits clean</td></tr>
+  </table>
+  <p class="small muted">A STRIDE threat model with the evidence for each control is in docs/SECURITY_AND_SAAS.md in the repository.</p>
+</section>
+
+<section class="chapter">
+  <h2 style="margin-top:0">11. Engineering quality</h2>
+  <table>
+    <tr><th style="width:38%">Check</th><th>Result (1 November 2026)</th></tr>
+    <tr><td>API tests (pytest)</td><td>107 passing, including cross-tenant denial and the AI replay</td></tr>
+    <tr><td>Browser suite (Playwright)</td><td>146 checks in Chromium, WebKit (Safari engine) and Firefox, in CI on every push</td></tr>
+    <tr><td>Browser pilot suite</td><td>19 end-to-end checks on the public build</td></tr>
+    <tr><td>Accessibility (axe, WCAG 2.2 AA)</td><td>112 scans with 0 violations: light and dark, 320 px to 1440 px, and touch</td></tr>
+    <tr><td>Parity</td><td>60 of 60 planner cases and 7 of 7 change descriptions match between Python and the browser</td></tr>
+    <tr><td>Load test</td><td>600 requests at concurrency 12: about 1,100 requests a second, p95 18.7 ms, no errors</td></tr>
+    <tr><td>Containers</td><td>Docker images build and run end to end; both run as non-root users</td></tr>
+  </table>
+
+  <h2>12. Limitations</h2>
+  <ul>
+    <li><b>No participants yet.</b> All data is fictional; no interviews, observations, usability sessions or pilot have taken place.</li>
+    <li><b>Small, fictional AI test set.</b> 59 questions written for the fictional course; a 7-billion-parameter local model limits
+      answer quality.</li>
+    <li><b>Accessibility is automated only.</b> No screen-reader (VoiceOver or NVDA) session and no real-device test yet; phone
+      checks used browser emulation.</li>
+    <li><b>Prototype, not a product.</b> No hosted API, managed database, single sign-on or independent security review; the local
+      database is not encrypted at rest.</li>
+  </ul>
+</section>
+
+<section class="chapter">
+  <h2 style="margin-top:0">13. Recommendation and next steps</h2>
+  <div class="callout"><strong>Recommendation.</strong> Test ResumeLoop with real learners before building more. Approve consented
+    fieldwork and a two-week browser pilot with one coordinator and three to five learners, and judge it on time to the first correct
+    task and questions avoided. If participants prefer an improved LMS checklist, adopt that instead.</div>
+  <h3>Two-week fieldwork sprint (about 10 hours)</h3>
+  <table>
+    <tr><th style="width:15%">When</th><th>Step</th><th style="width:30%">Rubric item it produces</th></tr>
+    <tr><td>Before day 1</td><td>Send faculty the questions on groups, dates, ethics, frameworks and AI disclosure; choose a course that may be shared</td><td>Scope and permission</td></tr>
+    <tr><td>Days 1–2</td><td>Recruit 4 learners and 2 coordinators; record consent states</td><td>Research relevance</td></tr>
+    <tr><td>Days 3–5</td><td>6 interviews and guided tours</td><td>Qualitative evidence</td></tr>
+    <tr><td>Days 6–7</td><td>Thematic analysis; points of view, Hills, journey map</td><td>Data analysis; key issues</td></tr>
+    <tr><td>Day 8</td><td>Co-design session: Crazy 8s, votes, three alternatives scored</td><td>Decision among alternatives</td></tr>
+    <tr><td>Days 9–11</td><td>Freeze the protocol; usability round 1</td><td>Feasibility</td></tr>
+    <tr><td>Days 10–14</td><td>Browser pilot with 3 to 5 learners; collect progress files twice</td><td>Real-use evidence; impact</td></tr>
+    <tr><td>Day 14</td><td>Evidence report, story-mode counts from real data, reflection entries</td><td>Presentation; reflective paper</td></tr>
+  </table>
+  <figure class="band" style="margin-top:6mm">
+    <img src="img/stop-closing.jpg" alt="The ember path fully lit, ending at a glowing stone">
+  </figure>
+</section>
+
+<section class="chapter refs">
+  <h2 style="margin-top:0">References</h2>
+  <p class="small muted" style="text-indent:0;padding-left:0">Checked on 1 November 2026 against the publisher, DOI or library record.</p>
+  <p>Braun, V., &amp; Clarke, V. (2006). Using thematic analysis in psychology. <i>Qualitative Research in Psychology, 3</i>(2), 77–101. https://doi.org/10.1191/1478088706qp063oa</p>
+  <p>Brown, T. (2008, June). Design thinking. <i>Harvard Business Review</i>. https://hbr.org/2008/06/design-thinking</p>
+  <p>IDEO.org. (2015). <i>The field guide to human-centered design</i> (1st ed.). IDEO.org. ISBN 978-0-9914063-1-9.</p>
+  <p>Kara, M., Erdoğdu, F., Kokoç, M., &amp; Cagiltay, K. (2019). Challenges faced by adult learners in online distance education: A literature review. <i>Open Praxis, 11</i>(1), 5–22. https://doi.org/10.5944/openpraxis.11.1.929</p>
+  <p>Liedtka, J. (2018, September–October). Why design thinking works. <i>Harvard Business Review</i>. https://hbr.org/2018/09/why-design-thinking-works</p>
+  <p>Nielsen, J. (2000, March 18). <i>Why you only need to test with 5 users</i>. Nielsen Norman Group. https://www.nngroup.com/articles/why-you-only-need-to-test-with-5-users/</p>
+  <p>Tinto, V. (1975). Dropout from higher education: A theoretical synthesis of recent research. <i>Review of Educational Research, 45</i>(1), 89–125. https://doi.org/10.3102/00346543045001089</p>
+  <p>United Nations. (2015). <i>Sustainable Development Goal 4: Ensure inclusive and equitable quality education and promote lifelong learning opportunities for all</i> (targets 4.3 and 4.4). https://sdgs.un.org/goals/goal4</p>
+  <h3 style="margin-top:8mm">Credits</h3>
+  <p style="text-indent:0;padding-left:0" class="small">Illustrations generated with ChatGPT (OpenAI) for ResumeLoop; they illustrate the process and are not research
+    photos. Screenshots are of the live prototype at resumeloop-demo.vercel.app on fictional data, captured on 1 November 2026.</p>
+</section>
+
+<section class="chapter">
+  <h2 style="margin-top:0">Appendix A: Screens of the live prototype</h2>
+  <div class="two">
+    <figure><img src="../../submissions/screenshots/02-plan.jpg" alt="Plan list view"><figcaption>Plan as an accessible list.</figcaption></figure>
+    <figure><img src="../../submissions/screenshots/03-digest.jpg" alt="What changed"><figcaption>What changed: computed changes with a plain-English summary.</figcaption></figure>
+    <figure><img src="../../submissions/screenshots/07-ideate.jpg" alt="Ideate"><figcaption>Ideate: How might we and a Crazy 8s timer.</figcaption></figure>
+    <figure><img src="../../submissions/screenshots/08-experiments.jpg" alt="Experiment lab"><figcaption>Experiment lab: a protocol ready to freeze.</figcaption></figure>
+    <figure><img src="../../submissions/screenshots/12-pilot.jpg" alt="Browser pilot"><figcaption>Browser pilot workspace for the coordinator.</figcaption></figure>
+    <figure><img src="../../submissions/screenshots/13-course-hub-sdg.jpg" alt="Course hub"><figcaption>Course hub: faculty questions and the SDG canvas.</figcaption></figure>
+    <figure><img src="../../submissions/screenshots/11b-deck-slide.jpg" alt="Deck slide"><figcaption>A slide of the in-app Week 12 deck.</figcaption></figure>
+    <figure><img src="../../submissions/screenshots/14-readings.jpg" alt="Readings and quizzes"><figcaption>Readings and quizzes: class preparation.</figcaption></figure>
+    <figure><img src="../../submissions/screenshots/15-journey-dark.jpg" alt="The journey in dark mode"><figcaption>The journey in the dark theme.</figcaption></figure>
+    <figure><img src="../../submissions/screenshots/09-ethics-ai-eval.jpg" alt="Ethics and governance screen"><figcaption>Ethics and governance: the AI model card and log.</figcaption></figure>
+  </div>
+
+  <h2>Appendix B: Running the project</h2>
+  <p>The public demo needs nothing installed: open resumeloop-demo.vercel.app. To run the full local app with the AI coach, install
+    Python 3.14 and Node 24 or later, then follow the README in the repository (github.com/krish2105/ResumeLoop-term-4). It covers
+    installing the Python and Node dependencies, starting the API and the web app, optionally installing Ollama with qwen2.5:7b and
+    bge-m3, and running the test suites. With Docker, docker compose up --build starts both services with accounts switched on.</p>
+</section>
+
+</body>
+</html>

@@ -37,11 +37,11 @@ the UN Sustainable Development Goals, and ResumeLoop sits under **SDG 4, Quality
 ## See it
 | Journey: your next task, lit | Coach: answers only from the course, with sources |
 |---|---|
-| ![3D road with the next task glowing and the time-budget panel](submissions/screenshots/01-journey-3d.png) | ![Coach answering with cited course passages](submissions/screenshots/04-coach.png) |
+| ![3D road with the next task glowing and the time-budget panel](submissions/screenshots/01-journey-3d.jpg) | ![Coach answering with cited course passages](submissions/screenshots/04-coach.jpg) |
 | **Empathy studio: code real quotes, with consent** | **Week 12 deck, built from live evidence counts** |
-| ![Empathy studio with notes, codes and an empathy map](submissions/screenshots/05-empathy-studio.png) | ![Slide deck with illustrated stops](submissions/screenshots/11-deck.png) |
+| ![Empathy studio with notes, codes and an empathy map](submissions/screenshots/05-empathy-studio.jpg) | ![Slide deck with illustrated stops](submissions/screenshots/11-deck.jpg) |
 | **Browser pilot: run a real course with no server** | **Phone** |
-| ![Coordinator pilot workspace](submissions/screenshots/12-pilot.png) | ![Journey on a phone](submissions/screenshots/16-phone-journey.png) |
+| ![Coordinator pilot workspace](submissions/screenshots/12-pilot.jpg) | ![Journey on a phone](submissions/screenshots/16-phone-journey.jpg) |
 
 ## What it does
 **For a returning learner**

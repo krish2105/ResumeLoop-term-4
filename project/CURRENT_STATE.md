@@ -2,6 +2,10 @@
 
 Last updated: **23 October 2026**. User requested a complete cross-account continuation package and publication to `https://github.com/krish2105/ResumeLoop-term-4`. **`PROGRESS.md`** remains the status/run authority; **`NEW_ACCOUNT_HANDOFF.md`** and **`prompts/10_NEW_ACCOUNT_HANDOFF.md`** provide the transfer checklist and paste-ready prompt.
 
+## 1 November 2026 (evening) — illustrations and submission pack (latest)
+
+**Done:** illustrations across the app, link preview and icons; `submissions/` holds the 18-slide PPTX, the 17-page PDF report and 18 live-site screenshots; README rewritten. **Open:** GitHub still shows a cached "claude" contributor (history is clean; owner runs the branch-rename refresh); iPhone Simulator needs Xcode; real fieldwork.
+
 ## 1 November 2026 (later) — browser pilot and academic plan (latest)
 
 **VERIFIED (commands run):** `scripts/pilot-smoke.js` against a `NEXT_PUBLIC_DEMO_MODE=1` build on port 3001 → **19/19 in Chromium and in WebKit**, no console errors (refuses a cyclic, unknown-source course file; needs the permission tick; fingerprint; empty pilot progress that persists; computed digest of 7 changes; coach cites S3-p2 for the quiz date and declines an off-topic question; learner code refuses a name; progress file has no notes; roll-up shows two learners and refuses a file for another course; CSV; leaving the pilot restores the fictional course; no overflow at 320px). axe WCAG 2.2 AA on 11 pilot scans, light and dark → 0 violations. Live build: smoke 146/146, axe 112 scans 0 violations. `npm run test:parity` → 60/60 planner cases and 7/7 change descriptions match Python. pytest 107 passed. References in `docs/FRAMEWORK.md` checked against publishers, DOIs or library records.

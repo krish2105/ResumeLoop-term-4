@@ -125,3 +125,13 @@ Initial Git publication completed: root commit `29dfb5c6e20659ced07cf12736a6ddc1
 
 **Verification:** pilot smoke 19/19 in Chromium and WebKit; axe clean on pilot screens; live smoke 146/146; parity and pytest green. Professor ≈ 55 and MVP ≈ 86 until fieldwork and a real pilot exist.
 
+### 2026-11-01 (evening) — Illustrations, submission pack, README
+
+**User steering:** add the generated images; remove Claude from GitHub contributors; bigger pictures; remove the local-only screens and sidebar box from the live site; professional PPTX, README and PDF report in `submissions/`.
+
+**Work:** 18 ChatGPT illustrations optimised to WebP and placed (deck, page headers, sign-in, pilot, empty plan, no-3D fallback, 404); link-preview card and app icons; larger header art; Imports and Review queue hidden on the public site; sidebar box removed; slide text moved onto its own panel after screenshots showed it covering the art; 18 live-site screenshots; README rewritten; 18-slide deck (pptxgenjs, validated, rendered and reviewed); 17-page report (HTML printed to PDF, reviewed page by page, 6 MB).
+
+**Contributor list:** history has 0 Claude authors or co-author lines and the contributors API lists only krish2105; the sidebar entry is GitHub's cache. The fix (rename the default branch away and back) was blocked by this session's safety check; the owner must run it.
+
+**Verification:** smoke 146/146 (Chromium, WebKit), pilot 19/19, axe 112 scans 0 violations, pytest 107; deck validate.py passed.
+
