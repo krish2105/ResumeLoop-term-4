@@ -79,5 +79,10 @@ jobs:
           npx --yes --package @playwright/cli playwright-cli --session ci open http://127.0.0.1:3000
           npx --yes --package @playwright/cli playwright-cli --session ci run-code "$(cat scripts/browser-smoke.js)" | tee $RUNNER_TEMP/smoke.txt
           grep -q '"kind":"SYNTHETIC ENGINEERING VERIFICATION"' $RUNNER_TEMP/smoke.txt
+      - name: Accessibility scan (axe, 24 routes x light/dark x 1440/320)
+        run: |
+          npm install --prefix $RUNNER_TEMP/axe axe-core@4 >/dev/null
+          npx --yes --package @playwright/cli playwright-cli --session ci run-code "$(sed "s#AXE_PATH#$RUNNER_TEMP/axe/node_modules/axe-core/axe.min.js#" scripts/accessibility-smoke.js)" | tee $RUNNER_TEMP/axe.txt
+          grep -q '"scans_with_violations":0' $RUNNER_TEMP/axe.txt
       - if: failure()
         run: tail -50 $RUNNER_TEMP/api.log $RUNNER_TEMP/web.log || true

@@ -1,0 +1,10 @@
+{
+ "base": "http://127.0.0.1:8014",
+ "requests": 600,
+ "concurrency": 12,
+ "wall_s": 0.53,
+ "rps": 1122.7,
+ "p50_ms": 8.4,
+ "p95_ms": 18.7,
+ "errors": 0
+}

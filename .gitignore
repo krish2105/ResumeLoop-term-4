@@ -57,3 +57,7 @@ evidence/2026-10-31/*
 !evidence/eval/
 evidence/eval/*
 !evidence/eval/coach-eval.json
+backups/
+!evidence/2026-11-01/
+evidence/2026-11-01/*
+!evidence/2026-11-01/*.json

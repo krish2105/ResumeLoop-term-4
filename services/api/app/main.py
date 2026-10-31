@@ -156,6 +156,10 @@ from .assist import router as assist_router  # noqa: E402  (routers import conne
 from .learning import router as learning_router  # noqa: E402
 from .studio import examples_router, router as studio_router  # noqa: E402
 
+from .ops import access_middleware, router as ops_router  # noqa: E402
+
+app.middleware('http')(access_middleware)
+app.include_router(ops_router)
 app.include_router(learning_router)
 app.include_router(assist_router)
 app.include_router(examples_router)

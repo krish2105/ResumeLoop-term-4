@@ -28,7 +28,9 @@ function ReviewQueue() {
     setRows(data); setSelected(cur => data.some(x => x.id === cur) ? cur : (data[0]?.id || ''));
   };
   useEffect(() => { reload().catch(e => setMsg('API is unavailable: ' + String(e))).finally(() => setLoading(false)); }, []);
-  useEffect(() => { setNote(''); }, [selected]);
+  // Review-note drafts autosave per record, so switching records never carries a note across.
+  useEffect(() => { try { setNote(selected ? localStorage.getItem('rl-review-draft-' + selected) || '' : ''); } catch { setNote(''); } }, [selected]);
+  const editNote = (text: string) => { setNote(text); try { if (selected) localStorage.setItem('rl-review-draft-' + selected, text); } catch { /* ignore */ } };
   const active = rows.find(r => r.id === selected) || null;
   const filtered = useMemo(() => rows.filter(r => (status === 'all' || r.status === status) && (r.title + ' ' + r.subtitle + ' ' + r.id).toLowerCase().includes(search.toLowerCase())), [rows, status, search]);
   const save = async () => {
@@ -37,7 +39,7 @@ function ReviewQueue() {
     try {
       const r = await fetch(API + '/api/demo/reviews', {method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({record_id: active.id, status: reviewStatus, note: note.trim()})});
       if (!r.ok) throw Error(await r.text());
-      await reload(); setNote(''); setMsg('Review saved to the local database.');
+      await reload(); setNote(''); try { localStorage.removeItem('rl-review-draft-' + active.id); } catch { /* ignore */ } setMsg('Review saved to the local database.');
     } catch (e) { setMsg('Review failed: ' + String(e)); } finally { setSaving(false); }
   };
   return <>
@@ -58,7 +60,7 @@ function ReviewQueue() {
         <div className="evidence">{active.evidence}</div>
         <div className="meta"><span>Record ID</span><code>{active.id}</code></div><div className="meta"><span>Status</span><strong>{active.status.replaceAll('-', ' ')}</strong></div>
         <div className="review"><label htmlFor="reviewstatus">Disposition</label><select id="reviewstatus" value={reviewStatus} onChange={e => setReviewStatus(e.target.value)}><option value="approved">Approved</option><option value="needs-review">Needs review</option><option value="blocked">Blocked</option><option value="rejected">Rejected</option></select>
-          <label htmlFor="reviewnote">Review rationale</label><textarea maxLength={2000} id="reviewnote" value={note} onChange={e => setNote(e.target.value)} placeholder="Explain why this is the correct disposition…" rows={4} />
+          <label htmlFor="reviewnote">Review rationale</label><textarea maxLength={2000} id="reviewnote" value={note} onChange={e => editNote(e.target.value)} placeholder="Explain why this is the correct disposition…" rows={4} />
           <button className="primaryBtn" disabled={saving || note.trim().length < 3} onClick={save}>{saving ? 'Saving…' : 'Save review'}</button></div>
       </aside>}
     </div>
