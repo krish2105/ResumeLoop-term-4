@@ -377,7 +377,10 @@ async (page) => {
     for (const width of [320, 768, 1440]) {
       await page.setViewportSize({width, height: 900});
       await go(route); await settle();
-      check(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1), `No page overflow on ${route} at ${width}px`);
+      const wide = await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1 ? '' :
+        [...document.querySelectorAll('body *')].filter(e => e.getBoundingClientRect().right > innerWidth + 1 && !e.closest('.tableWrap,.journeyGrid,.affinity'))
+          .slice(0, 3).map(e => e.tagName + '.' + e.className + ' right=' + Math.round(e.getBoundingClientRect().right)).join(' | ') || 'positioned element');
+      check(!wide, `No page overflow on ${route} at ${width}px${wide ? ' (' + wide + ')' : ''}`);
     }
   }
   await page.setViewportSize({width: 1440, height: 1000});

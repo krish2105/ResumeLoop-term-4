@@ -133,3 +133,8 @@ button,a.outlineBtn,a.primaryBtn{min-height:40px}
  body,.panel,.report{background:#fff!important;color:#000!important;box-shadow:none!important;border:0!important}
  .report section{break-inside:avoid}
 }
+/* Narrow-screen hardening for wider fallback fonts (found by the Linux CI browser run on /course) */
+select,input,textarea{max-width:100%}
+.checkList li{grid-template-columns:auto minmax(0,1fr) minmax(0,auto)}.checkList li>*{min-width:0}
+.timeline .sectionHead,.sectionHead{flex-wrap:wrap}.timeline li>*{min-width:0}
+@media(max-width:480px){.checkList li{grid-template-columns:minmax(0,1fr)}.checkList li select{width:100%}}
