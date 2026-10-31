@@ -20,6 +20,7 @@ export default function ReflectPage() {
   const entries = [...s.of('reflections')].sort((a, b) => (a.entry_date < b.entry_date ? 1 : -1));
   const [d, setD] = useState<Draft>(empty);
   const [restored, setRestored] = useState(false);
+  const [picked, setPicked] = useState<string[]>([]);
   useEffect(() => { try { const x = localStorage.getItem('rl-reflection-draft'); if (x) { setD(JSON.parse(x)); setRestored(true); } } catch { /* ignore */ } }, []);
   useEffect(() => { try { localStorage.setItem('rl-reflection-draft', JSON.stringify(d)); } catch { /* ignore */ } }, [d]);
   const total = words(d.explanation) + words(d.organisation_value) + words(d.example);
@@ -51,6 +52,19 @@ export default function ReflectPage() {
       <p className="muted"><span className="mono">{total}</span> words in this entry. The outline does not set a length; check with faculty.</p>
       <button className="primaryBtn" onClick={save} disabled={d.concept.trim().length < 3}>Save entry</button>
     </section>
+    {entries.length > 0 && <section className="panel sectionGap" aria-labelledby="asm-h">
+      <h2 id="asm-h">Assemble the reflective paper</h2>
+      <p>Pick the entries to build on. Your own words are arranged under the outline's three headings, oldest first, with an appendix of evidence you can cite. Nothing is rewritten; edit the result yourself.</p>
+      <fieldset className="consent"><legend>Entries to include</legend>{entries.map(e => <label key={e.id} className="checkRow"><input type="checkbox" checked={picked.includes(e.id)}
+        onChange={x => setPicked(p => x.target.checked ? [...p, e.id] : p.filter(i => i !== e.id))} /> <span className="mono">{e.entry_date}</span> {e.concept}</label>)}</fieldset>
+      <button className="primaryBtn" disabled={!picked.length} onClick={() => {
+        const chosen = entries.filter(e => picked.includes(e.id)).reverse();
+        const part = (k: string) => chosen.filter(e => e[k]).map(e => `*${e.concept} (${e.entry_date})*\n\n${e[k]}`).join('\n\n');
+        const counts = ['notes', 'observations', 'themes', 'povs', 'hills', 'prototypes', 'sessions'].map(k => `${s.of(k).filter(i => !i.synthetic).length} ${k}`).join(', ');
+        const md = `# Reflective paper (draft from my journal)\n\n## 1. The concept, in my own words\n\n${part('explanation')}\n\n## 2. How it helps an organisation achieve its objectives\n\n${part('organisation_value')}\n\n## 3. A detailed practical example\n\n${part('example')}\n\n## Appendix: evidence I can cite\n\n${counts}. AI assistance disclosed per entry: ${chosen.map(e => `${e.entry_date} ${e.ai_assistance}`).join('; ')}.\n`;
+        const url = URL.createObjectURL(new Blob([md], {type: 'text/markdown'})); const a = document.createElement('a'); a.href = url; a.download = 'reflective-paper-draft.md'; a.click(); URL.revokeObjectURL(url);
+      }}>Download paper draft ({picked.length} entries)</button>
+    </section>}
     <section className="sectionGap" aria-label="Entries">{entries.map(e => <article key={e.id} className="entry sectionGap">
       <div className="sectionHead"><div><span className="eyebrow mono">{e.entry_date}</span><h3>{e.concept}</h3></div>
         <button className="textBtn" onClick={() => s.run(() => studio.remove('reflections', e.id), 'Entry deleted.')}>Delete</button></div>

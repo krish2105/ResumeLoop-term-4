@@ -59,7 +59,9 @@ function Experiment({exp, sessions, run}: {exp: Item; sessions: Item[]; run: (fn
             <td>{fmtNum(t[k].medianSeconds)} ({fmtNum(t[k].min)}–{fmtNum(t[k].max)})</td><td>{fmtNum(t[k].medianWrong, 1)}</td><td>{fmtNum(t[k].medianEase, 1)}</td></tr>))}
         </tbody></table></div>
         <TimeChart rows={summary.perTask} />
-        <ul>{summary.perTask.map(t => <li key={t.task}>{t.name}: {t.pairedN} paired participant(s), median B − A = {fmtNum(t.medianDifference)} s{t.medianDifference !== null ? (t.medianDifference < 0 ? ' (B faster)' : t.medianDifference > 0 ? ' (A faster)' : '') : ''}</li>)}</ul>
+        <ul>{summary.perTask.map(t => <li key={t.task}>{t.name}: {t.pairedN} paired participant(s), median B − A = {fmtNum(t.medianDifference)} s{t.medianDifference !== null ? (t.medianDifference < 0 ? ' (B faster)' : t.medianDifference > 0 ? ' (A faster)' : '') : ''}
+          {t.sign.n > 0 && <> · {t.sign.bFaster} of {t.sign.n} faster with B · exact sign test p = <span className="mono">{t.sign.p!.toFixed(3)}</span></>}</li>)}</ul>
+        <p className="muted">The sign test only asks whether more people were faster with one condition. With fewer than about 8 pairs it cannot reach p &lt; 0.05 whatever happens, so report it as formative and lead with medians, ranges and failures.</p>
         <h3>Sessions</h3><ul className="queueList">{sessions.map(x => <li key={x.id}><strong>{x.participant_code}</strong> · order {x.order}{x.synthetic ? ' · fictional' : ''} · {x.results.length} results <button className="textBtn" onClick={() => run(() => studio.remove('sessions', x.id), 'Session removed.')}>Remove</button>{x.notes && <p>{x.notes}</p>}</li>)}</ul>
       </>}
     </section>

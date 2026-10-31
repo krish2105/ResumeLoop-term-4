@@ -117,3 +117,19 @@ button,a.outlineBtn,a.primaryBtn{min-height:40px}
 .momentList{list-style:none;padding:0;display:grid;gap:6px;max-height:260px;overflow:auto;margin:10px 0}
 .momentList li{display:flex;gap:8px;align-items:baseline;font-size:13px;border-bottom:1px solid var(--border);padding:4px 0}
 .momentList .textBtn{margin-left:auto;min-height:28px;padding:0 6px}
+.affinity{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(min(240px,80vw),1fr);gap:12px;overflow-x:auto;padding-bottom:8px;position:relative}
+.affCol{background:var(--raised);border-radius:14px;padding:10px;min-height:160px;display:grid;gap:8px;align-content:start;border:2px dashed transparent;position:relative}
+.affCol.over{border-color:var(--accent)}
+.affCol h3{margin:0;font-size:14px;display:flex;justify-content:space-between;align-items:center}
+.affCard{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:8px;display:grid;gap:6px;cursor:grab;min-width:0}
+.affCard:active{cursor:grabbing}.affCard select{font-size:12px;padding:4px 6px}
+.traceTree{list-style:none;padding:0;display:grid;gap:12px}.traceTree>li{border-left:3px solid var(--accent);padding-left:10px}
+.traceTree ul{padding-left:16px;font-size:12px;line-height:1.6}.povLine{font-size:12px;color:var(--accentText)!important}
+.report section{padding:10px 0;border-bottom:1px solid var(--border)}.report section:last-child{border-bottom:0}
+.report h2{font-size:17px;margin:4px 0 8px}.report ul{margin:0;padding-left:20px;line-height:1.65}
+@media print{
+ .sidebar,.splitter,.topbar,.noPrint,.hero .detailActions,.skipLink{display:none!important}
+ .appShell{display:block}.content{padding:0;max-width:none}
+ body,.panel,.report{background:#fff!important;color:#000!important;box-shadow:none!important;border:0!important}
+ .report section{break-inside:avoid}
+}
