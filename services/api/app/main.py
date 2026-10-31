@@ -151,6 +151,8 @@ def import_demo(x: CSVImport):
     return {**receipt, 'replayed': False}
 
 
-from .learning import router as learning_router  # noqa: E402  (routers import connect lazily)
+from .assist import router as assist_router  # noqa: E402  (routers import connect lazily)
+from .learning import router as learning_router  # noqa: E402
 
 app.include_router(learning_router)
+app.include_router(assist_router)
