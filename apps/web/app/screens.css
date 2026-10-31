@@ -140,3 +140,19 @@ select,input,textarea{max-width:100%}
 @media(max-width:480px){.checkList li{grid-template-columns:minmax(0,1fr)}.checkList li select{width:100%}}
 .learnerSelect{max-width:160px}.fileBtn{position:relative;overflow:hidden}.fileBtn input{position:absolute;inset:0;opacity:0;cursor:pointer}
 @media(max-width:760px){.learnerSelect{max-width:110px}}
+/* Slide deck */
+.deckWrap{display:grid;gap:20px;justify-items:center}
+.deckBar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;width:100%}
+.slide{width:min(100%,1000px);aspect-ratio:16/9;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:clamp(20px,4vw,56px);display:grid;align-content:start;gap:12px;box-shadow:var(--shadow);position:relative;overflow:hidden}
+.slide h1{font-family:var(--font-display),sans-serif;font-size:clamp(32px,6vw,72px);margin:0;letter-spacing:-.04em}
+.slide h2{font-family:var(--font-display),sans-serif;font-size:clamp(22px,3.6vw,42px);margin:0;letter-spacing:-.03em}
+.slide.cover{align-content:center;background:linear-gradient(135deg,var(--surface),var(--wash))}
+.slideLead{font-size:clamp(14px,1.8vw,22px);color:var(--text)!important;max-width:40ch;margin:0}
+.slideFacts{font-size:clamp(13px,1.5vw,18px);line-height:1.6;padding-left:22px;margin:0}
+.slideHead{display:flex;justify-content:space-between;align-items:center}
+.speaker{position:absolute;left:0;right:0;bottom:0;background:var(--raised);padding:10px 20px;font-size:12px;border-top:1px dashed var(--controlBorder)}.speaker p{margin:2px 0 0}
+@media print{
+ @page{size:landscape;margin:0}
+ .deckWrap{gap:0}.slide{width:100vw;height:100vh;aspect-ratio:auto;border:0;border-radius:0;box-shadow:none;break-after:page;page-break-after:always}
+}
+.vivaList{display:grid;gap:12px;padding-left:20px}.vivaList li{display:grid;gap:6px}.vivaList textarea{min-height:56px}

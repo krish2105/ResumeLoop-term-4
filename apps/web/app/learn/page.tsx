@@ -3,6 +3,7 @@ import {useMemo, useState} from 'react';
 import {PageHead} from '@/components/AppShell';
 import {QuickForm} from '@/components/QuickForm';
 import {Msg, useStudio} from '@/components/StudioBits';
+import {VivaPractice} from '@/components/VivaPractice';
 import {studio, type Item} from '@/lib/studio';
 
 const today = () => new Date().toISOString().slice(0, 10);
@@ -80,5 +81,6 @@ export default function LearnPage() {
       </li>)}</ul>
       {readings.length === 0 && <p className="empty">Load the reading list to start tracking.</p>}
     </section>
+    <VivaPractice run={s.run} />
   </>;
 }

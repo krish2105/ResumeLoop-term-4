@@ -1,6 +1,7 @@
 "use client";
 import {PageHead} from '@/components/AppShell';
 import {QuickForm} from '@/components/QuickForm';
+import {FacultyQuestions} from '@/components/FacultyQuestions';
 import {Msg, useStudio} from '@/components/StudioBits';
 import {studio, type Item} from '@/lib/studio';
 
@@ -21,7 +22,8 @@ export default function CoursePage() {
       {milestones.length === 0 && <button className="primaryBtn" onClick={() => s.run(() => studio.seedCourseHub(), 'Loaded the assessment components and rubric criteria.')}>Load outline structure</button>}
     </PageHead>
     <Msg text={s.msg} />
-    <div className="twoCol">
+    <FacultyQuestions />
+    <div className="twoCol sectionGap">
       <section className="panel" aria-labelledby="ms-h">
         <h2 id="ms-h">Assessment components</h2>
         <p>Dates stay unverified: the outline's two schedules disagree. Mark a date verified only after faculty confirm it.</p>
