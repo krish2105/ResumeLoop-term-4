@@ -93,7 +93,8 @@ def build_plan(actions: list[CourseAction], budget_minutes: int, completed: set[
     warnings = []
     for a in chosen:
         if a.due_status in ('unverified', 'conflict'):
-            warnings.append(f'{a.title}: deadline is {a.due_status}; check with the coordinator')
+            problem = 'is not verified' if a.due_status == 'unverified' else 'differs between sources'
+            warnings.append(f'{a.title}: the deadline {problem}; check with the coordinator')
     for a in actions:
         if a.id not in done and a.due_status == 'conflict' and a.id not in picked:
             warnings.append(f'{a.title}: sources disagree on the deadline')

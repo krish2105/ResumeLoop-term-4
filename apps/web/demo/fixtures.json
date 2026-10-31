@@ -1,0 +1,2527 @@
+{
+ "generated_by": "scripts/export_demo_fixtures.py",
+ "notice": "FICTIONAL demo data. No real learners, deadlines or participants.",
+ "courses": {
+  "v1": {
+   "course": "Fictional demo course: Human-Centred Design Sprint",
+   "notice": "FICTIONAL. Not the MAIB outline, not a real timetable. Created for ResumeLoop demonstrations only.",
+   "source_owner": "ResumeLoop demo (fictional coordinator)",
+   "timezone": "Asia/Dubai",
+   "schema_version": "course-actions/v1",
+   "versions": [
+    "v1",
+    "v2"
+   ],
+   "version": "v1",
+   "published_at": "2026-11-02T09:00:00+04:00",
+   "actions": [
+    {
+     "id": "s1-recap",
+     "title": "Session 1 recap: what design thinking is",
+     "session": 1,
+     "kind": "recap",
+     "minutes": 15,
+     "prerequisites": [],
+     "due": null,
+     "due_status": "none",
+     "source_ref": "S1"
+    },
+    {
+     "id": "s1-reading",
+     "title": "Read: observation methods primer",
+     "session": 1,
+     "kind": "reading",
+     "minutes": 20,
+     "prerequisites": [
+      "s1-recap"
+     ],
+     "due": null,
+     "due_status": "none",
+     "source_ref": "S1"
+    },
+    {
+     "id": "s2-recap",
+     "title": "Session 2 recap: observing users",
+     "session": 2,
+     "kind": "recap",
+     "minutes": 15,
+     "prerequisites": [
+      "s1-recap"
+     ],
+     "due": null,
+     "due_status": "none",
+     "source_ref": "S2"
+    },
+    {
+     "id": "s2-exercise",
+     "title": "Exercise: write five observation notes",
+     "session": 2,
+     "kind": "exercise",
+     "minutes": 30,
+     "prerequisites": [
+      "s2-recap",
+      "s1-reading"
+     ],
+     "due": null,
+     "due_status": "none",
+     "source_ref": "S2"
+    },
+    {
+     "id": "s3-recap",
+     "title": "Session 3 recap: empathy mapping",
+     "session": 3,
+     "kind": "recap",
+     "minutes": 15,
+     "prerequisites": [
+      "s2-recap"
+     ],
+     "due": null,
+     "due_status": "none",
+     "source_ref": "S3"
+    },
+    {
+     "id": "s3-quiz",
+     "title": "Reading check quiz",
+     "session": 3,
+     "kind": "assessment",
+     "minutes": 10,
+     "prerequisites": [
+      "s1-reading"
+     ],
+     "due": "2026-11-24T18:00:00+04:00",
+     "due_status": "verified",
+     "source_ref": "S3"
+    },
+    {
+     "id": "s3-exercise",
+     "title": "Exercise: build an empathy map",
+     "session": 3,
+     "kind": "exercise",
+     "minutes": 35,
+     "prerequisites": [
+      "s3-recap",
+      "s2-exercise"
+     ],
+     "due": null,
+     "due_status": "none",
+     "source_ref": "S3"
+    },
+    {
+     "id": "s4-recap",
+     "title": "Session 4 recap: problem framing",
+     "session": 4,
+     "kind": "recap",
+     "minutes": 15,
+     "prerequisites": [
+      "s3-recap"
+     ],
+     "due": null,
+     "due_status": "none",
+     "source_ref": "S4"
+    },
+    {
+     "id": "s4-exercise",
+     "title": "Exercise: write a point-of-view statement",
+     "session": 4,
+     "kind": "exercise",
+     "minutes": 25,
+     "prerequisites": [
+      "s4-recap",
+      "s3-exercise"
+     ],
+     "due": null,
+     "due_status": "none",
+     "source_ref": "S4"
+    },
+    {
+     "id": "s5-recap",
+     "title": "Session 5 recap: how might we",
+     "session": 5,
+     "kind": "recap",
+     "minutes": 15,
+     "prerequisites": [
+      "s4-recap"
+     ],
+     "due": null,
+     "due_status": "none",
+     "source_ref": "S5"
+    },
+    {
+     "id": "s5-group",
+     "title": "Group task: prepare the HMW workshop",
+     "session": 5,
+     "kind": "assessment",
+     "minutes": 40,
+     "prerequisites": [
+      "s5-recap",
+      "s4-exercise"
+     ],
+     "due": "2026-12-08T18:00:00+04:00",
+     "due_status": "unverified",
+     "source_ref": "S5"
+    },
+    {
+     "id": "s6-recap",
+     "title": "Session 6 recap: envisioning futures",
+     "session": 6,
+     "kind": "recap",
+     "minutes": 15,
+     "prerequisites": [
+      "s5-recap"
+     ],
+     "due": null,
+     "due_status": "none",
+     "source_ref": "S6"
+    },
+    {
+     "id": "s6-reflection",
+     "title": "Reflection log entry",
+     "session": 6,
+     "kind": "reflection",
+     "minutes": 20,
+     "prerequisites": [
+      "s6-recap"
+     ],
+     "due": null,
+     "due_status": "none",
+     "source_ref": "S6"
+    }
+   ],
+   "sources": [
+    {
+     "id": "S1",
+     "session": 1,
+     "title": "Session 1 notes: what design thinking is",
+     "text": "Design thinking is a human-centred way of solving problems. Teams start by understanding people before proposing solutions. The process moves through empathise, define, ideate, prototype and test, and teams often loop back when they learn something new.\n\nThe observation methods primer explains how to watch people doing a task in their own setting. Note what they do, what tools they use and where they pause. Record what you saw separately from what you think it means.\n\nThe session 1 recap takes about fifteen minutes. The primer reading takes about twenty minutes and must be read before the session 2 exercise and the reading check quiz."
+    },
+    {
+     "id": "S2",
+     "session": 2,
+     "title": "Session 2 notes: observing users",
+     "text": "Session 2 practised observation. Extreme users, people with very high or very low use of a product, often reveal needs that average users hide. Analogies from other industries help teams notice patterns.\n\nThe exercise asks for five observation notes. Each note should record time, place, action and a direct quote if the person agreed to be quoted. Do not record names. The exercise needs the session 2 recap and the observation primer first, and takes about thirty minutes."
+    },
+    {
+     "id": "S3",
+     "session": 3,
+     "title": "Session 3 notes: empathy mapping",
+     "text": "An empathy map has four areas: says, does, thinks and feels. Says and does come from evidence you collected. Thinks and feels are interpretations and must be labelled as such, with the evidence that supports them.\n\nThe empathy map exercise takes about thirty-five minutes and builds on your observation notes from session 2. The reading check quiz covers the observation primer. In version 1 of the course page the quiz was due on 24 November at 18:00 Dubai time. Version 2 lists 26 November, and the coordinator has not yet confirmed which date is correct."
+    },
+    {
+     "id": "S4",
+     "session": 4,
+     "title": "Session 4 notes: problem framing",
+     "text": "Problem framing turns research into a clear point-of-view statement: a user, a need and an insight. A good statement is specific enough to guide ideas but does not contain a solution.\n\nVersion 2 of the course adds a short framing case study reading of about fifteen minutes. The point-of-view exercise now takes about thirty minutes instead of twenty-five. It needs the session 4 recap and your empathy map."
+    },
+    {
+     "id": "S5",
+     "session": 5,
+     "title": "Session 5 notes: how might we",
+     "text": "How might we questions reframe a point-of-view statement as an opportunity. They should be broad enough to allow many ideas and narrow enough to be useful. Teams generate many questions, then vote on the most promising.\n\nThe group task is to prepare the HMW workshop. It takes about forty minutes. The course page lists 8 December, but this date has not been verified by the coordinator. In version 2 the task also needs the framing case study reading."
+    },
+    {
+     "id": "S6",
+     "session": 6,
+     "title": "Session 6 notes: envisioning futures",
+     "text": "Envisioning uses hill statements to describe a future outcome for a specific user, written as who, what and wow. Future-state journey maps show how the experience should feel after the change.\n\nVersion 1 asked for a short reflection log entry. Version 2 replaces it with a reflection journal in a new format, which takes about twenty-five minutes."
+    }
+   ],
+   "source_type": "SYNTHETIC"
+  },
+  "v2": {
+   "course": "Fictional demo course: Human-Centred Design Sprint",
+   "notice": "FICTIONAL. Not the MAIB outline, not a real timetable. Created for ResumeLoop demonstrations only.",
+   "source_owner": "ResumeLoop demo (fictional coordinator)",
+   "timezone": "Asia/Dubai",
+   "schema_version": "course-actions/v1",
+   "versions": [
+    "v1",
+    "v2"
+   ],
+   "version": "v2",
+   "published_at": "2026-11-16T09:00:00+04:00",
+   "actions": [
+    {
+     "id": "s1-recap",
+     "title": "Session 1 recap: what design thinking is",
+     "session": 1,
+     "kind": "recap",
+     "minutes": 15,
+     "prerequisites": [],
+     "due": null,
+     "due_status": "none",
+     "source_ref": "S1"
+    },
+    {
+     "id": "s1-reading",
+     "title": "Read: observation methods primer",
+     "session": 1,
+     "kind": "reading",
+     "minutes": 20,
+     "prerequisites": [
+      "s1-recap"
+     ],
+     "due": null,
+     "due_status": "none",
+     "source_ref": "S1"
+    },
+    {
+     "id": "s2-recap",
+     "title": "Session 2 recap: observing users",
+     "session": 2,
+     "kind": "recap",
+     "minutes": 15,
+     "prerequisites": [
+      "s1-recap"
+     ],
+     "due": null,
+     "due_status": "none",
+     "source_ref": "S2"
+    },
+    {
+     "id": "s2-exercise",
+     "title": "Exercise: write five observation notes",
+     "session": 2,
+     "kind": "exercise",
+     "minutes": 30,
+     "prerequisites": [
+      "s2-recap",
+      "s1-reading"
+     ],
+     "due": null,
+     "due_status": "none",
+     "source_ref": "S2"
+    },
+    {
+     "id": "s3-recap",
+     "title": "Session 3 recap: empathy mapping",
+     "session": 3,
+     "kind": "recap",
+     "minutes": 15,
+     "prerequisites": [
+      "s2-recap"
+     ],
+     "due": null,
+     "due_status": "none",
+     "source_ref": "S3"
+    },
+    {
+     "id": "s3-quiz",
+     "title": "Reading check quiz",
+     "session": 3,
+     "kind": "assessment",
+     "minutes": 10,
+     "prerequisites": [
+      "s1-reading"
+     ],
+     "due": "2026-11-26T18:00:00+04:00",
+     "due_status": "conflict",
+     "source_ref": "S3"
+    },
+    {
+     "id": "s3-exercise",
+     "title": "Exercise: build an empathy map",
+     "session": 3,
+     "kind": "exercise",
+     "minutes": 35,
+     "prerequisites": [
+      "s3-recap",
+      "s2-exercise"
+     ],
+     "due": null,
+     "due_status": "none",
+     "source_ref": "S3"
+    },
+    {
+     "id": "s4-recap",
+     "title": "Session 4 recap: problem framing",
+     "session": 4,
+     "kind": "recap",
+     "minutes": 15,
+     "prerequisites": [
+      "s3-recap"
+     ],
+     "due": null,
+     "due_status": "none",
+     "source_ref": "S4"
+    },
+    {
+     "id": "s4-reading",
+     "title": "Read: framing case study",
+     "session": 4,
+     "kind": "reading",
+     "minutes": 15,
+     "prerequisites": [
+      "s4-recap"
+     ],
+     "due": null,
+     "due_status": "none",
+     "source_ref": "S4"
+    },
+    {
+     "id": "s4-exercise",
+     "title": "Exercise: write a point-of-view statement",
+     "session": 4,
+     "kind": "exercise",
+     "minutes": 30,
+     "prerequisites": [
+      "s4-recap",
+      "s3-exercise"
+     ],
+     "due": null,
+     "due_status": "none",
+     "source_ref": "S4"
+    },
+    {
+     "id": "s5-recap",
+     "title": "Session 5 recap: how might we",
+     "session": 5,
+     "kind": "recap",
+     "minutes": 15,
+     "prerequisites": [
+      "s4-recap"
+     ],
+     "due": null,
+     "due_status": "none",
+     "source_ref": "S5"
+    },
+    {
+     "id": "s5-group",
+     "title": "Group task: prepare the HMW workshop",
+     "session": 5,
+     "kind": "assessment",
+     "minutes": 40,
+     "prerequisites": [
+      "s5-recap",
+      "s4-exercise",
+      "s4-reading"
+     ],
+     "due": "2026-12-08T18:00:00+04:00",
+     "due_status": "unverified",
+     "source_ref": "S5"
+    },
+    {
+     "id": "s6-recap",
+     "title": "Session 6 recap: envisioning futures",
+     "session": 6,
+     "kind": "recap",
+     "minutes": 15,
+     "prerequisites": [
+      "s5-recap"
+     ],
+     "due": null,
+     "due_status": "none",
+     "source_ref": "S6"
+    },
+    {
+     "id": "s6-journal",
+     "title": "Reflection journal (new format)",
+     "session": 6,
+     "kind": "reflection",
+     "minutes": 25,
+     "prerequisites": [
+      "s6-recap"
+     ],
+     "due": null,
+     "due_status": "none",
+     "source_ref": "S6"
+    }
+   ],
+   "sources": [
+    {
+     "id": "S1",
+     "session": 1,
+     "title": "Session 1 notes: what design thinking is",
+     "text": "Design thinking is a human-centred way of solving problems. Teams start by understanding people before proposing solutions. The process moves through empathise, define, ideate, prototype and test, and teams often loop back when they learn something new.\n\nThe observation methods primer explains how to watch people doing a task in their own setting. Note what they do, what tools they use and where they pause. Record what you saw separately from what you think it means.\n\nThe session 1 recap takes about fifteen minutes. The primer reading takes about twenty minutes and must be read before the session 2 exercise and the reading check quiz."
+    },
+    {
+     "id": "S2",
+     "session": 2,
+     "title": "Session 2 notes: observing users",
+     "text": "Session 2 practised observation. Extreme users, people with very high or very low use of a product, often reveal needs that average users hide. Analogies from other industries help teams notice patterns.\n\nThe exercise asks for five observation notes. Each note should record time, place, action and a direct quote if the person agreed to be quoted. Do not record names. The exercise needs the session 2 recap and the observation primer first, and takes about thirty minutes."
+    },
+    {
+     "id": "S3",
+     "session": 3,
+     "title": "Session 3 notes: empathy mapping",
+     "text": "An empathy map has four areas: says, does, thinks and feels. Says and does come from evidence you collected. Thinks and feels are interpretations and must be labelled as such, with the evidence that supports them.\n\nThe empathy map exercise takes about thirty-five minutes and builds on your observation notes from session 2. The reading check quiz covers the observation primer. In version 1 of the course page the quiz was due on 24 November at 18:00 Dubai time. Version 2 lists 26 November, and the coordinator has not yet confirmed which date is correct."
+    },
+    {
+     "id": "S4",
+     "session": 4,
+     "title": "Session 4 notes: problem framing",
+     "text": "Problem framing turns research into a clear point-of-view statement: a user, a need and an insight. A good statement is specific enough to guide ideas but does not contain a solution.\n\nVersion 2 of the course adds a short framing case study reading of about fifteen minutes. The point-of-view exercise now takes about thirty minutes instead of twenty-five. It needs the session 4 recap and your empathy map."
+    },
+    {
+     "id": "S5",
+     "session": 5,
+     "title": "Session 5 notes: how might we",
+     "text": "How might we questions reframe a point-of-view statement as an opportunity. They should be broad enough to allow many ideas and narrow enough to be useful. Teams generate many questions, then vote on the most promising.\n\nThe group task is to prepare the HMW workshop. It takes about forty minutes. The course page lists 8 December, but this date has not been verified by the coordinator. In version 2 the task also needs the framing case study reading."
+    },
+    {
+     "id": "S6",
+     "session": 6,
+     "title": "Session 6 notes: envisioning futures",
+     "text": "Envisioning uses hill statements to describe a future outcome for a specific user, written as who, what and wow. Future-state journey maps show how the experience should feel after the change.\n\nVersion 1 asked for a short reflection log entry. Version 2 replaces it with a reflection journal in a new format, which takes about twenty-five minutes."
+    }
+   ],
+   "source_type": "SYNTHETIC"
+  }
+ },
+ "diff": {
+  "from": "v1",
+  "to": "v2",
+  "changes": [
+   {
+    "id": "C1",
+    "type": "added",
+    "action_id": "s4-reading",
+    "title": "Read: framing case study",
+    "session": 4,
+    "source_ref": "S4",
+    "minutes": 15
+   },
+   {
+    "id": "C2",
+    "type": "added",
+    "action_id": "s6-journal",
+    "title": "Reflection journal (new format)",
+    "session": 6,
+    "source_ref": "S6",
+    "minutes": 25
+   },
+   {
+    "id": "C3",
+    "type": "removed",
+    "action_id": "s6-reflection",
+    "title": "Reflection log entry",
+    "session": 6,
+    "source_ref": "S6"
+   },
+   {
+    "id": "C4",
+    "type": "changed",
+    "action_id": "s3-quiz",
+    "title": "Reading check quiz",
+    "session": 3,
+    "source_ref": "S3",
+    "field": "due",
+    "before": "2026-11-24T18:00:00+04:00",
+    "after": "2026-11-26T18:00:00+04:00"
+   },
+   {
+    "id": "C5",
+    "type": "changed",
+    "action_id": "s3-quiz",
+    "title": "Reading check quiz",
+    "session": 3,
+    "source_ref": "S3",
+    "field": "due_status",
+    "before": "verified",
+    "after": "conflict"
+   },
+   {
+    "id": "C6",
+    "type": "changed",
+    "action_id": "s4-exercise",
+    "title": "Exercise: write a point-of-view statement",
+    "session": 4,
+    "source_ref": "S4",
+    "field": "minutes",
+    "before": 25,
+    "after": 30
+   },
+   {
+    "id": "C7",
+    "type": "changed",
+    "action_id": "s5-group",
+    "title": "Group task: prepare the HMW workshop",
+    "session": 5,
+    "source_ref": "S5",
+    "field": "prerequisites",
+    "before": [
+     "s5-recap",
+     "s4-exercise"
+    ],
+    "after": [
+     "s5-recap",
+     "s4-exercise",
+     "s4-reading"
+    ]
+   }
+  ]
+ },
+ "demo_learner": {
+  "learner_id": "demo-learner",
+  "last_completed_session": 2,
+  "completed": [
+   "s1-recap",
+   "s1-reading",
+   "s2-recap"
+  ],
+  "budget_minutes": 60,
+  "seen_version": "v1"
+ },
+ "planner_parity": [
+  {
+   "version": "v2",
+   "budget": 15,
+   "completed": [
+    "s2-recap",
+    "s3-quiz",
+    "s4-recap"
+   ],
+   "sequence": [
+    "s1-recap"
+   ],
+   "warnings": [],
+   "states": {
+    "s1-recap": "planned",
+    "s1-reading": "does-not-fit",
+    "s2-recap": "completed",
+    "s2-exercise": "locked",
+    "s3-recap": "does-not-fit",
+    "s3-exercise": "locked",
+    "s3-quiz": "completed",
+    "s4-recap": "completed",
+    "s4-reading": "does-not-fit",
+    "s4-exercise": "locked",
+    "s5-recap": "does-not-fit",
+    "s5-group": "locked",
+    "s6-recap": "locked",
+    "s6-journal": "locked"
+   }
+  },
+  {
+   "version": "v1",
+   "budget": 15,
+   "completed": [
+    "s1-recap",
+    "s2-recap",
+    "s3-quiz",
+    "s4-exercise"
+   ],
+   "sequence": [
+    "s3-recap"
+   ],
+   "warnings": [],
+   "states": {
+    "s1-recap": "completed",
+    "s1-reading": "does-not-fit",
+    "s2-recap": "completed",
+    "s2-exercise": "locked",
+    "s3-recap": "planned",
+    "s3-exercise": "locked",
+    "s3-quiz": "completed",
+    "s4-recap": "does-not-fit",
+    "s4-exercise": "completed",
+    "s5-recap": "locked",
+    "s5-group": "locked",
+    "s6-recap": "locked",
+    "s6-reflection": "locked"
+   }
+  },
+  {
+   "version": "v2",
+   "budget": 90,
+   "completed": [
+    "s2-exercise",
+    "s3-quiz",
+    "s4-reading",
+    "s4-recap"
+   ],
+   "sequence": [
+    "s1-recap",
+    "s1-reading",
+    "s2-recap",
+    "s3-recap",
+    "s5-recap"
+   ],
+   "warnings": [],
+   "states": {
+    "s1-recap": "planned",
+    "s1-reading": "planned",
+    "s2-recap": "planned",
+    "s2-exercise": "completed",
+    "s3-recap": "planned",
+    "s3-exercise": "does-not-fit",
+    "s3-quiz": "completed",
+    "s4-recap": "completed",
+    "s4-reading": "completed",
+    "s4-exercise": "locked",
+    "s5-recap": "planned",
+    "s5-group": "locked",
+    "s6-recap": "does-not-fit",
+    "s6-journal": "locked"
+   }
+  },
+  {
+   "version": "v2",
+   "budget": 0,
+   "completed": [
+    "s3-exercise",
+    "s3-recap",
+    "s4-exercise"
+   ],
+   "sequence": [],
+   "warnings": [
+    "Reading check quiz: sources disagree on the deadline"
+   ],
+   "states": {
+    "s1-recap": "does-not-fit",
+    "s1-reading": "locked",
+    "s2-recap": "locked",
+    "s2-exercise": "locked",
+    "s3-recap": "completed",
+    "s3-exercise": "completed",
+    "s3-quiz": "locked",
+    "s4-recap": "does-not-fit",
+    "s4-reading": "locked",
+    "s4-exercise": "completed",
+    "s5-recap": "locked",
+    "s5-group": "locked",
+    "s6-recap": "locked",
+    "s6-journal": "locked"
+   }
+  },
+  {
+   "version": "v2",
+   "budget": 240,
+   "completed": [
+    "s3-quiz",
+    "s4-exercise",
+    "s4-reading",
+    "s5-recap",
+    "s6-journal",
+    "s6-recap"
+   ],
+   "sequence": [
+    "s1-recap",
+    "s1-reading",
+    "s2-recap",
+    "s2-exercise",
+    "s3-recap",
+    "s3-exercise",
+    "s4-recap",
+    "s5-group"
+   ],
+   "warnings": [
+    "Group task: prepare the HMW workshop: the deadline is not verified; check with the coordinator"
+   ],
+   "states": {
+    "s1-recap": "planned",
+    "s1-reading": "planned",
+    "s2-recap": "planned",
+    "s2-exercise": "planned",
+    "s3-recap": "planned",
+    "s3-exercise": "planned",
+    "s3-quiz": "completed",
+    "s4-recap": "planned",
+    "s4-reading": "completed",
+    "s4-exercise": "completed",
+    "s5-recap": "completed",
+    "s5-group": "planned",
+    "s6-recap": "completed",
+    "s6-journal": "completed"
+   }
+  },
+  {
+   "version": "v2",
+   "budget": 120,
+   "completed": [
+    "s1-recap",
+    "s3-exercise",
+    "s4-reading",
+    "s4-recap",
+    "s5-group"
+   ],
+   "sequence": [
+    "s1-reading",
+    "s2-recap",
+    "s2-exercise",
+    "s3-recap",
+    "s3-quiz",
+    "s4-exercise"
+   ],
+   "warnings": [
+    "Reading check quiz: the deadline differs between sources; check with the coordinator"
+   ],
+   "states": {
+    "s1-recap": "completed",
+    "s1-reading": "planned",
+    "s2-recap": "planned",
+    "s2-exercise": "planned",
+    "s3-recap": "planned",
+    "s3-exercise": "completed",
+    "s3-quiz": "planned",
+    "s4-recap": "completed",
+    "s4-reading": "completed",
+    "s4-exercise": "planned",
+    "s5-recap": "does-not-fit",
+    "s5-group": "completed",
+    "s6-recap": "locked",
+    "s6-journal": "locked"
+   }
+  },
+  {
+   "version": "v1",
+   "budget": 120,
+   "completed": [
+    "s1-recap",
+    "s3-exercise",
+    "s3-recap",
+    "s6-recap"
+   ],
+   "sequence": [
+    "s1-reading",
+    "s3-quiz",
+    "s2-recap",
+    "s2-exercise",
+    "s4-recap",
+    "s4-exercise"
+   ],
+   "warnings": [],
+   "states": {
+    "s1-recap": "completed",
+    "s1-reading": "planned",
+    "s2-recap": "planned",
+    "s2-exercise": "planned",
+    "s3-recap": "completed",
+    "s3-exercise": "completed",
+    "s3-quiz": "planned",
+    "s4-recap": "planned",
+    "s4-exercise": "planned",
+    "s5-recap": "does-not-fit",
+    "s5-group": "locked",
+    "s6-recap": "completed",
+    "s6-reflection": "does-not-fit"
+   }
+  },
+  {
+   "version": "v1",
+   "budget": 60,
+   "completed": [
+    "s2-exercise",
+    "s3-quiz"
+   ],
+   "sequence": [
+    "s1-recap",
+    "s1-reading",
+    "s2-recap"
+   ],
+   "warnings": [],
+   "states": {
+    "s1-recap": "planned",
+    "s1-reading": "planned",
+    "s2-recap": "planned",
+    "s2-exercise": "completed",
+    "s3-recap": "does-not-fit",
+    "s3-exercise": "locked",
+    "s3-quiz": "completed",
+    "s4-recap": "locked",
+    "s4-exercise": "locked",
+    "s5-recap": "locked",
+    "s5-group": "locked",
+    "s6-recap": "locked",
+    "s6-reflection": "locked"
+   }
+  },
+  {
+   "version": "v1",
+   "budget": 60,
+   "completed": [
+    "s2-exercise",
+    "s3-exercise",
+    "s5-group",
+    "s6-reflection"
+   ],
+   "sequence": [
+    "s1-recap",
+    "s1-reading",
+    "s3-quiz",
+    "s2-recap"
+   ],
+   "warnings": [],
+   "states": {
+    "s1-recap": "planned",
+    "s1-reading": "planned",
+    "s2-recap": "planned",
+    "s2-exercise": "completed",
+    "s3-recap": "does-not-fit",
+    "s3-exercise": "completed",
+    "s3-quiz": "planned",
+    "s4-recap": "locked",
+    "s4-exercise": "locked",
+    "s5-recap": "locked",
+    "s5-group": "completed",
+    "s6-recap": "locked",
+    "s6-reflection": "completed"
+   }
+  },
+  {
+   "version": "v1",
+   "budget": 10,
+   "completed": [
+    "s1-reading",
+    "s3-exercise",
+    "s4-recap"
+   ],
+   "sequence": [
+    "s3-quiz"
+   ],
+   "warnings": [],
+   "states": {
+    "s1-recap": "does-not-fit",
+    "s1-reading": "completed",
+    "s2-recap": "locked",
+    "s2-exercise": "locked",
+    "s3-recap": "locked",
+    "s3-exercise": "completed",
+    "s3-quiz": "planned",
+    "s4-recap": "completed",
+    "s4-exercise": "does-not-fit",
+    "s5-recap": "does-not-fit",
+    "s5-group": "locked",
+    "s6-recap": "locked",
+    "s6-reflection": "locked"
+   }
+  },
+  {
+   "version": "v1",
+   "budget": 30,
+   "completed": [
+    "s2-exercise",
+    "s4-exercise",
+    "s4-recap"
+   ],
+   "sequence": [
+    "s1-recap",
+    "s2-recap"
+   ],
+   "warnings": [],
+   "states": {
+    "s1-recap": "planned",
+    "s1-reading": "does-not-fit",
+    "s2-recap": "planned",
+    "s2-exercise": "completed",
+    "s3-recap": "does-not-fit",
+    "s3-exercise": "locked",
+    "s3-quiz": "locked",
+    "s4-recap": "completed",
+    "s4-exercise": "completed",
+    "s5-recap": "does-not-fit",
+    "s5-group": "locked",
+    "s6-recap": "locked",
+    "s6-reflection": "locked"
+   }
+  },
+  {
+   "version": "v2",
+   "budget": 240,
+   "completed": [
+    "s1-recap",
+    "s2-recap",
+    "s3-recap",
+    "s6-journal"
+   ],
+   "sequence": [
+    "s1-reading",
+    "s2-exercise",
+    "s3-exercise",
+    "s3-quiz",
+    "s4-recap",
+    "s4-reading",
+    "s4-exercise",
+    "s5-recap",
+    "s5-group",
+    "s6-recap"
+   ],
+   "warnings": [
+    "Group task: prepare the HMW workshop: the deadline is not verified; check with the coordinator",
+    "Reading check quiz: the deadline differs between sources; check with the coordinator"
+   ],
+   "states": {
+    "s1-recap": "completed",
+    "s1-reading": "planned",
+    "s2-recap": "completed",
+    "s2-exercise": "planned",
+    "s3-recap": "completed",
+    "s3-exercise": "planned",
+    "s3-quiz": "planned",
+    "s4-recap": "planned",
+    "s4-reading": "planned",
+    "s4-exercise": "planned",
+    "s5-recap": "planned",
+    "s5-group": "planned",
+    "s6-recap": "planned",
+    "s6-journal": "completed"
+   }
+  },
+  {
+   "version": "v2",
+   "budget": 90,
+   "completed": [
+    "s2-exercise",
+    "s4-reading",
+    "s4-recap"
+   ],
+   "sequence": [
+    "s1-recap",
+    "s1-reading",
+    "s2-recap",
+    "s3-recap",
+    "s3-quiz",
+    "s5-recap"
+   ],
+   "warnings": [
+    "Reading check quiz: the deadline differs between sources; check with the coordinator"
+   ],
+   "states": {
+    "s1-recap": "planned",
+    "s1-reading": "planned",
+    "s2-recap": "planned",
+    "s2-exercise": "completed",
+    "s3-recap": "planned",
+    "s3-exercise": "does-not-fit",
+    "s3-quiz": "planned",
+    "s4-recap": "completed",
+    "s4-reading": "completed",
+    "s4-exercise": "locked",
+    "s5-recap": "planned",
+    "s5-group": "locked",
+    "s6-recap": "does-not-fit",
+    "s6-journal": "locked"
+   }
+  },
+  {
+   "version": "v1",
+   "budget": 10,
+   "completed": [
+    "s1-recap",
+    "s2-exercise",
+    "s3-exercise",
+    "s3-quiz",
+    "s5-group",
+    "s5-recap"
+   ],
+   "sequence": [],
+   "warnings": [],
+   "states": {
+    "s1-recap": "completed",
+    "s1-reading": "does-not-fit",
+    "s2-recap": "does-not-fit",
+    "s2-exercise": "completed",
+    "s3-recap": "locked",
+    "s3-exercise": "completed",
+    "s3-quiz": "completed",
+    "s4-recap": "locked",
+    "s4-exercise": "locked",
+    "s5-recap": "completed",
+    "s5-group": "completed",
+    "s6-recap": "does-not-fit",
+    "s6-reflection": "locked"
+   }
+  },
+  {
+   "version": "v2",
+   "budget": 90,
+   "completed": [],
+   "sequence": [
+    "s1-recap",
+    "s1-reading",
+    "s2-recap",
+    "s2-exercise",
+    "s3-quiz"
+   ],
+   "warnings": [
+    "Reading check quiz: the deadline differs between sources; check with the coordinator"
+   ],
+   "states": {
+    "s1-recap": "planned",
+    "s1-reading": "planned",
+    "s2-recap": "planned",
+    "s2-exercise": "planned",
+    "s3-recap": "does-not-fit",
+    "s3-exercise": "locked",
+    "s3-quiz": "planned",
+    "s4-recap": "locked",
+    "s4-reading": "locked",
+    "s4-exercise": "locked",
+    "s5-recap": "locked",
+    "s5-group": "locked",
+    "s6-recap": "locked",
+    "s6-journal": "locked"
+   }
+  },
+  {
+   "version": "v1",
+   "budget": 120,
+   "completed": [
+    "s2-exercise",
+    "s2-recap",
+    "s3-quiz",
+    "s4-exercise",
+    "s4-recap",
+    "s5-group",
+    "s6-recap"
+   ],
+   "sequence": [
+    "s1-recap",
+    "s1-reading",
+    "s3-recap",
+    "s3-exercise",
+    "s5-recap",
+    "s6-reflection"
+   ],
+   "warnings": [],
+   "states": {
+    "s1-recap": "planned",
+    "s1-reading": "planned",
+    "s2-recap": "completed",
+    "s2-exercise": "completed",
+    "s3-recap": "planned",
+    "s3-exercise": "planned",
+    "s3-quiz": "completed",
+    "s4-recap": "completed",
+    "s4-exercise": "completed",
+    "s5-recap": "planned",
+    "s5-group": "completed",
+    "s6-recap": "completed",
+    "s6-reflection": "planned"
+   }
+  },
+  {
+   "version": "v1",
+   "budget": 45,
+   "completed": [
+    "s4-recap",
+    "s5-group",
+    "s5-recap"
+   ],
+   "sequence": [
+    "s1-recap",
+    "s1-reading",
+    "s3-quiz"
+   ],
+   "warnings": [],
+   "states": {
+    "s1-recap": "planned",
+    "s1-reading": "planned",
+    "s2-recap": "does-not-fit",
+    "s2-exercise": "locked",
+    "s3-recap": "locked",
+    "s3-exercise": "locked",
+    "s3-quiz": "planned",
+    "s4-recap": "completed",
+    "s4-exercise": "locked",
+    "s5-recap": "completed",
+    "s5-group": "completed",
+    "s6-recap": "does-not-fit",
+    "s6-reflection": "locked"
+   }
+  },
+  {
+   "version": "v2",
+   "budget": 0,
+   "completed": [
+    "s3-exercise",
+    "s3-recap"
+   ],
+   "sequence": [],
+   "warnings": [
+    "Reading check quiz: sources disagree on the deadline"
+   ],
+   "states": {
+    "s1-recap": "does-not-fit",
+    "s1-reading": "locked",
+    "s2-recap": "locked",
+    "s2-exercise": "locked",
+    "s3-recap": "completed",
+    "s3-exercise": "completed",
+    "s3-quiz": "locked",
+    "s4-recap": "does-not-fit",
+    "s4-reading": "locked",
+    "s4-exercise": "locked",
+    "s5-recap": "locked",
+    "s5-group": "locked",
+    "s6-recap": "locked",
+    "s6-journal": "locked"
+   }
+  },
+  {
+   "version": "v2",
+   "budget": 30,
+   "completed": [
+    "s3-exercise",
+    "s3-quiz",
+    "s3-recap",
+    "s6-recap"
+   ],
+   "sequence": [
+    "s1-recap",
+    "s2-recap"
+   ],
+   "warnings": [],
+   "states": {
+    "s1-recap": "planned",
+    "s1-reading": "does-not-fit",
+    "s2-recap": "planned",
+    "s2-exercise": "locked",
+    "s3-recap": "completed",
+    "s3-exercise": "completed",
+    "s3-quiz": "completed",
+    "s4-recap": "does-not-fit",
+    "s4-reading": "locked",
+    "s4-exercise": "locked",
+    "s5-recap": "locked",
+    "s5-group": "locked",
+    "s6-recap": "completed",
+    "s6-journal": "does-not-fit"
+   }
+  },
+  {
+   "version": "v1",
+   "budget": 30,
+   "completed": [
+    "s1-reading",
+    "s3-exercise",
+    "s4-exercise"
+   ],
+   "sequence": [
+    "s3-quiz",
+    "s1-recap"
+   ],
+   "warnings": [],
+   "states": {
+    "s1-recap": "planned",
+    "s1-reading": "completed",
+    "s2-recap": "does-not-fit",
+    "s2-exercise": "locked",
+    "s3-recap": "locked",
+    "s3-exercise": "completed",
+    "s3-quiz": "planned",
+    "s4-recap": "locked",
+    "s4-exercise": "completed",
+    "s5-recap": "locked",
+    "s5-group": "locked",
+    "s6-recap": "locked",
+    "s6-reflection": "locked"
+   }
+  },
+  {
+   "version": "v2",
+   "budget": 90,
+   "completed": [
+    "s5-recap",
+    "s6-journal"
+   ],
+   "sequence": [
+    "s1-recap",
+    "s1-reading",
+    "s2-recap",
+    "s2-exercise",
+    "s3-quiz"
+   ],
+   "warnings": [
+    "Reading check quiz: the deadline differs between sources; check with the coordinator"
+   ],
+   "states": {
+    "s1-recap": "planned",
+    "s1-reading": "planned",
+    "s2-recap": "planned",
+    "s2-exercise": "planned",
+    "s3-recap": "does-not-fit",
+    "s3-exercise": "locked",
+    "s3-quiz": "planned",
+    "s4-recap": "locked",
+    "s4-reading": "locked",
+    "s4-exercise": "locked",
+    "s5-recap": "completed",
+    "s5-group": "locked",
+    "s6-recap": "does-not-fit",
+    "s6-journal": "completed"
+   }
+  },
+  {
+   "version": "v2",
+   "budget": 120,
+   "completed": [
+    "s3-quiz",
+    "s3-recap",
+    "s4-reading",
+    "s6-recap"
+   ],
+   "sequence": [
+    "s1-recap",
+    "s1-reading",
+    "s2-recap",
+    "s2-exercise",
+    "s3-exercise"
+   ],
+   "warnings": [],
+   "states": {
+    "s1-recap": "planned",
+    "s1-reading": "planned",
+    "s2-recap": "planned",
+    "s2-exercise": "planned",
+    "s3-recap": "completed",
+    "s3-exercise": "planned",
+    "s3-quiz": "completed",
+    "s4-recap": "does-not-fit",
+    "s4-reading": "completed",
+    "s4-exercise": "locked",
+    "s5-recap": "locked",
+    "s5-group": "locked",
+    "s6-recap": "completed",
+    "s6-journal": "does-not-fit"
+   }
+  },
+  {
+   "version": "v1",
+   "budget": 0,
+   "completed": [
+    "s1-recap",
+    "s2-recap",
+    "s3-exercise",
+    "s3-quiz",
+    "s3-recap"
+   ],
+   "sequence": [],
+   "warnings": [],
+   "states": {
+    "s1-recap": "completed",
+    "s1-reading": "does-not-fit",
+    "s2-recap": "completed",
+    "s2-exercise": "locked",
+    "s3-recap": "completed",
+    "s3-exercise": "completed",
+    "s3-quiz": "completed",
+    "s4-recap": "does-not-fit",
+    "s4-exercise": "locked",
+    "s5-recap": "locked",
+    "s5-group": "locked",
+    "s6-recap": "locked",
+    "s6-reflection": "locked"
+   }
+  },
+  {
+   "version": "v1",
+   "budget": 15,
+   "completed": [
+    "s1-recap",
+    "s3-exercise"
+   ],
+   "sequence": [
+    "s2-recap"
+   ],
+   "warnings": [],
+   "states": {
+    "s1-recap": "completed",
+    "s1-reading": "does-not-fit",
+    "s2-recap": "planned",
+    "s2-exercise": "locked",
+    "s3-recap": "does-not-fit",
+    "s3-exercise": "completed",
+    "s3-quiz": "locked",
+    "s4-recap": "locked",
+    "s4-exercise": "locked",
+    "s5-recap": "locked",
+    "s5-group": "locked",
+    "s6-recap": "locked",
+    "s6-reflection": "locked"
+   }
+  },
+  {
+   "version": "v2",
+   "budget": 15,
+   "completed": [
+    "s1-recap",
+    "s3-exercise",
+    "s3-quiz",
+    "s4-exercise",
+    "s5-recap"
+   ],
+   "sequence": [
+    "s2-recap"
+   ],
+   "warnings": [],
+   "states": {
+    "s1-recap": "completed",
+    "s1-reading": "does-not-fit",
+    "s2-recap": "planned",
+    "s2-exercise": "locked",
+    "s3-recap": "does-not-fit",
+    "s3-exercise": "completed",
+    "s3-quiz": "completed",
+    "s4-recap": "locked",
+    "s4-reading": "locked",
+    "s4-exercise": "completed",
+    "s5-recap": "completed",
+    "s5-group": "locked",
+    "s6-recap": "does-not-fit",
+    "s6-journal": "locked"
+   }
+  },
+  {
+   "version": "v1",
+   "budget": 240,
+   "completed": [
+    "s1-recap",
+    "s3-quiz",
+    "s5-recap"
+   ],
+   "sequence": [
+    "s1-reading",
+    "s2-recap",
+    "s2-exercise",
+    "s3-recap",
+    "s3-exercise",
+    "s4-recap",
+    "s4-exercise",
+    "s5-group",
+    "s6-recap",
+    "s6-reflection"
+   ],
+   "warnings": [
+    "Group task: prepare the HMW workshop: the deadline is not verified; check with the coordinator"
+   ],
+   "states": {
+    "s1-recap": "completed",
+    "s1-reading": "planned",
+    "s2-recap": "planned",
+    "s2-exercise": "planned",
+    "s3-recap": "planned",
+    "s3-exercise": "planned",
+    "s3-quiz": "completed",
+    "s4-recap": "planned",
+    "s4-exercise": "planned",
+    "s5-recap": "completed",
+    "s5-group": "planned",
+    "s6-recap": "planned",
+    "s6-reflection": "planned"
+   }
+  },
+  {
+   "version": "v1",
+   "budget": 60,
+   "completed": [
+    "s1-reading",
+    "s1-recap",
+    "s3-exercise",
+    "s3-quiz",
+    "s3-recap",
+    "s4-exercise",
+    "s6-recap",
+    "s6-reflection"
+   ],
+   "sequence": [
+    "s2-recap",
+    "s2-exercise",
+    "s4-recap"
+   ],
+   "warnings": [],
+   "states": {
+    "s1-recap": "completed",
+    "s1-reading": "completed",
+    "s2-recap": "planned",
+    "s2-exercise": "planned",
+    "s3-recap": "completed",
+    "s3-exercise": "completed",
+    "s3-quiz": "completed",
+    "s4-recap": "planned",
+    "s4-exercise": "completed",
+    "s5-recap": "does-not-fit",
+    "s5-group": "locked",
+    "s6-recap": "completed",
+    "s6-reflection": "completed"
+   }
+  },
+  {
+   "version": "v2",
+   "budget": 30,
+   "completed": [
+    "s2-exercise",
+    "s2-recap",
+    "s3-exercise",
+    "s4-reading",
+    "s6-recap"
+   ],
+   "sequence": [
+    "s1-recap",
+    "s3-recap"
+   ],
+   "warnings": [
+    "Reading check quiz: sources disagree on the deadline"
+   ],
+   "states": {
+    "s1-recap": "planned",
+    "s1-reading": "does-not-fit",
+    "s2-recap": "completed",
+    "s2-exercise": "completed",
+    "s3-recap": "planned",
+    "s3-exercise": "completed",
+    "s3-quiz": "locked",
+    "s4-recap": "does-not-fit",
+    "s4-reading": "completed",
+    "s4-exercise": "locked",
+    "s5-recap": "locked",
+    "s5-group": "locked",
+    "s6-recap": "completed",
+    "s6-journal": "does-not-fit"
+   }
+  },
+  {
+   "version": "v1",
+   "budget": 240,
+   "completed": [
+    "s2-recap",
+    "s3-exercise",
+    "s3-quiz",
+    "s3-recap",
+    "s4-exercise",
+    "s5-group",
+    "s6-recap"
+   ],
+   "sequence": [
+    "s1-recap",
+    "s1-reading",
+    "s2-exercise",
+    "s4-recap",
+    "s5-recap",
+    "s6-reflection"
+   ],
+   "warnings": [],
+   "states": {
+    "s1-recap": "planned",
+    "s1-reading": "planned",
+    "s2-recap": "completed",
+    "s2-exercise": "planned",
+    "s3-recap": "completed",
+    "s3-exercise": "completed",
+    "s3-quiz": "completed",
+    "s4-recap": "planned",
+    "s4-exercise": "completed",
+    "s5-recap": "planned",
+    "s5-group": "completed",
+    "s6-recap": "completed",
+    "s6-reflection": "planned"
+   }
+  },
+  {
+   "version": "v2",
+   "budget": 90,
+   "completed": [
+    "s1-reading",
+    "s4-recap"
+   ],
+   "sequence": [
+    "s1-recap",
+    "s2-recap",
+    "s2-exercise",
+    "s3-recap",
+    "s3-quiz"
+   ],
+   "warnings": [
+    "Reading check quiz: the deadline differs between sources; check with the coordinator"
+   ],
+   "states": {
+    "s1-recap": "planned",
+    "s1-reading": "completed",
+    "s2-recap": "planned",
+    "s2-exercise": "planned",
+    "s3-recap": "planned",
+    "s3-exercise": "does-not-fit",
+    "s3-quiz": "planned",
+    "s4-recap": "completed",
+    "s4-reading": "does-not-fit",
+    "s4-exercise": "locked",
+    "s5-recap": "does-not-fit",
+    "s5-group": "locked",
+    "s6-recap": "locked",
+    "s6-journal": "locked"
+   }
+  },
+  {
+   "version": "v2",
+   "budget": 90,
+   "completed": [
+    "s1-reading",
+    "s2-exercise",
+    "s3-exercise",
+    "s3-recap",
+    "s4-exercise",
+    "s4-reading",
+    "s5-group",
+    "s5-recap",
+    "s6-journal",
+    "s6-recap"
+   ],
+   "sequence": [
+    "s1-recap",
+    "s2-recap",
+    "s3-quiz",
+    "s4-recap"
+   ],
+   "warnings": [
+    "Reading check quiz: the deadline differs between sources; check with the coordinator"
+   ],
+   "states": {
+    "s1-recap": "planned",
+    "s1-reading": "completed",
+    "s2-recap": "planned",
+    "s2-exercise": "completed",
+    "s3-recap": "completed",
+    "s3-exercise": "completed",
+    "s3-quiz": "planned",
+    "s4-recap": "planned",
+    "s4-reading": "completed",
+    "s4-exercise": "completed",
+    "s5-recap": "completed",
+    "s5-group": "completed",
+    "s6-recap": "completed",
+    "s6-journal": "completed"
+   }
+  },
+  {
+   "version": "v2",
+   "budget": 0,
+   "completed": [
+    "s1-recap",
+    "s2-exercise",
+    "s3-exercise",
+    "s3-recap"
+   ],
+   "sequence": [],
+   "warnings": [
+    "Reading check quiz: sources disagree on the deadline"
+   ],
+   "states": {
+    "s1-recap": "completed",
+    "s1-reading": "does-not-fit",
+    "s2-recap": "does-not-fit",
+    "s2-exercise": "completed",
+    "s3-recap": "completed",
+    "s3-exercise": "completed",
+    "s3-quiz": "locked",
+    "s4-recap": "does-not-fit",
+    "s4-reading": "locked",
+    "s4-exercise": "locked",
+    "s5-recap": "locked",
+    "s5-group": "locked",
+    "s6-recap": "locked",
+    "s6-journal": "locked"
+   }
+  },
+  {
+   "version": "v1",
+   "budget": 30,
+   "completed": [
+    "s4-exercise",
+    "s6-recap"
+   ],
+   "sequence": [
+    "s1-recap",
+    "s2-recap"
+   ],
+   "warnings": [],
+   "states": {
+    "s1-recap": "planned",
+    "s1-reading": "does-not-fit",
+    "s2-recap": "planned",
+    "s2-exercise": "locked",
+    "s3-recap": "does-not-fit",
+    "s3-exercise": "locked",
+    "s3-quiz": "locked",
+    "s4-recap": "locked",
+    "s4-exercise": "completed",
+    "s5-recap": "locked",
+    "s5-group": "locked",
+    "s6-recap": "completed",
+    "s6-reflection": "does-not-fit"
+   }
+  },
+  {
+   "version": "v2",
+   "budget": 10,
+   "completed": [
+    "s1-reading",
+    "s3-quiz",
+    "s4-exercise",
+    "s4-reading",
+    "s4-recap",
+    "s5-recap",
+    "s6-journal"
+   ],
+   "sequence": [],
+   "warnings": [],
+   "states": {
+    "s1-recap": "does-not-fit",
+    "s1-reading": "completed",
+    "s2-recap": "locked",
+    "s2-exercise": "locked",
+    "s3-recap": "locked",
+    "s3-exercise": "locked",
+    "s3-quiz": "completed",
+    "s4-recap": "completed",
+    "s4-reading": "completed",
+    "s4-exercise": "completed",
+    "s5-recap": "completed",
+    "s5-group": "does-not-fit",
+    "s6-recap": "does-not-fit",
+    "s6-journal": "completed"
+   }
+  },
+  {
+   "version": "v2",
+   "budget": 90,
+   "completed": [
+    "s3-exercise",
+    "s4-exercise"
+   ],
+   "sequence": [
+    "s1-recap",
+    "s1-reading",
+    "s2-recap",
+    "s2-exercise",
+    "s3-quiz"
+   ],
+   "warnings": [
+    "Reading check quiz: the deadline differs between sources; check with the coordinator"
+   ],
+   "states": {
+    "s1-recap": "planned",
+    "s1-reading": "planned",
+    "s2-recap": "planned",
+    "s2-exercise": "planned",
+    "s3-recap": "does-not-fit",
+    "s3-exercise": "completed",
+    "s3-quiz": "planned",
+    "s4-recap": "locked",
+    "s4-reading": "locked",
+    "s4-exercise": "completed",
+    "s5-recap": "locked",
+    "s5-group": "locked",
+    "s6-recap": "locked",
+    "s6-journal": "locked"
+   }
+  },
+  {
+   "version": "v2",
+   "budget": 0,
+   "completed": [
+    "s1-reading",
+    "s3-recap",
+    "s4-recap",
+    "s5-group"
+   ],
+   "sequence": [],
+   "warnings": [
+    "Reading check quiz: sources disagree on the deadline"
+   ],
+   "states": {
+    "s1-recap": "does-not-fit",
+    "s1-reading": "completed",
+    "s2-recap": "locked",
+    "s2-exercise": "locked",
+    "s3-recap": "completed",
+    "s3-exercise": "locked",
+    "s3-quiz": "does-not-fit",
+    "s4-recap": "completed",
+    "s4-reading": "does-not-fit",
+    "s4-exercise": "locked",
+    "s5-recap": "does-not-fit",
+    "s5-group": "completed",
+    "s6-recap": "locked",
+    "s6-journal": "locked"
+   }
+  },
+  {
+   "version": "v2",
+   "budget": 240,
+   "completed": [
+    "s2-exercise",
+    "s2-recap",
+    "s4-recap",
+    "s6-recap"
+   ],
+   "sequence": [
+    "s1-recap",
+    "s1-reading",
+    "s3-recap",
+    "s3-exercise",
+    "s3-quiz",
+    "s4-reading",
+    "s4-exercise",
+    "s5-recap",
+    "s5-group",
+    "s6-journal"
+   ],
+   "warnings": [
+    "Group task: prepare the HMW workshop: the deadline is not verified; check with the coordinator",
+    "Reading check quiz: the deadline differs between sources; check with the coordinator"
+   ],
+   "states": {
+    "s1-recap": "planned",
+    "s1-reading": "planned",
+    "s2-recap": "completed",
+    "s2-exercise": "completed",
+    "s3-recap": "planned",
+    "s3-exercise": "planned",
+    "s3-quiz": "planned",
+    "s4-recap": "completed",
+    "s4-reading": "planned",
+    "s4-exercise": "planned",
+    "s5-recap": "planned",
+    "s5-group": "planned",
+    "s6-recap": "completed",
+    "s6-journal": "planned"
+   }
+  },
+  {
+   "version": "v1",
+   "budget": 45,
+   "completed": [
+    "s1-reading",
+    "s2-exercise",
+    "s2-recap",
+    "s3-exercise",
+    "s4-exercise",
+    "s5-group",
+    "s6-recap"
+   ],
+   "sequence": [
+    "s3-quiz",
+    "s1-recap",
+    "s3-recap"
+   ],
+   "warnings": [],
+   "states": {
+    "s1-recap": "planned",
+    "s1-reading": "completed",
+    "s2-recap": "completed",
+    "s2-exercise": "completed",
+    "s3-recap": "planned",
+    "s3-exercise": "completed",
+    "s3-quiz": "planned",
+    "s4-recap": "does-not-fit",
+    "s4-exercise": "completed",
+    "s5-recap": "locked",
+    "s5-group": "completed",
+    "s6-recap": "completed",
+    "s6-reflection": "does-not-fit"
+   }
+  },
+  {
+   "version": "v2",
+   "budget": 10,
+   "completed": [
+    "s1-reading",
+    "s2-exercise",
+    "s2-recap",
+    "s4-recap"
+   ],
+   "sequence": [
+    "s3-quiz"
+   ],
+   "warnings": [
+    "Reading check quiz: the deadline differs between sources; check with the coordinator"
+   ],
+   "states": {
+    "s1-recap": "does-not-fit",
+    "s1-reading": "completed",
+    "s2-recap": "completed",
+    "s2-exercise": "completed",
+    "s3-recap": "does-not-fit",
+    "s3-exercise": "locked",
+    "s3-quiz": "planned",
+    "s4-recap": "completed",
+    "s4-reading": "does-not-fit",
+    "s4-exercise": "locked",
+    "s5-recap": "does-not-fit",
+    "s5-group": "locked",
+    "s6-recap": "locked",
+    "s6-journal": "locked"
+   }
+  },
+  {
+   "version": "v2",
+   "budget": 30,
+   "completed": [
+    "s5-recap",
+    "s6-journal"
+   ],
+   "sequence": [
+    "s1-recap",
+    "s2-recap"
+   ],
+   "warnings": [
+    "Reading check quiz: sources disagree on the deadline"
+   ],
+   "states": {
+    "s1-recap": "planned",
+    "s1-reading": "does-not-fit",
+    "s2-recap": "planned",
+    "s2-exercise": "locked",
+    "s3-recap": "does-not-fit",
+    "s3-exercise": "locked",
+    "s3-quiz": "locked",
+    "s4-recap": "locked",
+    "s4-reading": "locked",
+    "s4-exercise": "locked",
+    "s5-recap": "completed",
+    "s5-group": "locked",
+    "s6-recap": "does-not-fit",
+    "s6-journal": "completed"
+   }
+  },
+  {
+   "version": "v2",
+   "budget": 60,
+   "completed": [
+    "s1-recap",
+    "s2-recap",
+    "s4-reading",
+    "s5-group"
+   ],
+   "sequence": [
+    "s1-reading",
+    "s2-exercise",
+    "s3-quiz"
+   ],
+   "warnings": [
+    "Reading check quiz: the deadline differs between sources; check with the coordinator"
+   ],
+   "states": {
+    "s1-recap": "completed",
+    "s1-reading": "planned",
+    "s2-recap": "completed",
+    "s2-exercise": "planned",
+    "s3-recap": "does-not-fit",
+    "s3-exercise": "locked",
+    "s3-quiz": "planned",
+    "s4-recap": "locked",
+    "s4-reading": "completed",
+    "s4-exercise": "locked",
+    "s5-recap": "locked",
+    "s5-group": "completed",
+    "s6-recap": "locked",
+    "s6-journal": "locked"
+   }
+  },
+  {
+   "version": "v1",
+   "budget": 90,
+   "completed": [
+    "s2-exercise",
+    "s3-quiz",
+    "s4-exercise"
+   ],
+   "sequence": [
+    "s1-recap",
+    "s1-reading",
+    "s2-recap",
+    "s3-recap",
+    "s4-recap"
+   ],
+   "warnings": [],
+   "states": {
+    "s1-recap": "planned",
+    "s1-reading": "planned",
+    "s2-recap": "planned",
+    "s2-exercise": "completed",
+    "s3-recap": "planned",
+    "s3-exercise": "does-not-fit",
+    "s3-quiz": "completed",
+    "s4-recap": "planned",
+    "s4-exercise": "completed",
+    "s5-recap": "does-not-fit",
+    "s5-group": "locked",
+    "s6-recap": "locked",
+    "s6-reflection": "locked"
+   }
+  },
+  {
+   "version": "v1",
+   "budget": 15,
+   "completed": [
+    "s1-recap",
+    "s5-group",
+    "s5-recap",
+    "s6-reflection"
+   ],
+   "sequence": [
+    "s2-recap"
+   ],
+   "warnings": [],
+   "states": {
+    "s1-recap": "completed",
+    "s1-reading": "does-not-fit",
+    "s2-recap": "planned",
+    "s2-exercise": "locked",
+    "s3-recap": "does-not-fit",
+    "s3-exercise": "locked",
+    "s3-quiz": "locked",
+    "s4-recap": "locked",
+    "s4-exercise": "locked",
+    "s5-recap": "completed",
+    "s5-group": "completed",
+    "s6-recap": "does-not-fit",
+    "s6-reflection": "completed"
+   }
+  },
+  {
+   "version": "v2",
+   "budget": 90,
+   "completed": [
+    "s2-recap",
+    "s3-exercise",
+    "s5-group",
+    "s5-recap",
+    "s6-journal"
+   ],
+   "sequence": [
+    "s1-recap",
+    "s1-reading",
+    "s2-exercise",
+    "s3-recap",
+    "s3-quiz"
+   ],
+   "warnings": [
+    "Reading check quiz: the deadline differs between sources; check with the coordinator"
+   ],
+   "states": {
+    "s1-recap": "planned",
+    "s1-reading": "planned",
+    "s2-recap": "completed",
+    "s2-exercise": "planned",
+    "s3-recap": "planned",
+    "s3-exercise": "completed",
+    "s3-quiz": "planned",
+    "s4-recap": "does-not-fit",
+    "s4-reading": "locked",
+    "s4-exercise": "locked",
+    "s5-recap": "completed",
+    "s5-group": "completed",
+    "s6-recap": "does-not-fit",
+    "s6-journal": "completed"
+   }
+  },
+  {
+   "version": "v2",
+   "budget": 30,
+   "completed": [
+    "s1-reading",
+    "s2-exercise",
+    "s4-exercise"
+   ],
+   "sequence": [
+    "s1-recap",
+    "s2-recap"
+   ],
+   "warnings": [
+    "Reading check quiz: sources disagree on the deadline"
+   ],
+   "states": {
+    "s1-recap": "planned",
+    "s1-reading": "completed",
+    "s2-recap": "planned",
+    "s2-exercise": "completed",
+    "s3-recap": "does-not-fit",
+    "s3-exercise": "locked",
+    "s3-quiz": "does-not-fit",
+    "s4-recap": "locked",
+    "s4-reading": "locked",
+    "s4-exercise": "completed",
+    "s5-recap": "locked",
+    "s5-group": "locked",
+    "s6-recap": "locked",
+    "s6-journal": "locked"
+   }
+  },
+  {
+   "version": "v1",
+   "budget": 15,
+   "completed": [
+    "s2-exercise",
+    "s3-exercise",
+    "s3-recap",
+    "s5-group",
+    "s6-reflection"
+   ],
+   "sequence": [
+    "s1-recap"
+   ],
+   "warnings": [],
+   "states": {
+    "s1-recap": "planned",
+    "s1-reading": "does-not-fit",
+    "s2-recap": "does-not-fit",
+    "s2-exercise": "completed",
+    "s3-recap": "completed",
+    "s3-exercise": "completed",
+    "s3-quiz": "locked",
+    "s4-recap": "does-not-fit",
+    "s4-exercise": "locked",
+    "s5-recap": "locked",
+    "s5-group": "completed",
+    "s6-recap": "locked",
+    "s6-reflection": "completed"
+   }
+  },
+  {
+   "version": "v1",
+   "budget": 0,
+   "completed": [
+    "s2-recap",
+    "s3-exercise",
+    "s5-group",
+    "s6-recap"
+   ],
+   "sequence": [],
+   "warnings": [],
+   "states": {
+    "s1-recap": "does-not-fit",
+    "s1-reading": "locked",
+    "s2-recap": "completed",
+    "s2-exercise": "locked",
+    "s3-recap": "does-not-fit",
+    "s3-exercise": "completed",
+    "s3-quiz": "locked",
+    "s4-recap": "locked",
+    "s4-exercise": "locked",
+    "s5-recap": "locked",
+    "s5-group": "completed",
+    "s6-recap": "completed",
+    "s6-reflection": "does-not-fit"
+   }
+  },
+  {
+   "version": "v2",
+   "budget": 0,
+   "completed": [
+    "s2-exercise",
+    "s4-reading",
+    "s4-recap"
+   ],
+   "sequence": [],
+   "warnings": [
+    "Reading check quiz: sources disagree on the deadline"
+   ],
+   "states": {
+    "s1-recap": "does-not-fit",
+    "s1-reading": "locked",
+    "s2-recap": "locked",
+    "s2-exercise": "completed",
+    "s3-recap": "locked",
+    "s3-exercise": "locked",
+    "s3-quiz": "locked",
+    "s4-recap": "completed",
+    "s4-reading": "completed",
+    "s4-exercise": "locked",
+    "s5-recap": "does-not-fit",
+    "s5-group": "locked",
+    "s6-recap": "locked",
+    "s6-journal": "locked"
+   }
+  },
+  {
+   "version": "v2",
+   "budget": 30,
+   "completed": [
+    "s3-recap",
+    "s4-recap",
+    "s6-recap"
+   ],
+   "sequence": [
+    "s1-recap",
+    "s2-recap"
+   ],
+   "warnings": [
+    "Reading check quiz: sources disagree on the deadline"
+   ],
+   "states": {
+    "s1-recap": "planned",
+    "s1-reading": "does-not-fit",
+    "s2-recap": "planned",
+    "s2-exercise": "locked",
+    "s3-recap": "completed",
+    "s3-exercise": "locked",
+    "s3-quiz": "locked",
+    "s4-recap": "completed",
+    "s4-reading": "does-not-fit",
+    "s4-exercise": "locked",
+    "s5-recap": "does-not-fit",
+    "s5-group": "locked",
+    "s6-recap": "completed",
+    "s6-journal": "does-not-fit"
+   }
+  },
+  {
+   "version": "v2",
+   "budget": 0,
+   "completed": [
+    "s3-quiz",
+    "s4-recap",
+    "s5-group"
+   ],
+   "sequence": [],
+   "warnings": [],
+   "states": {
+    "s1-recap": "does-not-fit",
+    "s1-reading": "locked",
+    "s2-recap": "locked",
+    "s2-exercise": "locked",
+    "s3-recap": "locked",
+    "s3-exercise": "locked",
+    "s3-quiz": "completed",
+    "s4-recap": "completed",
+    "s4-reading": "does-not-fit",
+    "s4-exercise": "locked",
+    "s5-recap": "does-not-fit",
+    "s5-group": "completed",
+    "s6-recap": "locked",
+    "s6-journal": "locked"
+   }
+  },
+  {
+   "version": "v1",
+   "budget": 60,
+   "completed": [
+    "s2-recap",
+    "s3-quiz",
+    "s4-recap",
+    "s6-recap"
+   ],
+   "sequence": [
+    "s1-recap",
+    "s1-reading",
+    "s3-recap"
+   ],
+   "warnings": [],
+   "states": {
+    "s1-recap": "planned",
+    "s1-reading": "planned",
+    "s2-recap": "completed",
+    "s2-exercise": "does-not-fit",
+    "s3-recap": "planned",
+    "s3-exercise": "locked",
+    "s3-quiz": "completed",
+    "s4-recap": "completed",
+    "s4-exercise": "locked",
+    "s5-recap": "does-not-fit",
+    "s5-group": "locked",
+    "s6-recap": "completed",
+    "s6-reflection": "does-not-fit"
+   }
+  },
+  {
+   "version": "v2",
+   "budget": 15,
+   "completed": [
+    "s1-recap",
+    "s2-exercise",
+    "s3-quiz",
+    "s6-journal"
+   ],
+   "sequence": [
+    "s2-recap"
+   ],
+   "warnings": [],
+   "states": {
+    "s1-recap": "completed",
+    "s1-reading": "does-not-fit",
+    "s2-recap": "planned",
+    "s2-exercise": "completed",
+    "s3-recap": "does-not-fit",
+    "s3-exercise": "locked",
+    "s3-quiz": "completed",
+    "s4-recap": "locked",
+    "s4-reading": "locked",
+    "s4-exercise": "locked",
+    "s5-recap": "locked",
+    "s5-group": "locked",
+    "s6-recap": "locked",
+    "s6-journal": "completed"
+   }
+  },
+  {
+   "version": "v2",
+   "budget": 10,
+   "completed": [
+    "s1-reading"
+   ],
+   "sequence": [
+    "s3-quiz"
+   ],
+   "warnings": [
+    "Reading check quiz: the deadline differs between sources; check with the coordinator"
+   ],
+   "states": {
+    "s1-recap": "does-not-fit",
+    "s1-reading": "completed",
+    "s2-recap": "locked",
+    "s2-exercise": "locked",
+    "s3-recap": "locked",
+    "s3-exercise": "locked",
+    "s3-quiz": "planned",
+    "s4-recap": "locked",
+    "s4-reading": "locked",
+    "s4-exercise": "locked",
+    "s5-recap": "locked",
+    "s5-group": "locked",
+    "s6-recap": "locked",
+    "s6-journal": "locked"
+   }
+  },
+  {
+   "version": "v2",
+   "budget": 240,
+   "completed": [
+    "s1-recap",
+    "s3-recap",
+    "s4-exercise",
+    "s4-reading",
+    "s6-journal"
+   ],
+   "sequence": [
+    "s1-reading",
+    "s2-recap",
+    "s2-exercise",
+    "s3-exercise",
+    "s3-quiz",
+    "s4-recap",
+    "s5-recap",
+    "s5-group",
+    "s6-recap"
+   ],
+   "warnings": [
+    "Group task: prepare the HMW workshop: the deadline is not verified; check with the coordinator",
+    "Reading check quiz: the deadline differs between sources; check with the coordinator"
+   ],
+   "states": {
+    "s1-recap": "completed",
+    "s1-reading": "planned",
+    "s2-recap": "planned",
+    "s2-exercise": "planned",
+    "s3-recap": "completed",
+    "s3-exercise": "planned",
+    "s3-quiz": "planned",
+    "s4-recap": "planned",
+    "s4-reading": "completed",
+    "s4-exercise": "completed",
+    "s5-recap": "planned",
+    "s5-group": "planned",
+    "s6-recap": "planned",
+    "s6-journal": "completed"
+   }
+  },
+  {
+   "version": "v2",
+   "budget": 240,
+   "completed": [
+    "s1-recap",
+    "s3-quiz",
+    "s3-recap",
+    "s4-exercise",
+    "s4-recap",
+    "s5-group",
+    "s6-journal",
+    "s6-recap"
+   ],
+   "sequence": [
+    "s1-reading",
+    "s2-recap",
+    "s2-exercise",
+    "s3-exercise",
+    "s4-reading",
+    "s5-recap"
+   ],
+   "warnings": [],
+   "states": {
+    "s1-recap": "completed",
+    "s1-reading": "planned",
+    "s2-recap": "planned",
+    "s2-exercise": "planned",
+    "s3-recap": "completed",
+    "s3-exercise": "planned",
+    "s3-quiz": "completed",
+    "s4-recap": "completed",
+    "s4-reading": "planned",
+    "s4-exercise": "completed",
+    "s5-recap": "planned",
+    "s5-group": "completed",
+    "s6-recap": "completed",
+    "s6-journal": "completed"
+   }
+  },
+  {
+   "version": "v2",
+   "budget": 0,
+   "completed": [
+    "s1-recap",
+    "s2-exercise",
+    "s3-exercise",
+    "s4-exercise",
+    "s4-recap",
+    "s5-recap",
+    "s6-recap"
+   ],
+   "sequence": [],
+   "warnings": [
+    "Reading check quiz: sources disagree on the deadline"
+   ],
+   "states": {
+    "s1-recap": "completed",
+    "s1-reading": "does-not-fit",
+    "s2-recap": "does-not-fit",
+    "s2-exercise": "completed",
+    "s3-recap": "locked",
+    "s3-exercise": "completed",
+    "s3-quiz": "locked",
+    "s4-recap": "completed",
+    "s4-reading": "does-not-fit",
+    "s4-exercise": "completed",
+    "s5-recap": "completed",
+    "s5-group": "locked",
+    "s6-recap": "completed",
+    "s6-journal": "does-not-fit"
+   }
+  },
+  {
+   "version": "v1",
+   "budget": 15,
+   "completed": [
+    "s1-recap",
+    "s4-recap",
+    "s5-recap",
+    "s6-recap",
+    "s6-reflection"
+   ],
+   "sequence": [
+    "s2-recap"
+   ],
+   "warnings": [],
+   "states": {
+    "s1-recap": "completed",
+    "s1-reading": "does-not-fit",
+    "s2-recap": "planned",
+    "s2-exercise": "locked",
+    "s3-recap": "does-not-fit",
+    "s3-exercise": "locked",
+    "s3-quiz": "locked",
+    "s4-recap": "completed",
+    "s4-exercise": "locked",
+    "s5-recap": "completed",
+    "s5-group": "locked",
+    "s6-recap": "completed",
+    "s6-reflection": "completed"
+   }
+  },
+  {
+   "version": "v1",
+   "budget": 30,
+   "completed": [
+    "s1-recap",
+    "s2-exercise",
+    "s3-recap",
+    "s4-exercise",
+    "s4-recap",
+    "s5-group",
+    "s6-recap"
+   ],
+   "sequence": [
+    "s1-reading",
+    "s3-quiz"
+   ],
+   "warnings": [],
+   "states": {
+    "s1-recap": "completed",
+    "s1-reading": "planned",
+    "s2-recap": "does-not-fit",
+    "s2-exercise": "completed",
+    "s3-recap": "completed",
+    "s3-exercise": "does-not-fit",
+    "s3-quiz": "planned",
+    "s4-recap": "completed",
+    "s4-exercise": "completed",
+    "s5-recap": "does-not-fit",
+    "s5-group": "completed",
+    "s6-recap": "completed",
+    "s6-reflection": "does-not-fit"
+   }
+  },
+  {
+   "version": "v1",
+   "budget": 15,
+   "completed": [
+    "s1-reading",
+    "s2-exercise",
+    "s3-exercise",
+    "s3-quiz",
+    "s3-recap",
+    "s6-recap"
+   ],
+   "sequence": [
+    "s1-recap"
+   ],
+   "warnings": [],
+   "states": {
+    "s1-recap": "planned",
+    "s1-reading": "completed",
+    "s2-recap": "does-not-fit",
+    "s2-exercise": "completed",
+    "s3-recap": "completed",
+    "s3-exercise": "completed",
+    "s3-quiz": "completed",
+    "s4-recap": "does-not-fit",
+    "s4-exercise": "locked",
+    "s5-recap": "locked",
+    "s5-group": "locked",
+    "s6-recap": "completed",
+    "s6-reflection": "does-not-fit"
+   }
+  },
+  {
+   "version": "v2",
+   "budget": 240,
+   "completed": [
+    "s1-recap",
+    "s4-exercise",
+    "s4-recap",
+    "s6-recap"
+   ],
+   "sequence": [
+    "s1-reading",
+    "s2-recap",
+    "s2-exercise",
+    "s3-recap",
+    "s3-exercise",
+    "s3-quiz",
+    "s4-reading",
+    "s5-recap",
+    "s5-group",
+    "s6-journal"
+   ],
+   "warnings": [
+    "Group task: prepare the HMW workshop: the deadline is not verified; check with the coordinator",
+    "Reading check quiz: the deadline differs between sources; check with the coordinator"
+   ],
+   "states": {
+    "s1-recap": "completed",
+    "s1-reading": "planned",
+    "s2-recap": "planned",
+    "s2-exercise": "planned",
+    "s3-recap": "planned",
+    "s3-exercise": "planned",
+    "s3-quiz": "planned",
+    "s4-recap": "completed",
+    "s4-reading": "planned",
+    "s4-exercise": "completed",
+    "s5-recap": "planned",
+    "s5-group": "planned",
+    "s6-recap": "completed",
+    "s6-journal": "planned"
+   }
+  }
+ ],
+ "recorded_ai": {}
+}

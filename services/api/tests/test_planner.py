@@ -58,7 +58,7 @@ def test_verified_deadline_goes_first_and_unverified_is_warned():
                act('g1', session=2, kind='assessment', due='2026-12-01T18:00:00+04:00', due_status='unverified')]
     plan = build_plan(actions, 60, set())
     assert plan['sequence'][0] == 'q1'
-    assert any('unverified' in w for w in plan['warnings'])
+    assert any('not verified' in w for w in plan['warnings'])
 
 
 def test_all_completed_has_explicit_empty_reason():
