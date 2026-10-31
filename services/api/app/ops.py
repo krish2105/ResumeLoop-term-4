@@ -10,6 +10,7 @@ from collections import defaultdict, deque
 from pathlib import Path
 
 from fastapi import APIRouter, Depends, Request
+from fastapi.responses import JSONResponse
 
 from .storage import db, schema_version
 
@@ -33,6 +34,7 @@ def route_key(request: Request) -> str:
     return f"{request.method} {getattr(route, 'path', request.url.path)}"
 
 
+MAX_BODY = 1_000_000  # bytes; the largest legitimate request is a course package
 SECURITY_HEADERS = {
     'Cache-Control': 'no-store',
     'X-Content-Type-Options': 'nosniff',
@@ -49,7 +51,10 @@ async def access_middleware(request: Request, call_next):
     start = time.perf_counter()
     status = 500
     try:
-        response = await call_next(request)
+        if int(request.headers.get('content-length') or 0) > MAX_BODY:
+            response = JSONResponse({'detail': 'Request is larger than 1 MB'}, status_code=413)
+        else:
+            response = await call_next(request)
         status = response.status_code
         response.headers['X-Request-ID'] = rid
         # Learner data must never come from a browser cache (Safari reused a stale GET after a refresh).

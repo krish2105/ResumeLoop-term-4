@@ -1,0 +1,14 @@
+.git
+.venv
+.vercel
+.playwright-cli
+**/node_modules
+**/.next
+**/.next-*
+**/__pycache__
+**/.pytest_cache
+**/*.sqlite3
+**/.env*
+output
+evidence
+course

@@ -23,8 +23,8 @@ The table below lists the remaining engineering and platform gaps, which are not
 | Planner reselects completed actions and skips some newly feasible dependents | **Resolved 31 Oct 2026** | New `planner.py` with tests for completed exclusion, unlock chains and invalid graphs |
 | Review-note draft is not scoped/autosaved per record | Carryover fixed 31 Oct (note clears on record change); autosave still absent | Engineering: autosave review notes |
 | New UI not yet covered by browser smoke or axe scripts | **Resolved 31 Oct**: 71/71 smoke, 52 axe scans 0 violations | Remaining: VoiceOver, Safari/Firefox, manual contrast over canvas |
-| Local API unauthenticated, no tenant isolation, unencrypted SQLite/localStorage | Unsafe for real learner data or public service | Engineering: auth/privacy/tenant tests before pilot; keep localhost synthetic |
-| No screen-reader, Safari/Firefox or real-device participant tests | Accessibility not fully established | Engineering/research: assisted manual tests; automated scan limitations documented |
+| No hosted API, TLS, Postgres or independent security review; SQLite unencrypted | Unsafe for real learner data | Accounts, tenant isolation and a threat model exist (31 Oct); see `docs/SECURITY_AND_SAAS.md` gates before any real data |
+| No screen-reader or real-device participant tests; Firefox unverified locally | Accessibility not fully established | Safari engine verified 31 Oct (WebKit 143/143); Firefox runs in CI only. Remaining: VoiceOver/NVDA and phones |
 | Four hours/week default for this project; five projects share 20 hours | Scope risk | Student: prioritize rubric evidence and one vertical slice per session |
 | Original Design Kit resource link returned 404 | Starter source pointer stale | Resolved for method research using verified primary method pages; no dataset downloaded |
 | Port 8000 belongs to another service on this machine | Default launch fails | Resolved locally with port 8014 and explicit environment configuration |

@@ -52,8 +52,8 @@ async (page) => {
   check(await page.getByRole('link', {name: /The course changed/}).isVisible(), 'Course-change banner links to the digest');
   await stars.nth(0).focus();
   // Safari moves Tab only through form fields unless Option is held; Option+Tab is its "every item" key.
-  const engine = page.context().browser()?.browserType().name();
-  await page.keyboard.press(engine === 'webkit' ? 'Alt+Tab' : 'Tab');
+  const macSafari = page.context().browser()?.browserType().name() === 'webkit' && await page.evaluate(() => /Mac/.test(navigator.platform));
+  await page.keyboard.press(macSafari ? 'Alt+Tab' : 'Tab');
   check(await stars.nth(1).evaluate(el => el === document.activeElement && el.matches(':focus-visible') && getComputedStyle(el).outlineStyle !== 'none'), 'Tab moves between star buttons with a visible focus ring');
 
   // ---------- List view twin ----------

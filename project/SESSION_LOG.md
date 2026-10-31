@@ -85,7 +85,7 @@ Initial Git publication completed: root commit `29dfb5c6e20659ced07cf12736a6ddc1
 
 **Untested:** assistive technology, other browsers, phones; manual contrast over the canvas.
 
-### 2026-11-01 — Remaining outline features, AI evaluation and CI browser suite
+### 2026-10-31 — Remaining outline features, AI evaluation and CI browser suite
 
 **User steering:** build everything possible for the outline to push the score above 95.
 
@@ -93,10 +93,19 @@ Initial Git publication completed: root commit `29dfb5c6e20659ced07cf12736a6ddc1
 
 **Verification:** 83 pytest; coach eval 95/100/100/100 (answer/citation/abstain/injection). Browser smoke 128/128 and axe 96 scans with 0 violations (24 routes), recorded in `evidence/2026-10-31/`.
 
-### 2026-11-01 (later) — Five build batches
+### 2026-10-31 (later) — Five build batches
 
 **User steering:** build all five batches in order, push before limits so Vercel deploys, then rescore.
 
 **Work:** migrations, observability, backup/restore, autosave, load test, CI axe; 59-question eval with offline replay and a status guard (found by the eval); coordinator course import, learner profiles, insights, .ics, offline shell; slide deck, viva practice, faculty email; accounts, organisations, roles, tenant isolation, audit, export/delete, privacy, Docker.
 
 **Verification:** 99 pytest including cross-tenant denial tests and the eval replay. CI caught a 320px overflow from the new learner switcher; fixed. Docker images not built (Colima daemon not running). Local browser smoke 143/143 and axe 112 scans with 0 violations (a target-size issue on /plan was found and fixed). Scorecard ≈ 74 overall.
+
+### 2026-10-31 (final round) — Cross-browser, retrieval, security, Docker
+
+**User steering:** build what remains and rescore.
+
+**Work:** ran the smoke suite in WebKit and Firefox; fixed a Safari stale-cache bug; measured three retrieval strategies offline against the gold set and shipped task-pinned retrieval instead of a keyword hybrid; security headers, body limit, audits and a STRIDE threat model; built and ran the Docker stack; added WebKit and Firefox to CI; corrected doc entries wrongly dated 1 November (git shows 31 October).
+
+**Verification:** 101 pytest; live eval 97.6/97.5/100/100; smoke 143/143 in Chromium and WebKit; axe 112 scans with 0 violations; pip-audit and npm audit clean; compose stack checked end to end. Firefox not verified locally. Scorecard ≈ 75 overall.
+

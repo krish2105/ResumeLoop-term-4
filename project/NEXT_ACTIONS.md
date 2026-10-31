@@ -27,7 +27,8 @@ Updated 23 October 2026. Four project hours/week is the default; all five projec
 ## M2 — complete learner recovery workflow
 - [x] (31 Oct) Rewrite browser smoke + axe scripts for the new routes; run light/dark at 320–1440px (71/71, 52 scans 0 violations).
 - [x] (31 Oct) Ember dusk redesign, resizable panels, 3D rebuild, nine outline-aligned screens; 109/109 smoke, 80 axe scans 0 violations.
-- [ ] **NEXT (engineering):** manual VoiceOver pass on journey, coach, empathy studio and reflection journal; Safari and Firefox check; eyeball contrast over the 3D canvas.
+- [x] (31 Oct) Safari (WebKit) smoke 143/143 after fixing a stale-cache bug; WebKit and Firefox added to CI.
+- [ ] **NEXT (engineering):** manual VoiceOver pass on journey, coach, empathy studio and reflection journal; Firefox locally; eyeball contrast over the 3D canvas; Next standalone output to shrink the 1.26 GB web image.
 - [ ] **NEXT (owner):** use the Course hub and Reflection journal from the first session; record real observations only after consent.
 - [x] (31 Oct) Budget + last completed session → explainable feasible plan → chosen task → saved progress → refresh/resume (3D road + list view).
 - [ ] Versioned timeline/deadline verification and conflict/unknown states; no unsupported deadline assurances.

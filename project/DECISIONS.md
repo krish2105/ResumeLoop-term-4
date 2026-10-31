@@ -28,3 +28,6 @@
 | 2026-10-31 | Split layouts with WAI-ARIA splitters; nothing overlays the 3D canvas except two small chips | Owner feedback on overlap and resizing | Screen-reader testing finds problems |
 | 2026-10-31 | Add outline-aligned studio screens as typed collections in the existing studio table | Covers weeks 2–12 without a new service; one validation path | Data volume or governance needs separate tables |
 | 2026-10-31 | Vercel builds from GitHub `main` with root `apps/web` | Fixes failing checks; push deploys the demo | Hosting changes |
+| 2026-10-31 | Coach pins the selected task's own source passage; no keyword hybrid | Measured on the gold set: hybrid lifted recall but returned passages for 4–6 of 10 off-topic questions; pinning fixes "this task" questions without weakening abstention | A larger real question set shows other misses |
+| 2026-10-31 | API responses are `Cache-Control: no-store`; CSP and security headers on web and API | Safari served stale progress after refresh; defence in depth for a hosted deployment | A nonce-based CSP replaces `'unsafe-inline'` |
+

@@ -2,16 +2,23 @@
 
 Updated **23 October 2026**. Term starts **10 November 2026**. Solo developer; default allocation **4 hours/week** from 20 hours shared across five projects. Cross-account continuation instructions are in [`NEW_ACCOUNT_HANDOFF.md`](NEW_ACCOUNT_HANDOFF.md).
 
-## 1 November 2026 (later): five build batches
+## 31 October 2026 (final round): cross-browser, retrieval, security, Docker
+
+- **Safari bug fixed:** WebKit served a cached copy of progress after a refresh. The API now sends `Cache-Control: no-store` and the client fetches with `cache: 'no-store'`. The smoke suite passes 143/143 in Chromium and WebKit; CI also runs WebKit and Firefox on Linux (Firefox would not launch on this Mac).
+- **Retrieval:** questions about a selected task now pin that task's own source passage. A keyword hybrid was measured and rejected: it found more passages but returned hits for 4–6 of 10 off-topic questions. Live eval: answered 97.6% (was 95.1%), cited 97.5%, declined 100%, injection-safe 100%.
+- **Security:** CSP and security headers on web and API, 1 MB request limit (413), `pip-audit` and `npm audit` clean, threat model in [`docs/SECURITY_AND_SAAS.md`](docs/SECURITY_AND_SAAS.md).
+- **Docker:** both images built; `docker compose up` verified end to end. The web image is 1.26 GB (standalone output would shrink it).
+
+## 31 October 2026 (later): five build batches
 
 Engineering hardening, AI evaluation with CI replay, MVP (coordinator course import, learner profiles, insights, calendar export, offline), course extras (slide deck, viva practice, faculty email) and SaaS foundations (accounts, organisations, roles, tenant isolation, audit, export and delete, privacy, Docker). Scores in [`docs/SCORECARD.md`](docs/SCORECARD.md).
 
 - Accounts are off by default. Turn them on with `RL_AUTH=required` on the API (then visit `/login`). `RL_CORS_ORIGINS` sets allowed web origins.
 - Backup: `PYTHONPATH=services/api .venv/bin/python scripts/backup_db.py backup` (restore with `restore <file>` while the API is stopped).
 - Load test: `PYTHONPATH=services/api .venv/bin/python scripts/load_test.py`. Metrics: `http://127.0.0.1:8014/api/metrics`.
-- Self-host with accounts: `docker compose up --build` (Docker images not yet test-built on this machine).
+- Self-host with accounts: `docker compose up --build` (built and run on Colima 31 Oct: health, 401 without a token, sign-up, roles, volume persistence and the login page all checked).
 
-## 1 November 2026: everything buildable for the outline
+## 31 October 2026: everything buildable for the outline
 
 New screens: **Readings and quizzes** (`/learn`), **Research ops** (`/studio/research`), **Synthesis board** (`/studio/synthesis`), **Evidence report** (`/report`), a paper assembler in the Reflection journal, a sign test in the Experiment lab, and a **Coach evaluation** panel in Ethics. AI facts guard added after the evaluation caught an injected date. CI now runs the browser suite. Scores and the honest ceiling are in [`docs/SCORECARD.md`](docs/SCORECARD.md).
 

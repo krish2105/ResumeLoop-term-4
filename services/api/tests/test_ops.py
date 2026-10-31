@@ -20,6 +20,14 @@ def test_request_id_header_and_metrics(client):
     assert m['routes']['GET /api/health']['count'] >= 1
 
 
+def test_security_headers_and_body_limit(client):
+    h = client.get('/api/learner/progress').headers
+    assert h['Cache-Control'] == 'no-store' and h['X-Frame-Options'] == 'DENY' and h['X-Content-Type-Options'] == 'nosniff'
+    assert "frame-ancestors 'none'" in h['Content-Security-Policy']
+    r = client.post('/api/course/import/preview', content=b'{"package": "' + b'x' * 1_100_000 + b'"}', headers={'Content-Type': 'application/json'})
+    assert r.status_code == 413 and r.headers['X-Request-ID']
+
+
 def test_backup_and_restore_round_trip(client, tmp_path):
     import app.main as main
     client.post('/api/studio/themes', json={'body': {'title': 'Kept theme'}})

@@ -1,4 +1,25 @@
-# ResumeLoop scorecard — updated 1 November 2026 (after five build batches)
+# ResumeLoop scorecard — updated 31 October 2026 (final round)
+
+## Built in the final round
+1. **Cross-browser:** smoke suite 143/143 in Chromium and WebKit (Safari engine). It found a real Safari bug (stale progress after refresh), now fixed. CI runs WebKit and Firefox too.
+2. **AI:** task-pinned retrieval; a keyword hybrid was measured and rejected because it weakened abstention. Live answer rate 95.1% → 97.6%; citation 97.5%, declined 100%, injection-safe 100%. Two misses remain (one needs the version diff, one cites a neighbouring passage).
+3. **Security:** CSP and headers on web and API, 1 MB request limit, clean `pip-audit` and `npm audit`, STRIDE threat model with each control's evidence.
+4. **Docker:** both images built and the compose stack verified (auth required, sign-up, roles, persistence).
+
+| Perspective | Five batches | Now | What still caps it |
+|---|---|---|---|
+| CTO (engineering) | 92 | **94** | SQLite; no hosted monitoring; Firefox verified only in CI |
+| CEO (product and business) | 48 | **48** | No real users, pilot or buyer evidence |
+| AI engineer | 91 | **93** | Fictional 59-question set; 7B local model; quote validity 81% |
+| Course-outline coverage | 99 | **99** | Faculty confirmation of frameworks and dates |
+| Design Thinking professor (if submitted today) | 50 | **50** | Real fieldwork, sessions and your own reflection (85–95 with them) |
+| Real MVP | 78 | **80** | A real authorised course with 3–5 learners for two weeks |
+| Real SaaS | 55 | **60** | Hosted API, Postgres, SSO, TLS, billing, independent security review |
+| **Overall (weighted for this unit)** | ≈ 74 | **≈ 75** | Software is at its ceiling; the rest is academic evidence only you can produce |
+
+---
+
+## After five build batches — 31 October 2026
 
 ## Built in this round
 1. **Engineering:** versioned migrations (`schema_migrations`), request IDs, JSON access logs, `/api/metrics` (p50/p95, errors, schema version), tested backup and restore, review-note autosave, load test (600 requests at concurrency 12: ~1,100 req/s, p95 18.7 ms, 0 errors), accessibility scan in CI.
@@ -20,7 +41,7 @@
 
 ---
 
-## Earlier update — 1 November 2026
+## Earlier update — 31 October 2026
 
 ## What changed since the first scorecard (31 October: overall ≈ 60)
 - **Class prep (the quiz-based 20%):** reading list from the outline, own-words notes, spaced-repetition flashcards, participation log.

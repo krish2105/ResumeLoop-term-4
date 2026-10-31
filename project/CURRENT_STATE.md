@@ -2,7 +2,19 @@
 
 Last updated: **23 October 2026**. User requested a complete cross-account continuation package and publication to `https://github.com/krish2105/ResumeLoop-term-4`. **`PROGRESS.md`** remains the status/run authority; **`NEW_ACCOUNT_HANDOFF.md`** and **`prompts/10_NEW_ACCOUNT_HANDOFF.md`** provide the transfer checklist and paste-ready prompt.
 
-## 1 November 2026 (later) — five build batches (latest)
+## 31 October 2026 (final round) — cross-browser, retrieval, security, Docker (latest)
+
+**VERIFIED (commands run):** `pytest` → **101 passed** (new: task-pinned retrieval, security headers and 413 body limit). `scripts/eval_coach.py` live (qwen2.5:7b, bge-m3:567m) → answer 0.976, citation 0.975, abstain 1.0, injection 1.0, quote 0.812, digest before repair 0.857. Browser smoke **143/143 in Chromium and in WebKit** on fresh databases; axe 112 scans, 0 violations under the new CSP. `pip-audit` no known vulnerabilities; `npm audit` 0. `docker compose build` + `up` on Colima: health `auth_required: true`, 401 without token, sign-up issues a token, coordinator route 200 for admin, session survives an API restart, `/login` renders with no console errors; stack and Colima stopped afterwards.
+
+**Bugs found:** Safari reused a cached GET of progress after refresh (fixed with `Cache-Control: no-store` and `cache: 'no-store'`); the first CSP blocked the 3D label worker (added `blob:` to script-src); smoke race after reload (the list's Hide button appeared before the plan).
+
+**Changed:** `services/api/app/ops.py`, `app/ai/retrieval.py`, `app/ai/features.py`, tests `test_ai.py`, `test_ops.py`; `apps/web/next.config.mjs`, `lib/client.ts`; `scripts/browser-smoke.js`; `.github/workflows/ci.yml` (WebKit + Firefox step); `.dockerignore`; `docs/SECURITY_AND_SAAS.md` (threat model); re-recorded `data/eval/replay.json`, `data/sample/recorded_ai.json`, `apps/web/demo/fixtures.json`.
+
+**UNTESTED / open:** Firefox locally (headless launch fails on this Mac: "Could not find profile folder"; CI runs it on Linux); VoiceOver/NVDA; real phones; hosted API, Postgres, SSO; real fieldwork and the reflective paper. Not production-ready.
+
+**Next runnable task:** owner sends the faculty questions (`/course` → Faculty questions) and books the first consented interviews.
+
+## 31 October 2026 (later) — five build batches (latest)
 
 **Built:** migrations v1–v4, request IDs, access logs, `/api/metrics`, backup/restore, load test, review autosave; 59-question coach eval with CI replay and status guard; coordinator course import/versions/revert, learner profiles, insights, `.ics`, offline shell; slide deck, viva practice, faculty email; optional accounts (RL_AUTH=required), organisations, roles, tenant isolation, audit, export/delete, privacy page, Dockerfiles.
 
@@ -10,7 +22,7 @@ Last updated: **23 October 2026**. User requested a complete cross-account conti
 
 **UNTESTED / open:** Docker image builds (daemon not running); hosted deployment of the API; Postgres; VoiceOver, Safari/Firefox, phones; real fieldwork. Demo-era routes (`/api/demo/*` review and imports) are not tenant-scoped; keep them for fictional data only.
 
-## 1 November 2026 — remaining outline features, AI evaluation, CI browser suite
+## 31 October 2026 — remaining outline features, AI evaluation, CI browser suite
 
 **VERIFIED:** 83 pytest pass (new: readings seed, Leitner review, interview consent gate and conversion, facts guard). Coach evaluation on qwen2.5:7b + bge-m3:567m: answer 95%, citation hit 100%, abstain 100%, injection-safe 100% (was 67% before the facts guard; the eval caught the model repeating an injected date). Evidence: `evidence/eval/coach-eval.json`.
 
