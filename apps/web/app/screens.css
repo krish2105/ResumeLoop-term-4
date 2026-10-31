@@ -159,10 +159,12 @@ select,input,textarea{max-width:100%}
 .authCard{max-width:460px}.authCard input{width:100%}
 .dangerBtn{color:var(--danger);border-color:color-mix(in srgb,var(--danger) 50%,var(--border))}
 /* Top bar on phones: theme and learner selectors wrap instead of pushing the page wider (CI 320px check) */
-.toolbar{min-width:0;flex-wrap:wrap;justify-content:flex-end}
+.toolbar{min-width:0;flex-wrap:wrap;justify-content:flex-end}.toolbar select{min-height:32px}
+/* iOS Safari zooms the page when a field under 16px gets focus; touch screens get 16px fields */
+@media(pointer:coarse){input,select,textarea{font-size:max(16px,1em)}}
 @media(max-width:560px){
  .topbar{height:auto;min-height:56px;flex-wrap:wrap;gap:6px;padding:8px 16px}
- .toolbar{gap:6px}.toolbar select{max-width:120px;padding:6px 8px;font-size:12px}
+ .toolbar{gap:6px}.toolbar select{max-width:120px;padding:6px 8px}
  .demoPill{display:none}
  .journey2{height:auto}
 }

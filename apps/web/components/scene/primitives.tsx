@@ -2,7 +2,7 @@
 // Shared 3D building blocks for the ember road and story mode.
 import {useFrame} from '@react-three/fiber';
 import {Billboard, Text} from '@react-three/drei';
-import {useMemo, useRef} from 'react';
+import {useMemo, useRef, useState} from 'react';
 import * as THREE from 'three';
 
 export type SceneColors = {
@@ -92,16 +92,23 @@ export function ScreenLabel({text, px = 13, color, outline, anchorX = 'left', ma
 }) {
   const ref = useRef<THREE.Group>(null);
   const world = useMemo(() => new THREE.Vector3(), []);
+  const screen = useMemo(() => new THREE.Vector3(), []);
+  // On a phone a long label would run off the canvas: wrap it to the room left of the right edge.
+  const [ems, setEms] = useState(maxEms);
   useFrame(({camera, size}) => {
     if (!ref.current) return;
     ref.current.getWorldPosition(world);
     const d = camera.position.distanceTo(world);
     const fov = ((camera as THREE.PerspectiveCamera).fov * Math.PI) / 180;
     ref.current.scale.setScalar(px * (2 * d * Math.tan(fov / 2)) / size.height);
+    const x = (screen.copy(world).project(camera).x + 1) / 2 * size.width;
+    const room = anchorX === 'left' ? size.width - x - 12 : 2 * Math.min(x, size.width - x) - 24;
+    const fit = Math.max(6, Math.min(maxEms, Math.floor(room / px)));
+    if (fit !== ems) setEms(fit);
   });
   return <Billboard>
     <group ref={ref}>
-      <Text fontSize={1} color={color} outlineWidth={0.09} outlineColor={outline} anchorX={anchorX} anchorY="middle" maxWidth={maxEms}
+      <Text fontSize={1} color={color} outlineWidth={0.09} outlineColor={outline} anchorX={anchorX} anchorY="middle" maxWidth={ems}
         textAlign={anchorX} lineHeight={1.2} renderOrder={10} material-depthTest={false} material-depthWrite={false}>{text}</Text>
     </group>
   </Billboard>;

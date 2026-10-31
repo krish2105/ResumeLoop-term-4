@@ -427,6 +427,16 @@ async (page) => {
       check(!wide, `No page overflow on ${route} at ${width}px${wide ? ' (' + wide + ')' : ''}`);
     }
   }
+  // ---------- Touch phone (iPhone-sized, touch, coarse pointer) ----------
+  const phone = await page.context().browser().newContext({viewport: {width: 393, height: 852}, isMobile: true, hasTouch: true});
+  const tp = await phone.newPage();
+  await tp.goto(BASE + '/'); await tp.locator('#budget-help').filter({hasText: 'tasks lit'}).waitFor({timeout: 30000});
+  const fonts = await tp.locator('#budget, #theme').evaluateAll(els => els.map(e => parseFloat(getComputedStyle(e).fontSize)));
+  check(fonts.every(f => f >= 16), 'Touch screens get 16px fields so iOS Safari does not zoom on focus');
+  check((await tp.locator('#theme').boundingBox()).height >= 24, 'Top-bar selectors meet the 24px target size on phones');
+  await tp.getByRole('button', {name: 'Menu'}).tap(); await tp.getByRole('link', {name: 'Coach', exact: true}).tap(); await tp.waitForURL(/\/coach$/);
+  check(await tp.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth), 'Menu works by tap and the coach fits a phone');
+  await phone.close();
   await page.setViewportSize({width: 1440, height: 1000});
   await page.emulateMedia({colorScheme: 'dark', reducedMotion: 'no-preference'});
   const hydration = consoleErrors.filter(e => /\bhydrat|unmount a root/i.test(e)); // \b skips the 3D label worker's 'rehydrate' notice
