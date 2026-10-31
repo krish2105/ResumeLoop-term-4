@@ -1,11 +1,11 @@
 {
- "date": "2026-10-31",
- "build": "7a9397c + docs",
- "environment": "macOS arm64, Python 3.14.7, Node 26.10.0, Playwright CLI 0.1.22 (Chromium), axe-core 4, production Next.js build (23 pages), throwaway SQLite, Ollama qwen2.5:7b + bge-m3:567m",
+ "date": "2026-11-01",
+ "build": "067db32",
+ "environment": "macOS arm64, Python 3.14.7, Node 26.10.0, Playwright CLI 0.1.22 (Chromium), axe-core 4, production Next.js build (27 pages), throwaway SQLite, Ollama qwen2.5:7b + bge-m3:567m",
  "scope": "SYNTHETIC ENGINEERING VERIFICATION. Fictional data only. Not participant usability evidence and not WCAG certification.",
  "kind": "SYNTHETIC ENGINEERING VERIFICATION",
  "ai_available": true,
- "count": 109,
+ "count": 128,
  "checks": [
   "3D canvas renders on the journey",
   "Every course task is listed as a focusable star button",
@@ -53,6 +53,13 @@
   "Reflection cannot be saved without a concept",
   "Reflection entry saves and can be downloaded",
   "Course hub: rubric self-check and contribution matrix work",
+  "Reading list loads from the outline with 18 required readings",
+  "Flashcard self-quiz moves a known card to a later day",
+  "Participation log saves a session",
+  "An interview cannot become research data before consent is recorded",
+  "After consent, a captured interview becomes a note with coded moments",
+  "Synthesis board moves a code into a theme and the evidence trace updates",
+  "Evidence report compiles the studio in rubric order",
   "Sidebar resizes from the keyboard",
   "Sidebar resizes by dragging",
   "Sidebar collapses and restores",
@@ -115,12 +122,25 @@
   "No page overflow on /course at 320px",
   "No page overflow on /course at 768px",
   "No page overflow on /course at 1440px",
+  "No page overflow on /learn at 320px",
+  "No page overflow on /learn at 768px",
+  "No page overflow on /learn at 1440px",
+  "No page overflow on /studio/research at 320px",
+  "No page overflow on /studio/research at 768px",
+  "No page overflow on /studio/research at 1440px",
+  "No page overflow on /studio/synthesis at 320px",
+  "No page overflow on /studio/synthesis at 768px",
+  "No page overflow on /studio/synthesis at 1440px",
+  "No page overflow on /report at 320px",
+  "No page overflow on /report at 768px",
+  "No page overflow on /report at 1440px",
   "No hydration or root-unmount console errors"
  ],
  "other_console_errors": [
   "Failed to load resource: the server responded with a status of 409 (Conflict)",
   "Failed to load resource: the server responded with a status of 422 (Unprocessable Content)",
   "Failed to load resource: the server responded with a status of 422 (Unprocessable Content)",
-  "Failed to load resource: the server responded with a status of 422 (Unprocessable Content)"
+  "Failed to load resource: the server responded with a status of 422 (Unprocessable Content)",
+  "Failed to load resource: the server responded with a status of 409 (Conflict)"
  ]
 }

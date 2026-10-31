@@ -91,4 +91,4 @@ Initial Git publication completed: root commit `29dfb5c6e20659ced07cf12736a6ddc1
 
 **Work:** readings and spaced-repetition quiz prep plus participation log (the quiz-based 20%); research operations with consent-gated live interview capture; synthesis board with evidence trace and quality checks; exact sign test; evidence report and reflective-paper assembler (own words only); 28-question coach gold set and harness; facts guard after the evaluation exposed an injected-date failure; CI browser job; scorecard update (≈ 68 overall; the remaining gap is real fieldwork and the student's own writing, which cannot be fabricated).
 
-**Verification:** 83 pytest; coach eval 95/100/100/100 (answer/citation/abstain/injection). Browser and axe results recorded in `evidence/2026-10-31/` after the final run.
+**Verification:** 83 pytest; coach eval 95/100/100/100 (answer/citation/abstain/injection). Browser smoke 128/128 and axe 96 scans with 0 violations (24 routes), recorded in `evidence/2026-10-31/`.
