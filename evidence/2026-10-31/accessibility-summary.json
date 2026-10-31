@@ -1,15 +1,15 @@
 {
  "date": "2026-11-01",
- "build": "067db32",
- "environment": "macOS arm64, Python 3.14.7, Node 26.10.0, Playwright CLI 0.1.22 (Chromium), axe-core 4, production Next.js build (27 pages), throwaway SQLite, Ollama qwen2.5:7b + bge-m3:567m",
+ "build": "after five batches",
+ "environment": "macOS arm64, Python 3.14.7, Node 26.10.0, Playwright CLI 0.1.22 (Chromium), axe-core 4, production Next.js build (31 pages), throwaway SQLite, Ollama qwen2.5:7b + bge-m3:567m",
  "scope": "SYNTHETIC ENGINEERING VERIFICATION. Fictional data only. Not participant usability evidence and not WCAG certification.",
- "scans": 96,
+ "scans": 112,
  "scans_with_violations": 0,
  "violation_ids": [],
  "needs_manual_review": [
   "color-contrast"
  ],
- "routes": 24,
+ "routes": 28,
  "modes": [
   "light",
   "dark"

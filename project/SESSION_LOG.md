@@ -92,3 +92,11 @@ Initial Git publication completed: root commit `29dfb5c6e20659ced07cf12736a6ddc1
 **Work:** readings and spaced-repetition quiz prep plus participation log (the quiz-based 20%); research operations with consent-gated live interview capture; synthesis board with evidence trace and quality checks; exact sign test; evidence report and reflective-paper assembler (own words only); 28-question coach gold set and harness; facts guard after the evaluation exposed an injected-date failure; CI browser job; scorecard update (≈ 68 overall; the remaining gap is real fieldwork and the student's own writing, which cannot be fabricated).
 
 **Verification:** 83 pytest; coach eval 95/100/100/100 (answer/citation/abstain/injection). Browser smoke 128/128 and axe 96 scans with 0 violations (24 routes), recorded in `evidence/2026-10-31/`.
+
+### 2026-11-01 (later) — Five build batches
+
+**User steering:** build all five batches in order, push before limits so Vercel deploys, then rescore.
+
+**Work:** migrations, observability, backup/restore, autosave, load test, CI axe; 59-question eval with offline replay and a status guard (found by the eval); coordinator course import, learner profiles, insights, .ics, offline shell; slide deck, viva practice, faculty email; accounts, organisations, roles, tenant isolation, audit, export/delete, privacy, Docker.
+
+**Verification:** 99 pytest including cross-tenant denial tests and the eval replay. CI caught a 320px overflow from the new learner switcher; fixed. Docker images not built (Colima daemon not running). Local browser smoke 143/143 and axe 112 scans with 0 violations (a target-size issue on /plan was found and fixed). Scorecard ≈ 74 overall.

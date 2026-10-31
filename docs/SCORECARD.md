@@ -1,4 +1,26 @@
-# ResumeLoop scorecard — updated 1 November 2026
+# ResumeLoop scorecard — updated 1 November 2026 (after five build batches)
+
+## Built in this round
+1. **Engineering:** versioned migrations (`schema_migrations`), request IDs, JSON access logs, `/api/metrics` (p50/p95, errors, schema version), tested backup and restore, review-note autosave, load test (600 requests at concurrency 12: ~1,100 req/s, p95 18.7 ms, 0 errors), accessibility scan in CI.
+2. **AI quality:** 59-question gold set (40 answerable incl. task follow-ups, 10 out-of-scope, 8 injection), replayed offline in CI from a recording of the live model. The larger set exposed two real failures (the model asserted a cancelled quiz and a skippable task); a deterministic status guard fixed both. Live result: answered 95%, cited correctly 97%, declined 100%, resisted injection 100%, quotes valid 82%, digest grouped 86% before repair.
+3. **MVP:** coordinator course-package import with validation, preview diff, versions and revert; separate learner profiles; learner progress and "what learners ask about" insights; calendar export (.ics) with unverified deadlines labelled; installable offline app shell.
+4. **Course extras:** Week 12 slide deck generated from story mode (print to PDF), viva practice from the rubric, faculty-questions email to copy and send yourself.
+5. **SaaS foundations:** optional accounts (scrypt passwords, hashed expiring sessions, rate-limited sign-in), organisations and roles, tenant isolation on every query with cross-tenant denial tests, audit log, admin export and delete of all organisation data, privacy page, Dockerfiles and compose.
+
+| Perspective | 31 Oct | Before batches | Now | What still caps it |
+|---|---|---|---|---|
+| CTO (engineering) | 76 | 87 | **92** | SQLite only; no hosted monitoring or alerting; Docker images not yet test-built |
+| CEO (product and business) | 45 | 45 | **48** | No real users, pilot or buyer evidence |
+| AI engineer | 70 | 86 | **91** | Fictional set; 7B local model; three over-cautious or mis-cited answers |
+| Course-outline coverage | 88 | 97 | **99** | Faculty confirmation of frameworks and dates |
+| Design Thinking professor (if submitted today) | 45 | 50 | **50** | Real fieldwork, sessions and your own reflection (85–95 with them) |
+| Real MVP | 55 | 60 | **78** | A real authorised course with 3–5 learners for two weeks |
+| Real SaaS | 20 | 20 | **55** | Hosting, Postgres, SSO, encryption at rest, security review, billing |
+| **Overall (weighted for this unit)** | ≈ 60 | ≈ 68 | **≈ 74** | Software is at its ceiling; the rest is academic evidence |
+
+---
+
+## Earlier update — 1 November 2026
 
 ## What changed since the first scorecard (31 October: overall ≈ 60)
 - **Class prep (the quiz-based 20%):** reading list from the outline, own-words notes, spaced-repetition flashcards, participation log.

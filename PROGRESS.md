@@ -2,6 +2,15 @@
 
 Updated **23 October 2026**. Term starts **10 November 2026**. Solo developer; default allocation **4 hours/week** from 20 hours shared across five projects. Cross-account continuation instructions are in [`NEW_ACCOUNT_HANDOFF.md`](NEW_ACCOUNT_HANDOFF.md).
 
+## 1 November 2026 (later): five build batches
+
+Engineering hardening, AI evaluation with CI replay, MVP (coordinator course import, learner profiles, insights, calendar export, offline), course extras (slide deck, viva practice, faculty email) and SaaS foundations (accounts, organisations, roles, tenant isolation, audit, export and delete, privacy, Docker). Scores in [`docs/SCORECARD.md`](docs/SCORECARD.md).
+
+- Accounts are off by default. Turn them on with `RL_AUTH=required` on the API (then visit `/login`). `RL_CORS_ORIGINS` sets allowed web origins.
+- Backup: `PYTHONPATH=services/api .venv/bin/python scripts/backup_db.py backup` (restore with `restore <file>` while the API is stopped).
+- Load test: `PYTHONPATH=services/api .venv/bin/python scripts/load_test.py`. Metrics: `http://127.0.0.1:8014/api/metrics`.
+- Self-host with accounts: `docker compose up --build` (Docker images not yet test-built on this machine).
+
 ## 1 November 2026: everything buildable for the outline
 
 New screens: **Readings and quizzes** (`/learn`), **Research ops** (`/studio/research`), **Synthesis board** (`/studio/synthesis`), **Evidence report** (`/report`), a paper assembler in the Reflection journal, a sign test in the Experiment lab, and a **Coach evaluation** panel in Ethics. AI facts guard added after the evaluation caught an injected date. CI now runs the browser suite. Scores and the honest ceiling are in [`docs/SCORECARD.md`](docs/SCORECARD.md).

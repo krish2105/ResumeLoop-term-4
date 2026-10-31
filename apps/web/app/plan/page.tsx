@@ -22,7 +22,7 @@ export default function PlanPage() {
         <p>{plan.sequence.length ? `${plan.sequence.length} tasks planned, ${plan.planned_minutes} of ${plan.budget_minutes} minutes used, ${plan.remaining_minutes} left.` : plan.empty_reason}</p>
         <Warnings warnings={plan.warnings} />
         <button className="outlineBtn" onClick={() => downloadIcs(plan)} disabled={!plan.sequence.length && !plan.items.some(i => i.due)}>Add plan and deadlines to my calendar (.ics)</button>
-        {j.progress.state.seen_version !== j.course?.version && <p><Link href="/digest">The course changed since your last visit. See what changed.</Link></p>}
+        {j.progress.state.seen_version !== j.course?.version && <Link className="changeBanner" href="/digest">The course changed since your last visit. See what changed</Link>}
       </section>
       <section className="panel" aria-labelledby="tonight">
         <h2 id="tonight">Planned now, in order</h2>

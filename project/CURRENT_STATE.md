@@ -2,7 +2,15 @@
 
 Last updated: **23 October 2026**. User requested a complete cross-account continuation package and publication to `https://github.com/krish2105/ResumeLoop-term-4`. **`PROGRESS.md`** remains the status/run authority; **`NEW_ACCOUNT_HANDOFF.md`** and **`prompts/10_NEW_ACCOUNT_HANDOFF.md`** provide the transfer checklist and paste-ready prompt.
 
-## 1 November 2026 — remaining outline features, AI evaluation, CI browser suite (latest)
+## 1 November 2026 (later) — five build batches (latest)
+
+**Built:** migrations v1–v4, request IDs, access logs, `/api/metrics`, backup/restore, load test, review autosave; 59-question coach eval with CI replay and status guard; coordinator course import/versions/revert, learner profiles, insights, `.ics`, offline shell; slide deck, viva practice, faculty email; optional accounts (RL_AUTH=required), organisations, roles, tenant isolation, audit, export/delete, privacy page, Dockerfiles.
+
+**VERIFIED:** 99 pytest (cross-tenant read/update/delete/replay denial, roles, rate limit, export/delete, migration 4 data preservation, eval replay). Live eval 95.1/97.4/100/100. Load test 600 req, p95 18.7 ms, 0 errors.
+
+**UNTESTED / open:** Docker image builds (daemon not running); hosted deployment of the API; Postgres; VoiceOver, Safari/Firefox, phones; real fieldwork. Demo-era routes (`/api/demo/*` review and imports) are not tenant-scoped; keep them for fictional data only.
+
+## 1 November 2026 — remaining outline features, AI evaluation, CI browser suite
 
 **VERIFIED:** 83 pytest pass (new: readings seed, Leitner review, interview consent gate and conversion, facts guard). Coach evaluation on qwen2.5:7b + bge-m3:567m: answer 95%, citation hit 100%, abstain 100%, injection-safe 100% (was 67% before the facts guard; the eval caught the model repeating an injected date). Evidence: `evidence/eval/coach-eval.json`.
 
