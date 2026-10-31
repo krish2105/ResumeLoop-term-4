@@ -1,0 +1,29 @@
+/* Ember dusk: one warm graphite hue family, stepped lighter for elevation, one ember accent.
+   Every text pair is >= 4.5:1 in both themes; control borders >= 3:1. */
+:root{
+ --bg:#FAF6F0;--surface:#FFFFFF;--raised:#F2EBE2;--border:#E6DCD0;--text:#22160F;--muted:#62544B;
+ --accent:#B5401F;--accentFg:#FFFFFF;--accentBg:#FBE6DE;--accentText:#8F2F14;
+ --ok:#1D7A4F;--okBg:#E3F3EA;--warn:#8A5A00;--warnBg:#FFF1D6;--danger:#A3261A;--dangerBg:#FCE6E2;
+ --pill:#F2EBE2;--wash:#F7EAE3;--glass:rgba(255,255,255,.94);--sky:#F3EADF;--locked:#B9ACA0;--next:var(--accent);
+ --controlBorder:#8C7B70;--shadow:0 1px 2px rgba(60,35,20,.04),0 8px 28px rgba(60,35,20,.06);
+ --radius-lg:16px;--radius:10px;
+}
+:root[data-theme="dark"]{
+ --bg:#121011;--surface:#1B1719;--raised:#262023;--border:#3A3033;--text:#F1EAE5;--muted:#ADA29B;
+ --accent:#FF8E6B;--accentFg:#2A0E05;--accentBg:#3A211B;--accentText:#FFC2AE;
+ --ok:#7BD3A8;--okBg:#173227;--warn:#F4C76B;--warnBg:#3A2D14;--danger:#FF9A8A;--dangerBg:#3D1D1D;
+ --pill:#2A2326;--wash:#2B201E;--glass:rgba(27,23,25,.92);--sky:#0D0A0B;--locked:#6E6266;--next:var(--accent);
+ --controlBorder:#85767A;--shadow:0 1px 2px rgba(0,0,0,.3),0 10px 30px rgba(0,0,0,.35);
+}
+body{font-feature-settings:"ss01","cv11";-webkit-font-smoothing:antialiased;letter-spacing:-.005em}
+h1,h2,h3,.brand strong,.budgetRow label strong,.stat strong,.miniMetric strong{font-family:var(--font-display),var(--font-body),sans-serif;letter-spacing:-.02em}
+.hero h1{font-size:clamp(28px,3.2vw,40px);font-weight:700;letter-spacing:-.03em}
+code,.codeSample,.fingerprint,.chip,.saveBadge,.starBtn small,.mono{font-family:var(--font-mono),ui-monospace,monospace}
+.eyebrow,.navHeading{letter-spacing:.14em;text-transform:uppercase;font-size:10.5px}
+.panel,.stat{border-radius:var(--radius-lg)}
+.nav.active{background:var(--wash);box-shadow:inset 3px 0 var(--accent);color:var(--text)}
+.nav:hover{background:var(--raised)}
+.primaryBtn{border-radius:var(--radius)}.outlineBtn{border-radius:var(--radius);border-color:var(--border)}
+.outlineBtn:hover{background:var(--raised)}
+.toast{border-color:color-mix(in srgb,var(--accent) 45%,var(--border))}
+::selection{background:color-mix(in srgb,var(--accent) 30%,transparent)}

@@ -119,10 +119,178 @@ class Session(Base):
     notes: str = Field(default='', max_length=2000)
 
 
+Short = Field(default='', max_length=600)
+
+
+class Observation(Base):
+    participant_code: str | None = Field(default=None, pattern=r'^P\d{2,3}$')
+    setting: str = Field(min_length=3, max_length=160)
+    user_type: Literal['extreme-high', 'extreme-low', 'mainstream', 'analogous']
+    what_happened: str = Field(min_length=10, max_length=1500)
+    workaround: str = Short
+    insight: str = Short
+    synthetic: bool = False
+
+    @field_validator('what_happened')
+    @classmethod
+    def no_contact(cls, v: str) -> str:
+        if CONTACT.search(v):
+            raise ValueError('Remove emails and phone numbers before saving an observation')
+        return v
+
+
+class Persona(Base):
+    label: str = Field(min_length=3, max_length=80)
+    quote: str = Field(default='', max_length=300)
+    goals: str = Short
+    frustrations: str = Short
+    context: str = Short
+    evidence_ids: list[str] = Field(default_factory=list, max_length=40)
+
+
+class Pov(Base):
+    user: str = Field(min_length=3, max_length=160)
+    need: str = Field(min_length=3, max_length=200)
+    insight: str = Field(min_length=3, max_length=300)
+    theme_id: str | None = None
+
+
+class Frame(BaseModel):
+    model_config = ConfigDict(extra='forbid', str_strip_whitespace=True)
+    caption: str = Field(default='', max_length=300)
+
+
+class Storyboard(Base):
+    title: str = Field(min_length=3, max_length=120)
+    scenario: str = Short
+    frames: list[Frame] = Field(min_length=1, max_length=9)
+
+
+class Hill(Base):
+    who: str = Field(min_length=3, max_length=160)
+    what: str = Field(min_length=3, max_length=300)
+    wow: str = Field(min_length=3, max_length=300)
+    measure: str = Field(default='', max_length=200)
+
+
+class Scenario(Base):
+    what_if: str = Field(min_length=8, max_length=300)
+    impact: str = Short
+    response: str = Short
+
+
+class Stage(BaseModel):
+    model_config = ConfigDict(extra='forbid', str_strip_whitespace=True)
+    name: str = Field(min_length=1, max_length=60)
+    doing: str = Field(default='', max_length=400)
+    thinking: str = Field(default='', max_length=400)
+    feeling: int = Field(default=3, ge=1, le=5)
+    pain: str = Field(default='', max_length=400)
+    opportunity: str = Field(default='', max_length=400)
+
+
+class Journey(Base):
+    title: str = Field(min_length=3, max_length=120)
+    kind: Literal['current', 'future']
+    persona_id: str | None = None
+    stages: list[Stage] = Field(min_length=1, max_length=10)
+    evidence_note: str = Field(default='', max_length=400)
+
+
+class Sprint(Base):
+    prompt: str = Field(min_length=5, max_length=200)
+    sketches: list[str] = Field(max_length=8)
+    minutes: int = Field(default=8, ge=1, le=30)
+
+
+class Feedback(BaseModel):
+    model_config = ConfigDict(extra='forbid', str_strip_whitespace=True)
+    kind: Literal['like', 'wish', 'question', 'idea']
+    text: str = Field(min_length=2, max_length=400)
+    source: str = Field(default='', max_length=60)
+
+
+class Prototype(Base):
+    version: str = Field(min_length=1, max_length=20)
+    title: str = Field(min_length=3, max_length=120)
+    fidelity: Literal['paper', 'clickable', 'working']
+    what_changed: str = Short
+    why: str = Short
+    feedback: list[Feedback] = Field(default_factory=list, max_length=40)
+
+
+class Risk(Base):
+    risk: str = Field(min_length=5, max_length=300)
+    category: Literal['privacy', 'bias', 'accuracy', 'autonomy', 'security', 'wellbeing']
+    likelihood: int = Field(ge=1, le=3)
+    impact: int = Field(ge=1, le=3)
+    mitigation: str = Short
+    owner: str = Field(default='', max_length=60)
+    status: Literal['open', 'mitigated'] = 'open'
+
+
+class Roleplay(Base):
+    scenario: str = Field(min_length=10, max_length=600)
+    roles: list[str] = Field(min_length=2, max_length=8)
+    decision: str = Short
+    rationale: str = Short
+
+
+class Reflection(Base):
+    entry_date: str = Field(pattern=r'^\d{4}-\d{2}-\d{2}$')
+    concept: str = Field(min_length=3, max_length=160)
+    explanation: str = Field(default='', max_length=4000)
+    organisation_value: str = Field(default='', max_length=4000)
+    example: str = Field(default='', max_length=4000)
+    ai_assistance: Literal['none', 'spelling-only', 'other'] = 'none'
+    ai_note: str = Field(default='', max_length=300)
+
+
+class Member(Base):
+    name: str = Field(min_length=1, max_length=80)
+    role: str = Field(default='', max_length=80)
+
+
+class Contribution(Base):
+    member: str = Field(min_length=1, max_length=80)
+    area: Literal['research', 'synthesis', 'ideation', 'prototype', 'testing', 'presentation', 'reflection']
+    description: str = Field(min_length=3, max_length=400)
+
+
+class Milestone(Base):
+    title: str = Field(min_length=3, max_length=160)
+    when_text: str = Field(default='', max_length=80)
+    weight: int | None = Field(default=None, ge=0, le=100)
+    status: Literal['unverified', 'verified', 'done'] = 'unverified'
+    source: str = Field(default='', max_length=120)
+
+
+class RubricCheck(Base):
+    component: str = Field(min_length=3, max_length=80)
+    criterion: str = Field(min_length=3, max_length=120)
+    status: Literal['missing', 'partial', 'ready'] = 'missing'
+    evidence: str = Field(default='', max_length=600)
+
+
+class SdgCanvas(Base):
+    goal: str = Field(min_length=3, max_length=120)
+    targets: str = Field(default='', max_length=300)
+    problem: str = Short
+    impact_hypothesis: str = Short
+    indicator: str = Short
+    evidence: str = Short
+    risks: str = Short
+
+
 KINDS: dict[str, tuple[type[BaseModel], str | None]] = {
     'notes': (Note, None), 'codes': (Code, 'notes'), 'themes': (Theme, None), 'hmw': (Hmw, 'themes'),
     'ideas': (Idea, 'hmw'), 'votes': (Vote, 'ideas'), 'scores': (Score, None),
     'experiments': (Experiment, None), 'sessions': (Session, 'experiments'),
+    'observations': (Observation, None), 'personas': (Persona, None), 'povs': (Pov, None), 'storyboards': (Storyboard, None),
+    'hills': (Hill, None), 'scenarios': (Scenario, None), 'journeys': (Journey, None), 'sprints': (Sprint, None),
+    'prototypes': (Prototype, None), 'risks': (Risk, None), 'roleplays': (Roleplay, None), 'reflections': (Reflection, None),
+    'members': (Member, None), 'contributions': (Contribution, None), 'milestones': (Milestone, None),
+    'rubric': (RubricCheck, None), 'sdg': (SdgCanvas, None),
 }
 
 
@@ -290,3 +458,36 @@ def clear_examples(conn: sqlite3.Connection = Depends(db)):
         for i in ids:
             conn.execute('DELETE FROM studio_items WHERE id=? OR parent_id=?', (i, i))
     return {'ok': True, 'removed': len(ids)}
+
+
+COMPONENTS = [('Class participation (in-class quizzes)', 10), ('Individual assignments (reading quizzes)', 10),
+              ('Group assignment and Week 12 UN SDG presentation', 40), ('Reflective paper', 40)]
+RUBRIC = {
+    'Individual (§3.3)': ['Use of a relevant framework', 'Analysis of data and information', 'Understanding of key issues',
+                          'Decision among alternatives', 'Articulation of thoughts'],
+    'Group (§3.4)': ['Use of a relevant framework', 'Analysis of data and information', 'Understanding of key issues',
+                     'Quality of content (research and relevance)', 'Quality of recommendation (feasibility and impact)',
+                     'Quality of presentation', 'Quality of visual presentation', 'Individual oral presentation and defence'],
+    'Reflective paper (§3.5)': ['Concept explained in my own words', 'How it helps an organisation achieve its objectives',
+                                'Detailed, practical real-world example'],
+}
+
+
+@examples_router.post('/course-hub')
+def seed_course_hub(conn: sqlite3.Connection = Depends(db)):
+    """Assessment components and rubric criteria from the outline (as recorded in docs/ASSESSMENT.md).
+    Dates stay unverified: the outline's schedules conflict and faculty have not confirmed them."""
+    if conn.execute("SELECT 1 FROM studio_items WHERE kind='milestones'").fetchone():
+        return {'ok': True, 'loaded': 0}
+    n = 0
+    for title, weight in COMPONENTS:
+        insert(conn, 'milestones', None, validate(Milestone, {'title': title, 'weight': weight, 'when_text': 'date not confirmed',
+                                                               'status': 'unverified', 'source': 'Unit outline §2.5 / §3.1'}))
+        n += 1
+    for component, criteria in RUBRIC.items():
+        for c in criteria:
+            insert(conn, 'rubric', None, validate(RubricCheck, {'component': component, 'criterion': c}))
+            n += 1
+    insert(conn, 'sdg', None, validate(SdgCanvas, {'goal': 'SDG 4 Quality Education (proposed, confirm with faculty)',
+                                                   'targets': '4.3 equal access to education; 4.4 skills for youth and adults'}))
+    return {'ok': True, 'loaded': n + 1}
