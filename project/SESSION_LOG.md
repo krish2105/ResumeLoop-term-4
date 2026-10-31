@@ -47,7 +47,7 @@ Initial Git publication completed: root commit `29dfb5c6e20659ced07cf12736a6ddc1
 
 **Findings added to docs:** Week 12 group presentation is "AI-Driven Solutions for UN SDGs using Design Thinking Frameworks"; participation and individual assignments (20%) are in-class quizzes. Neither was previously recorded. The outline contains no AI-use policy and no exact dates.
 
-**Changes (documentation only):** `docs/ASSESSMENT.md` (re-read section, SDG framing as hypothesis, marks-vs-project table), `project/BLOCKERS.md` (ranked table), `project/NEXT_ACTIONS.md` (priority note), `project/DECISIONS.md` (two rows), `project/CURRENT_STATE.md`, this log. Outside the repo: a Design Thinking unit memory in the Claude project memory folder.
+**Changes (documentation only):** `docs/ASSESSMENT.md` (re-read section, SDG framing as hypothesis, marks-vs-project table), `project/BLOCKERS.md` (ranked table), `project/NEXT_ACTIONS.md` (priority note), `project/DECISIONS.md` (two rows), `project/CURRENT_STATE.md`, this log. Outside the repo: a Design Thinking unit memory in the assistant's local memory folder (outside the repository).
 
 **Not done / untested:** Production build, browser and accessibility checks and audits were not rerun. No faculty message sent; groupmates, solo permission, dates, frameworks, ethics process and AI-use policy still unknown. Nothing committed or pushed in this session.
 
@@ -55,7 +55,7 @@ Initial Git publication completed: root commit `29dfb5c6e20659ced07cf12736a6ddc1
 
 ### 2026-10-31 — Spatial journey build (brainstorm → spec → five slices → Vercel)
 
-**User steering:** Chose UI option C (full spatial 3D journey) and the night-constellation art direction; all ten learner and studio features; local Ollama (no API key); local app plus public read-only Vercel demo; 20+ hour sprint then 12 h/week; team undecided. Asked to build end to end without stopping, show progress in the built-in browser, push before limits expire, and remove Claude as a contributor (owner amended `96f0da5` → `e377364` and force-pushed after the agent's rewrite was blocked by the safety check).
+**User steering:** Chose UI option C (full spatial 3D journey) and the night-constellation art direction; all ten learner and studio features; local Ollama (no API key); local app plus public read-only Vercel demo; 20+ hour sprint then 12 h/week; team undecided. Asked to build end to end without stopping, show progress in the built-in browser, push before limits expire, and remove the AI assistant as a contributor (owner amended `96f0da5` → `e377364` and force-pushed after the agent's rewrite was blocked by the safety check).
 
 **Implementation:** Typed versioned fictional course + deterministic planner fix (completed exclusion, unlock re-evaluation, graph validation, abstention); version-checked progress autosave; R3F night road with accessible list twin, dawn theme, reduced-motion and no-WebGL fallbacks; local AI layer (Ollama client, bge-m3 retrieval with keyword fallback, validated digest/coach/escalation/code/HMW features, AI log); approval-gated local coordinator queue; Design Thinking studio (consent and privacy guards, exact-quote AI code suggestions with accept/reject, empathy map, themes, HMW, ideas, votes, alternatives matrix, frozen experiment protocols, timed session recorder, descriptive results, ethics panel); six-stop 3D story mode; demo client with TS planner parity and recorded answers; Vercel deployment `resumeloop-demo`.
 
@@ -74,3 +74,13 @@ Initial Git publication completed: root commit `29dfb5c6e20659ced07cf12736a6ddc1
 **Verified:** smoke 71/71 (AI available); axe 52 scans, 0 violations; remaining manual review: contrast of text over the WebGL canvas. Summaries in `evidence/2026-10-31/`.
 
 **Untested:** VoiceOver/NVDA, Safari, Firefox, real phones, manual canvas contrast.
+
+### 2026-10-31 (evening) — Ember dusk redesign, resizable layout, 3D rebuild, outline screens
+
+**User steering:** redesign dark mode after showing palette options (chose Ember dusk); drag-resizable sidebar; fix 3D overlap and quality; audit the outline and add missing features; remove the AI assistant as contributor; push before limits.
+
+**Work:** Verified contributors (git clean; GitHub sidebar cached). Fixed Vercel builds (root `apps/web`). Token system and fonts; WAI-ARIA splitters; split journey/story layouts; bloom-lit ember road with halo stars and non-colliding labels. Nine outline-aligned screens and 17 typed backend collections with a course-hub seed. Story mode counts all new evidence.
+
+**Verification:** 80 pytest; smoke 109/109 (live Ollama); axe 80 scans, 0 violations. Bugs found by the runs and fixed: journey maps hidden by a shadowed `kind` field, stale select values, 320px overflow (grid min-width, board min size, sr-only labels escaping a scroller, risk grid), ARIA table rows, unfocusable scroller, animation-abort crash in the test helper.
+
+**Untested:** assistive technology, other browsers, phones; manual contrast over the canvas.

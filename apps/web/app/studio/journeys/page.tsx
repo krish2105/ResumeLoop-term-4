@@ -40,14 +40,14 @@ export default function JourneysPage() {
       </div>)}</div>
       <div className="detailActions">
         <button className="outlineBtn" disabled={stages.length >= 10} onClick={() => setStages(x => [...x, blank('New stage')])}>Add stage</button>
-        <button className="primaryBtn" onClick={() => s.run(() => studio.create('journeys', {title, kind, persona_id: persona || null, stages, evidence_note: note}), 'Journey map saved.')
+        <button className="primaryBtn" onClick={() => s.run(() => studio.create('journeys', {title, phase: kind, persona_id: persona || null, stages, evidence_note: note}), 'Journey map saved.')
           .then(ok => { if (ok) { setTitle(''); setNote(''); setStages(START); } })}>Save journey map</button>
       </div>
     </section>
     {(['current', 'future'] as const).map(k => <section key={k} className="panel sectionGap" aria-label={k === 'current' ? 'Current journeys' : 'Future journeys'}>
       <h2>{k === 'current' ? 'Current journeys (as is)' : 'Future journeys (design ideas)'}</h2>
-      {maps.filter(m => m.kind === k).length === 0 && <p className="empty">None yet.</p>}
-      {maps.filter(m => m.kind === k).map(m => <JourneyView key={m.id} m={m} persona={personas.find(p => p.id === m.persona_id)?.label} onRemove={() => s.run(() => studio.remove('journeys', m.id), 'Journey removed.')} />)}
+      {maps.filter(m => m.phase === k).length === 0 && <p className="empty">None yet.</p>}
+      {maps.filter(m => m.phase === k).map(m => <JourneyView key={m.id} m={m} persona={personas.find(p => p.id === m.persona_id)?.label} onRemove={() => s.run(() => studio.remove('journeys', m.id), 'Journey removed.')} />)}
     </section>)}
   </>;
 }
@@ -55,7 +55,7 @@ export default function JourneysPage() {
 function JourneyView({m, persona, onRemove}: {m: Item; persona?: string; onRemove: () => void}) {
   return <article className="entry sectionGap">
     <div className="sectionHead"><div><h3>{m.title}</h3><p className="meta">{persona ? `Persona: ${persona} · ` : ''}{m.evidence_note || 'No evidence noted'}</p></div><button className="textBtn" onClick={onRemove}>Remove</button></div>
-    <div className="journeyGrid">{m.stages.map((st: Stage, i: number) => <div key={i} className="stage"><h4>{i + 1}. {st.name}</h4>
+    <div className="journeyGrid" role="region" tabIndex={0} aria-label={`${m.title} stages, scroll horizontally`}>{m.stages.map((st: Stage, i: number) => <div key={i} className="stage"><h4>{i + 1}. {st.name}</h4>
       <div className="feel" role="img" aria-label={`Feeling ${FEEL[st.feeling]}`}><i style={{width: `${st.feeling * 20}%`}} /></div>
       <dl>{st.doing && <><dt>Doing</dt><dd>{st.doing}</dd></>}{st.thinking && <><dt>Thinking</dt><dd>{st.thinking}</dd></>}{st.pain && <><dt>Pain point</dt><dd>{st.pain}</dd></>}{st.opportunity && <><dt>Opportunity</dt><dd>{st.opportunity}</dd></>}</dl></div>)}</div>
   </article>;

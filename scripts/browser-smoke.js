@@ -8,8 +8,8 @@ async (page) => {
   const AI = 150000;
   const checks = [];
   const check = (condition, label) => { if (!condition) throw Error('FAILED: ' + label); checks.push(label); };
-  const go = async path => { await page.goto(BASE + path); await page.locator('.hero, .journey').first().waitFor({timeout: 30000}); };
-  const settle = () => page.evaluate(async () => { await Promise.all(document.getAnimations().map(a => a.finished)); await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r))); });
+  const go = async path => { await page.goto(BASE + path); await page.locator('.hero, .journey2').first().waitFor({timeout: 30000}); };
+  const settle = () => page.evaluate(async () => { await Promise.all(document.getAnimations().map(a => a.finished.catch(() => null))); await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r))); });
   const text = loc => loc.innerText();
   const toast = page.locator('.toast');
   await page.addInitScript(() => { window.confirm = () => true; });
@@ -22,7 +22,7 @@ async (page) => {
 
   // ---------- Journey: 3D road + accessible list ----------
   await go('/');
-  await page.locator('.roadStage canvas').waitFor({timeout: 30000});
+  await page.locator('.stage3d canvas').waitFor({timeout: 30000});
   check(true, '3D canvas renders on the journey');
   const stars = page.getByRole('region', {name: 'Stars on your road'}).getByRole('button');
   check(await stars.count() >= 10, 'Every course task is listed as a focusable star button');
@@ -38,7 +38,7 @@ async (page) => {
   const next = await text(page.getByRole('region', {name: 'Selected task'}).getByRole('heading'));
   await page.getByRole('button', {name: 'Mark complete'}).click();
   await page.getByRole('status').filter({hasText: 'Saved'}).waitFor();
-  await page.reload(); await page.locator('.journey').waitFor();
+  await page.reload(); await page.locator('.journey2').waitFor();
   await stars.first().waitFor();
   check(await stars.filter({hasText: next}).filter({hasText: 'Completed'}).count() === 1, 'Completed task persists after refresh');
   const saved = await (await page.request.get(API + '/api/learner/progress')).json();
@@ -177,19 +177,119 @@ async (page) => {
   // ---------- Ethics ----------
   await go('/studio/ethics');
   await page.getByRole('heading', {name: 'AI decision log'}).waitFor();
-  check(await page.locator('section', {has: page.getByRole('heading', {name: 'AI decision log'})}).locator('tbody tr').count() >= 1, 'Ethics panel shows logged AI calls');
+  await page.locator('section', {has: page.getByRole('heading', {name: 'AI decision log'})}).locator('tbody tr').first().waitFor();
+  check(true, 'Ethics panel shows logged AI calls');
 
   // ---------- Story mode ----------
   await go('/story');
   const card = page.locator('.storyCard h2');
   await card.filter({hasText: 'Empathise'}).waitFor();
-  await page.locator('body').click({position: {x: 5, y: 300}});
+  await page.locator('.stage3d').click({position: {x: 40, y: 200}});
   await page.keyboard.press('ArrowRight');
   await card.filter({hasText: 'Define'}).waitFor();
   await page.getByRole('button', {name: 'Go to Impact · SDG 4'}).click();
   await card.filter({hasText: 'Impact'}).waitFor();
   check((await text(page.locator('.storyCard'))).includes('fictional') || (await text(page.locator('.storyCard'))).includes('hypothesis'), 'Story mode moves by keyboard and buttons and stays honest about evidence');
   await page.screenshot({path: 'output/playwright/story-desktop.png'});
+
+  // ---------- Outline-aligned studio screens ----------
+  const box = name => page.getByRole('textbox', {name: new RegExp('^' + name)});
+  await go('/studio/observe');
+  await page.getByRole('button', {name: 'Save observation'}).click();
+  check((await text(page.locator('#obs-err'))).includes('Setting'), 'Observation form explains missing required fields');
+  await box('Setting').fill('Train home, phone');
+  await box('What happened').fill('Opened three apps before finding the quiz date.');
+  await page.getByRole('combobox', {name: 'Who or where'}).selectOption('extreme-low');
+  await page.getByRole('button', {name: 'Save observation'}).click();
+  await toast.filter({hasText: 'Observation saved.'}).waitFor();
+  await box('Persona label').fill('The night-shift learner');
+  await page.getByRole('button', {name: 'Create persona'}).click();
+  await page.getByText('Assumption: no evidence yet').waitFor();
+  await page.locator('fieldset.consent').getByRole('checkbox').first().check();
+  await box('Persona label').fill('The evidence-backed learner');
+  await page.getByRole('button', {name: 'Create persona'}).click();
+  await page.getByText('1 evidence links').waitFor();
+  check(true, 'Personas are flagged as assumptions until linked to evidence');
+  await go('/studio/define');
+  await box('User').fill('A working learner'); await box('Needs a way to').fill('find the one next task'); await box('Because').fill('sources disagree');
+  await page.getByRole('button', {name: 'Save statement'}).click();
+  await page.getByText('needs a way to').first().waitFor();
+  await page.getByRole('textbox', {name: 'Frame 1 caption'}).fill('Opens the app on the train');
+  await page.locator('section', {has: page.getByRole('heading', {name: 'Storyboard'})}).getByRole('textbox', {name: 'Title'}).fill('Back on the train');
+  await page.getByRole('button', {name: 'Save storyboard'}).click();
+  await toast.filter({hasText: 'Storyboard saved.'}).waitFor();
+  check(true, 'Point-of-view statement and storyboard save');
+  await go('/studio/envision');
+  await box('Who').fill('A returning learner'); await box('What they can do').fill('start the right next task'); await box('Wow').fill('within two minutes');
+  await page.getByRole('button', {name: 'Add Hill'}).click();
+  await page.locator('.hill').first().waitFor();
+  check(true, 'Hill statement saves as who / what / wow');
+  await go('/studio/journeys');
+  await page.getByRole('textbox', {name: 'Title'}).fill('Returning today');
+  await page.getByRole('button', {name: 'Save journey map'}).click();
+  await page.locator('section[aria-label="Current journeys"] .stage').first().waitFor();
+  check(true, 'Current journey map saves with its stages');
+  await go('/studio/prototypes');
+  await box('Version').fill('v0.4'); await box('Title').fill('Split layout');
+  await page.getByRole('button', {name: 'Log version'}).click();
+  await page.getByPlaceholder('What the tester said or did').fill('Bigger labels please');
+  await page.getByRole('button', {name: 'Add feedback'}).click();
+  await page.getByText('Bigger labels please').waitFor();
+  check(true, 'Prototype version and tester feedback are logged');
+  await go('/studio/ideate');
+  await page.getByRole('button', {name: 'Start timer'}).click();
+  await page.waitForTimeout(1200);
+  check(/^7:5\d$/.test(await text(page.getByRole('timer'))), 'Crazy 8s timer counts down from eight minutes');
+  await page.getByRole('textbox', {name: 'Prompt (a How might we question)'}).fill('How might we show one trusted date?');
+  await page.getByRole('textbox', {name: 'Idea 1'}).fill('Verified badge');
+  await page.getByRole('button', {name: 'Save round'}).click();
+  await toast.filter({hasText: 'Round saved.'}).waitFor();
+  check(true, 'Crazy 8s round saves');
+  await go('/studio/ethics');
+  await box('Risk').fill('Coach states an unsupported deadline');
+  await page.getByRole('combobox', {name: 'Likelihood'}).selectOption('3');
+  await page.getByRole('combobox', {name: 'Impact'}).selectOption('3');
+  await page.getByRole('button', {name: 'Add risk'}).click();
+  await page.locator('.riskGrid .cell.h', {hasText: 'Coach states an unsupported deadline'}).waitFor();
+  check(true, 'High-likelihood, high-impact risk lands in the red band');
+  await go('/reflect');
+  check(await page.getByRole('button', {name: 'Save entry'}).isDisabled(), 'Reflection cannot be saved without a concept');
+  await box('Concept or framework').fill('Extreme users');
+  await page.getByRole('textbox', {name: 'The concept, in your own words'}).fill('Watching people at the edges shows needs that everyone has.');
+  await page.getByRole('button', {name: 'Save entry'}).click();
+  await toast.filter({hasText: 'Entry saved.'}).waitFor();
+  check(await page.getByRole('button', {name: 'Download as Markdown'}).isEnabled(), 'Reflection entry saves and can be downloaded');
+  await go('/course');
+  await page.getByRole('button', {name: 'Load outline structure'}).click();
+  await page.getByText('0/16 ready').waitFor();
+  await page.getByRole('combobox', {name: 'Status for Use of a relevant framework'}).first().selectOption('ready');
+  await page.getByText('1/16 ready').waitFor();
+  await box('Name').fill('Krishna Mathur');
+  await page.getByRole('button', {name: 'Add member'}).click();
+  await toast.filter({hasText: 'Member added.'}).waitFor();
+  await box('What they did').fill('Ran two interviews');
+  await page.getByRole('button', {name: 'Log contribution'}).click();
+  await toast.filter({hasText: 'Contribution logged.'}).waitFor();
+  check(await page.locator('.matrix td.mono', {hasText: '1'}).count() >= 1, 'Course hub: rubric self-check and contribution matrix work');
+
+  // ---------- Resizable panels ----------
+  await go('/');
+  const sideSep = page.getByRole('separator', {name: 'Resize sidebar'});
+  const w0 = Number(await sideSep.getAttribute('aria-valuenow'));
+  await sideSep.focus(); await page.keyboard.press('ArrowRight'); await page.keyboard.press('ArrowRight');
+  check(Number(await sideSep.getAttribute('aria-valuenow')) === w0 + 32, 'Sidebar resizes from the keyboard');
+  const box0 = await sideSep.boundingBox();
+  await page.mouse.move(box0.x + 5, box0.y + 200); await page.mouse.down(); await page.mouse.move(box0.x - 60, box0.y + 200, {steps: 5}); await page.mouse.up();
+  check(Number(await sideSep.getAttribute('aria-valuenow')) < w0 + 32, 'Sidebar resizes by dragging');
+  await sideSep.focus(); await page.keyboard.press('Enter');
+  await page.getByRole('button', {name: 'Show menu'}).click();
+  check(Number(await sideSep.getAttribute('aria-valuenow')) > 0, 'Sidebar collapses and restores');
+  const panelSep = page.getByRole('separator', {name: 'Resize the road panel'});
+  const p0 = Number(await panelSep.getAttribute('aria-valuenow'));
+  await panelSep.focus(); await page.keyboard.press('ArrowLeft');
+  check(Number(await panelSep.getAttribute('aria-valuenow')) === p0 + 16, 'Road panel widens from the keyboard');
+  await page.reload(); await page.locator('.journey2').waitFor();
+  check(Number(await page.getByRole('separator', {name: 'Resize the road panel'}).getAttribute('aria-valuenow')) === p0 + 16, 'Panel width persists after refresh');
 
   // ---------- Original journeys still work ----------
   await go('/imports');
@@ -210,7 +310,7 @@ async (page) => {
   await page.reload();
   await page.waitForFunction(() => document.documentElement.dataset.theme === 'light');
   check(true, 'Light (dawn) theme survives refresh');
-  await page.locator('.roadStage canvas').waitFor();
+  await page.locator('.stage3d canvas').waitFor();
   await page.screenshot({path: 'output/playwright/journey-desktop-light.png'});
   await page.getByRole('combobox', {name: 'Appearance'}).selectOption('system');
   await page.emulateMedia({colorScheme: 'dark', reducedMotion: 'reduce'});
@@ -226,9 +326,9 @@ async (page) => {
   await page.waitForURL(/\/story$/);
   check(true, 'Mobile menu opens and navigates');
   await go('/');
-  await page.locator('.roadStage canvas').waitFor();
+  await page.locator('.stage3d canvas').waitFor();
   await page.screenshot({path: 'output/playwright/journey-mobile-dark.png', fullPage: true});
-  for (const route of ['/', '/plan', '/digest', '/coach', '/escalations', '/studio/empathy', '/studio/ideate', '/studio/experiments', '/studio/ethics', '/story']) {
+  for (const route of ['/', '/plan', '/digest', '/coach', '/escalations', '/studio/observe', '/studio/empathy', '/studio/define', '/studio/envision', '/studio/ideate', '/studio/journeys', '/studio/prototypes', '/studio/experiments', '/studio/ethics', '/story', '/reflect', '/course']) {
     for (const width of [320, 768, 1440]) {
       await page.setViewportSize({width, height: 900});
       await go(route); await settle();

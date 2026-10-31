@@ -12,7 +12,7 @@ export function RiskRegister({risks, run}: {risks: Item[]; run: Run}) {
     <p>Likelihood × impact. Anything in the red band needs a mitigation and an owner before a pilot.</p>
     <div className="twoCol">
       <div className="riskGrid" role="table" aria-label="Risk matrix: impact rows, likelihood columns">
-        <div className="axis" role="columnheader">Impact ↓ / Likelihood →</div>{[1, 2, 3].map(l => <div key={l} className="axis" role="columnheader">{LEVEL[l]}</div>)}
+        <div style={{display: 'contents'}} role="row"><div className="axis" role="columnheader">Impact ↓ / Likelihood →</div>{[1, 2, 3].map(l => <div key={l} className="axis" role="columnheader">{LEVEL[l]}</div>)}</div>
         {[3, 2, 1].map(i => <div key={i} style={{display: 'contents'}} role="row"><div className="axis" role="rowheader">{LEVEL[i]}</div>
           {[1, 2, 3].map(l => <div key={l} role="cell" className={'cell ' + band(l, i)}>{risks.filter(r => r.likelihood === l && r.impact === i).map(r => <div key={r.id}>{r.risk}</div>)}</div>)}</div>)}
       </div>

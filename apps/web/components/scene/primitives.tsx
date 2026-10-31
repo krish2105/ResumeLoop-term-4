@@ -1,6 +1,7 @@
 "use client";
 // Shared 3D building blocks for the ember road and story mode.
 import {useFrame} from '@react-three/fiber';
+import {Billboard, Text} from '@react-three/drei';
 import {useMemo, useRef} from 'react';
 import * as THREE from 'three';
 
@@ -82,4 +83,26 @@ export function Ribbon({points, colors, upTo}: {points: THREE.Vector3[]; colors:
 /** Points along a calm S-curve receding into the distance, with even spacing. */
 export function roadPoints(n: number, spacing = 3.4): THREE.Vector3[] {
   return Array.from({length: n}, (_, i) => new THREE.Vector3(Math.sin(i * 0.55) * 3.2, Math.sin(i * 0.31) * 0.55, -i * spacing));
+}
+
+/** Text that keeps a constant on-screen size (about `px` pixels tall) at any camera distance,
+ *  always drawn on top. Fixes labels that were huge up close and tiny far away. */
+export function ScreenLabel({text, px = 13, color, outline, anchorX = 'left', maxEms = 18}: {
+  text: string; px?: number; color: string; outline: string; anchorX?: 'left' | 'center'; maxEms?: number;
+}) {
+  const ref = useRef<THREE.Group>(null);
+  const world = useMemo(() => new THREE.Vector3(), []);
+  useFrame(({camera, size}) => {
+    if (!ref.current) return;
+    ref.current.getWorldPosition(world);
+    const d = camera.position.distanceTo(world);
+    const fov = ((camera as THREE.PerspectiveCamera).fov * Math.PI) / 180;
+    ref.current.scale.setScalar(px * (2 * d * Math.tan(fov / 2)) / size.height);
+  });
+  return <Billboard>
+    <group ref={ref}>
+      <Text fontSize={1} color={color} outlineWidth={0.09} outlineColor={outline} anchorX={anchorX} anchorY="middle" maxWidth={maxEms}
+        textAlign={anchorX} lineHeight={1.2} renderOrder={10} material-depthTest={false} material-depthWrite={false}>{text}</Text>
+    </group>
+  </Billboard>;
 }

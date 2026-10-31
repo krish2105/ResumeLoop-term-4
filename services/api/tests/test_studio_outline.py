@@ -7,7 +7,7 @@ VALID = {
     'storyboards': {'title': 'Returning on the train', 'frames': [{'caption': 'Opens the app'}, {'caption': 'Sees one next task'}]},
     'hills': {'who': 'A returning learner', 'what': 'can start the right next task', 'wow': 'within two minutes of opening the app'},
     'scenarios': {'what_if': 'What if the coordinator changes a deadline twice?'},
-    'journeys': {'title': 'Current return journey', 'kind': 'current', 'stages': [{'name': 'Return', 'feeling': 2}]},
+    'journeys': {'title': 'Current return journey', 'phase': 'current', 'stages': [{'name': 'Return', 'feeling': 2}]},
     'sprints': {'prompt': 'How might we show one trusted date?', 'sketches': ['badge', 'banner']},
     'prototypes': {'version': 'v0.3', 'title': 'Ember road', 'fidelity': 'working', 'feedback': [{'kind': 'wish', 'text': 'Bigger labels'}]},
     'risks': {'risk': 'Coach invents a deadline', 'category': 'accuracy', 'likelihood': 2, 'impact': 3},
@@ -35,6 +35,11 @@ def test_every_outline_collection_accepts_a_valid_record(client, kind):
 ])
 def test_outline_collections_reject_invalid_records(client, kind, patch):
     assert client.post(f'/api/studio/{kind}', json={'body': {**VALID[kind], **patch}}).status_code == 422
+
+
+def test_record_fields_never_shadow_collection_metadata(client):
+    client.post('/api/studio/journeys', json={'body': VALID['journeys']})
+    assert client.get('/api/studio/journeys').json()[0]['kind'] == 'journeys'
 
 
 def test_course_hub_seed_is_idempotent_and_dates_stay_unverified(client):

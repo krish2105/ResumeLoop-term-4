@@ -24,3 +24,7 @@
 | 2026-10-31 | Local Ollama (qwen2.5:7b, bge-m3) with validated outputs and fallbacks; no cloud AI | Owner has no API key; privacy; offline demo safety | Faculty or pilot requires another provider |
 | 2026-10-31 | Public Vercel demo uses bundled fixtures, recorded answers and a TypeScript planner parity-tested against Python | No GPU or paid API on Vercel; demo must not break or leak data | A hosted backend with auth exists |
 | 2026-10-31 | AI may only phrase, suggest or draft; code decides facts, schedules and gates; humans accept codes and approve messages | Grounded-agent pattern; academic integrity of qualitative analysis | Never without a new ethics review |
+| 2026-10-31 | Ember dusk palette (warm graphite, ember accent) replaces the navy/teal mix | Owner choice from four contrast-checked options; single hue family fixes the muddy dark mode | Usability feedback on readability |
+| 2026-10-31 | Split layouts with WAI-ARIA splitters; nothing overlays the 3D canvas except two small chips | Owner feedback on overlap and resizing | Screen-reader testing finds problems |
+| 2026-10-31 | Add outline-aligned studio screens as typed collections in the existing studio table | Covers weeks 2–12 without a new service; one validation path | Data volume or governance needs separate tables |
+| 2026-10-31 | Vercel builds from GitHub `main` with root `apps/web` | Fixes failing checks; push deploys the demo | Hosting changes |

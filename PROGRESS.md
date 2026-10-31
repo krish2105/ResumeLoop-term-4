@@ -2,6 +2,16 @@
 
 Updated **23 October 2026**. Term starts **10 November 2026**. Solo developer; default allocation **4 hours/week** from 20 hours shared across five projects. Cross-account continuation instructions are in [`NEW_ACCOUNT_HANDOFF.md`](NEW_ACCOUNT_HANDOFF.md).
 
+## 31 October 2026 (evening): Ember dusk redesign and outline-aligned screens
+
+The owner chose the **Ember dusk** palette after comparing four contrast-checked options. Changes:
+- **Design system:** one warm-graphite hue family (`#121011`/`#1B1719`/`#262023`), ember accent `#FF8E6B` dark / `#B5401F` light, every text pair ≥ 4.5:1 in both themes (`app/theme.css`); Bricolage Grotesque display, Instrument Sans body, IBM Plex Mono data.
+- **Resizable layout:** WAI-ARIA splitters (drag, arrow keys, Home/End, Enter to collapse, double-click to reset, width remembered) for the sidebar, the road panel and the story panel.
+- **Journey redesign:** the canvas has its own area and the budget, selected task and star list live in a side panel, so nothing covers the road. 3D rebuilt: ember ribbon with the travelled stretch lit, halo-sprite stars, selective bloom in dark mode, prerequisite lines only for the focused task, at most two labels drawn on top and beside their star, adaptive resolution.
+- **New screens mapped to the outline:** Observe (extreme/mainstream/analogous observations, evidence-linked personas), Define (point-of-view statements, 6-frame storyboard), Envision (IBM-style Hills who/what/wow, what-if scenarios), Ideate gains a timed Crazy 8s round, Journey maps (current vs future, feeling curve), Prototype log (versions with I like / I wish / question / what if feedback), Ethics gains an AI risk register (likelihood × impact) and governance role-play, Reflection journal (§3.5 three-part template, AI-use disclosure, Markdown download, never AI-written), Course hub (assessment weights with unverified dates, 16-criterion rubric self-check, team contribution matrix, SDG impact canvas). Story mode counts evidence from all of them.
+- **Verification:** 80 pytest; browser smoke **109/109** (live Ollama); axe **80 scans, 0 violations** (20 routes × light/dark × 1440/320px). Runs found and fixed: journey maps vanishing (a body field shadowed the collection name), stale select values in forms, four 320px overflow causes, risk-matrix ARIA structure, an unfocusable scrolling strip.
+- **Deployment:** the Vercel project now builds from `apps/web` on every push to `main` (the earlier red ✗ was the repo root being built).
+
 ## 31 October 2026 build: spatial journey prototype
 
 **Public demo (fictional data, recorded AI answers): https://resumeloop-demo.vercel.app** · design spec: [`docs/superpowers/specs/2026-10-31-resumeloop-spatial-journey-design.md`](docs/superpowers/specs/2026-10-31-resumeloop-spatial-journey-design.md)
@@ -90,7 +100,7 @@ npm run dev -- --hostname 127.0.0.1
 
 **Local AI (optional, recommended):** install [Ollama](https://ollama.com), then `ollama pull qwen2.5:7b` and `ollama pull bge-m3:567m`. Without Ollama the app still works: the digest uses its fixed text, the coach falls back to keyword search and quotes the closest passage, and code suggestions are disabled. Override models with `RL_GEN_MODEL`, `RL_EMBED_MODEL` and `OLLAMA_URL`.
 
-**Demo data scripts (from the project root):** `PYTHONPATH=services/api .venv/bin/python scripts/record_demo_ai.py` records real local-model answers on fictional data; `PYTHONPATH=services/api .venv/bin/python scripts/export_demo_fixtures.py` rebuilds `apps/web/demo/fixtures.json`; `cd apps/web && npm run test:parity` checks the TypeScript planner against Python. Demo build: `NEXT_DIST_DIR=.next-demo NEXT_PUBLIC_DEMO_MODE=1 npm run build`. Deploy: `vercel deploy --prod --build-env NEXT_PUBLIC_DEMO_MODE=1` from `apps/web`.
+**Demo data scripts (from the project root):** `PYTHONPATH=services/api .venv/bin/python scripts/record_demo_ai.py` records real local-model answers on fictional data; `PYTHONPATH=services/api .venv/bin/python scripts/export_demo_fixtures.py` rebuilds `apps/web/demo/fixtures.json`; `cd apps/web && npm run test:parity` checks the TypeScript planner against Python. Demo build: `NEXT_DIST_DIR=.next-demo NEXT_PUBLIC_DEMO_MODE=1 npm run build`. Deploy: pushing to `main` builds the demo on Vercel automatically (project root `apps/web`, `NEXT_PUBLIC_DEMO_MODE=1` set in project env). A manual CLI deploy must now be run from the repository root.
 
 Open **http://127.0.0.1:3000**. API documentation: **http://127.0.0.1:8014/docs**. Health check: **http://127.0.0.1:8014/api/health**. Stop either service with Ctrl+C in its terminal.
 

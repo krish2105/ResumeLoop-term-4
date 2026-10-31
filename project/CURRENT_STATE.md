@@ -2,7 +2,17 @@
 
 Last updated: **23 October 2026**. User requested a complete cross-account continuation package and publication to `https://github.com/krish2105/ResumeLoop-term-4`. **`PROGRESS.md`** remains the status/run authority; **`NEW_ACCOUNT_HANDOFF.md`** and **`prompts/10_NEW_ACCOUNT_HANDOFF.md`** provide the transfer checklist and paste-ready prompt.
 
-## 31 October 2026 build — spatial journey prototype (latest)
+## 31 October 2026 evening — Ember dusk redesign and outline screens (latest)
+
+**User steering:** dark mode looked AI-made; sidebar should be drag-resizable; the star list overlapped the 3D road; 3D looked low quality; audit the outline and add what is missing; remove the AI assistant from the contributor list.
+
+**VERIFIED:** history has 0 AI co-author trailers and the GitHub contributors API lists only `krish2105`; the extra sidebar entry is GitHub's cache of the deleted commit. Vercel red ✗ was the repo-root build; project root set to `apps/web` with `vercel project update --root-directory apps/web --yes`. Palette Ember dusk chosen from four options whose pairs were computed (all ≥ 4.5:1). 80 pytest pass. Browser smoke 109/109 and axe 80 scans / 0 violations on a production build with a throwaway DB and live Ollama (see `evidence/2026-10-31/`).
+
+**Changed:** `app/theme.css`, `app/screens.css` (new), tokenised `globals.css`/`journey.css`, `components/Splitter.tsx`, `components/scene/primitives.tsx`, rewritten `NightRoad.tsx`, `StoryScene.tsx`, journey and story pages, `AppShell.tsx` (resizable, new nav), new pages `studio/observe|define|envision|journeys|prototypes`, `reflect`, `course`, components `QuickForm`, `CrazyEights`, `RiskRegister`; backend `studio.py` (17 new typed collections, course-hub seed, metadata-wins serialisation); tests `test_studio_outline.py`; smoke/axe scripts extended.
+
+**UNTESTED / open:** VoiceOver/NVDA, Safari/Firefox, phones, manual contrast over the 3D canvas, the public Vercel build of this commit (check the deployment status after push). No real participants, sessions or faculty answers. Not production-ready.
+
+## 31 October 2026 build — spatial journey prototype
 
 Owner chose option C (full 3D journey, night-road art), all ten features, local Ollama AI, and a public Vercel demo. Spec: `docs/superpowers/specs/2026-10-31-resumeloop-spatial-journey-design.md`. Commits `14cf41e` → `abdcf34` (+ this documentation commit) pushed to `origin/main`; no AI co-author trailers.
 

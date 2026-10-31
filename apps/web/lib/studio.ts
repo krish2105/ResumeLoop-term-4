@@ -63,7 +63,7 @@ export const studio = {
     const parent = parent_id ? items.find(i => i.id === parent_id) : undefined;
     demoCheck(kind, parent, body);
     const rest = kind === 'scores' ? items.filter(i => !(i.kind === 'scores' && i.alternative === body.alternative && i.criterion === body.criterion && i.scorer === body.scorer)) : items;
-    const item: Item = {id: uid(), kind, parent_id: parent_id || null, created_at: stamp(), updated_at: stamp(), status: kind === 'codes' ? 'accepted' : undefined, origin: 'human', ...body};
+    const item: Item = {status: kind === 'codes' ? 'accepted' : undefined, origin: 'human', ...body, id: uid(), kind, parent_id: parent_id || null, created_at: stamp(), updated_at: stamp()};
     save([...rest, item]);
     return item;
   },
@@ -72,7 +72,7 @@ export const studio = {
     const items = all();
     const cur = items.find(i => i.id === id) || fail(404, 'Unknown item');
     if (kind === 'experiments' && cur.frozen_at && ['title', 'hypothesis', 'conditions', 'tasks', 'metrics'].some(k => k in patch)) fail(409, 'The protocol is frozen');
-    const next = {...cur, ...patch, updated_at: stamp()};
+    const next = {...cur, ...patch, id: cur.id, kind: cur.kind, parent_id: cur.parent_id, created_at: cur.created_at, updated_at: stamp()};
     save(items.map(i => i.id === id ? next : i));
     return next;
   },

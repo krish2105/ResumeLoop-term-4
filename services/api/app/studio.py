@@ -191,7 +191,7 @@ class Stage(BaseModel):
 
 class Journey(Base):
     title: str = Field(min_length=3, max_length=120)
-    kind: Literal['current', 'future']
+    phase: Literal['current', 'future']
     persona_id: str | None = None
     stages: list[Stage] = Field(min_length=1, max_length=10)
     evidence_note: str = Field(default='', max_length=400)
@@ -301,8 +301,9 @@ class Create(BaseModel):
 
 
 def out(row) -> dict:
-    return {'id': row['id'], 'kind': row['kind'], 'parent_id': row['parent_id'], 'created_at': row['created_at'],
-            'updated_at': row['updated_at'], **json.loads(row['body_json'])}
+    # Metadata last, so a body field can never shadow the collection name or id.
+    return {**json.loads(row['body_json']), 'id': row['id'], 'kind': row['kind'], 'parent_id': row['parent_id'],
+            'created_at': row['created_at'], 'updated_at': row['updated_at']}
 
 
 def get_row(conn, kind: str, item_id: str):

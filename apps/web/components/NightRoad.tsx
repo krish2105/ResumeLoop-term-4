@@ -2,11 +2,11 @@
 // The ember road. A pure view of the planner: one star per course task, in road order.
 // The DOM panel beside the canvas is the accessible source of truth (keyboard and screen readers).
 import {Canvas, useFrame} from '@react-three/fiber';
-import {AdaptiveDpr, Billboard, Line, PerformanceMonitor, Sparkles, Stars, Text} from '@react-three/drei';
+import {AdaptiveDpr, Line, PerformanceMonitor, Sparkles, Stars} from '@react-three/drei';
 import {Bloom, EffectComposer} from '@react-three/postprocessing';
 import {useMemo, useRef, useState} from 'react';
 import * as THREE from 'three';
-import {PALETTE, Ribbon, roadPoints, Star} from './scene/primitives';
+import {PALETTE, Ribbon, roadPoints, ScreenLabel, Star} from './scene/primitives';
 
 export {PALETTE};
 export type RoadState = 'completed' | 'next' | 'planned' | 'locked' | 'does-not-fit' | 'abstained';
@@ -14,7 +14,7 @@ export type RoadNode = {id: string; title: string; state: RoadState; prerequisit
 
 const SIZE: Record<RoadState, number> = {next: 0.34, planned: 0.2, completed: 0.17, locked: 0.11, 'does-not-fit': 0.13, abstained: 0.11};
 // Kept modest so bloom adds glow without washing hues out to white.
-const GLOW: Record<RoadState, number> = {next: 1.9, planned: 1.35, completed: 1.45, locked: 0.6, 'does-not-fit': 0.7, abstained: 0.6};
+const GLOW: Record<RoadState, number> = {next: 1.9, planned: 1.15, completed: 1.45, locked: 0.6, 'does-not-fit': 0.7, abstained: 0.6};
 const LIFT = new THREE.Vector3(0, 0.42, 0);
 
 function CameraRig({target, reducedMotion}: {target: THREE.Vector3; reducedMotion: boolean}) {
@@ -22,7 +22,8 @@ function CameraRig({target, reducedMotion}: {target: THREE.Vector3; reducedMotio
   useFrame(({camera, size}, delta) => {
     const narrow = size.width < 560;
     const goal = target.clone().add(new THREE.Vector3(narrow ? 0.6 : 2.4, narrow ? 2.4 : 2.1, narrow ? 9.5 : 7.4));
-    const ahead = target.clone().add(new THREE.Vector3(narrow ? 0 : -0.8, 0.1, -5.5));
+    // Look slightly right of the focus star so it sits left of centre and its label has room.
+    const ahead = target.clone().add(new THREE.Vector3(narrow ? 1.1 : 1.9, 0.1, -5.5));
     const k = reducedMotion ? 1 : 1 - Math.exp(-delta * 2.4);
     camera.position.lerp(goal, k);
     look.current.lerp(ahead, k);
@@ -65,10 +66,9 @@ export default function NightRoad({nodes, selected, onSelect, theme, reducedMoti
         onClick={() => onSelect(n.id)} onHover={h => setHover(cur => (h ? n.id : cur === n.id ? null : cur))} />
       {n.id === focusId && <mesh rotation={[Math.PI / 2, 0, 0]}><ringGeometry args={[SIZE[n.state] * 2.1, SIZE[n.state] * 2.25, 64]} />
         <meshBasicMaterial color={colors.next} transparent opacity={0.75} side={THREE.DoubleSide} toneMapped={!colors.glow} /></mesh>}
-      {labelled.includes(n.id) && <Billboard position={[0, SIZE[n.state] + 0.42, 0]}>
-        <Text fontSize={0.2} color={colors.label} outlineWidth={0.014} outlineColor={colors.labelOutline} anchorX="center" anchorY="bottom" maxWidth={3.2} textAlign="center" lineHeight={1.15}>
-          {(n.state === 'next' ? 'Next · ' : '') + n.title}
-        </Text></Billboard>}
+      {labelled.includes(n.id) && <group position={[SIZE[n.state] + 0.22, SIZE[n.state] * 0.4, 0]}>
+        <ScreenLabel text={(n.state === 'next' ? 'Next · ' : '') + n.title} px={n.id === focusId ? 14 : 12} color={colors.label} outline={colors.labelOutline} />
+      </group>}
     </group>)}
     <CameraRig target={target} reducedMotion={reducedMotion} />
     {colors.glow && <EffectComposer multisampling={0}><Bloom mipmapBlur luminanceThreshold={1} luminanceSmoothing={0.2} intensity={0.85} radius={0.72} levels={6} /></EffectComposer>}

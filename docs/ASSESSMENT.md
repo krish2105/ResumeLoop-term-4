@@ -83,3 +83,20 @@ Source: original `course/outline.docx`, text extracted into `evidence/2026-10-22
 **Open dependency:** the group assignment assumes a team (§3.4 lists Students 1–4). Who the groupmates are, and whether this project can be one group member's contribution or a solo submission, is still unknown.
 
 **TODO for owner:** Ask faculty which schedule applies, the final-session date, solo/group policy, required frameworks and permission/ethics process. No email has been sent and no date has been marked verified in the software.
+
+
+### Outline week → ResumeLoop screen (31 October 2026)
+
+| Outline | Screen | Evidence it can hold |
+|---|---|---|
+| Wk 2–3 Observe: extreme users, analogies, empathy maps, personas | Observe, Empathy studio | Observations by user type, consented notes, accepted codes, evidence-linked personas |
+| Wk 4–5 Needs and problem framing, storyboarding | Define | Point-of-view statements linked to themes; storyboards |
+| Wk 6 Envision: HMW, Hill statements, what-if | Envision, Ideate | Hills (who/what/wow + measure), what-if scenarios, HMW questions |
+| Wk 7 Solve: creativity exercises, future-state journeys, co-creation | Ideate (Crazy 8s, votes, alternatives), Journey maps | Timed idea rounds, votes, alternative scores, current and future journeys |
+| Wk 8 Prototyping | Prototype log, the app itself | Versions, what changed and why, tester feedback |
+| Wk 9 Experimentation | Experiment lab | Frozen protocol hash, sessions, medians and paired differences |
+| Wk 10 Ethics and governance | Ethics and governance | Model card, AI log, risk register, role-play decisions |
+| Wk 11 Integration and reflection; reflective paper 40% | Reflection journal | Dated first-person entries in the §3.5 structure, AI-use disclosure |
+| Wk 12 UN SDG presentation; group rubric incl. oral defence | Story mode, Course hub | Live evidence counts, presenters per stop, SDG canvas, rubric self-check, contribution matrix |
+
+The screens only hold evidence; the marks depend on real fieldwork, sessions and the student's own writing. Participation and individual quizzes (20%) remain outside the software.

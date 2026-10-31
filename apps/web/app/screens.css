@@ -82,3 +82,30 @@
 .stageField textarea,.stageField input{font-weight:400;color:var(--text)}
 .storyCard{left:auto;bottom:auto;width:auto}
 .lead{color:var(--text)}
+/* 320px containment for the new screens (found by the overflow checks) */
+.board{grid-template-columns:repeat(auto-fill,minmax(min(260px,100%),1fr))}
+.panel,.entry,.timeline li{min-width:0}
+.journeyGrid{max-width:100%;grid-auto-columns:minmax(min(200px,80vw),1fr)}
+.content{min-width:0}
+.journeyGrid,.stage,.tableWrap,.frame{position:relative}
+.riskGrid{grid-template-columns:minmax(0,.9fr) repeat(3,minmax(0,1fr))}.riskGrid>*{min-width:0;overflow-wrap:anywhere}
+
+/* Side panel containment: the grid column must not grow past the panel (content was clipped). */
+.roadSide{grid-template-columns:minmax(0,1fr)}
+.sideCard>*{min-width:0}.sideCard h2,.sideCard p,.starBtn span{overflow-wrap:anywhere}
+.budgetRow{flex-wrap:wrap}.saveBadge{font-size:10.5px;padding:4px 8px}
+
+/* Calmer type scale (owner feedback: fonts too big) */
+body{font-size:14px;line-height:1.5}
+.hero{margin-bottom:22px}.hero h1{font-size:clamp(24px,2.3vw,32px);margin:8px 0}.hero p{font-size:14px;max-width:62ch}
+.panel{padding:20px}.panel h2,.sideCard h2{font-size:16px;letter-spacing:-.01em}.detailCard h2{font-size:17px}
+.sideCard{padding:14px}.roadSide{gap:12px;padding:14px}.roadSide p{font-size:13px}
+.budgetRow label strong{font-size:24px}
+.starBtn{padding:6px 8px;min-height:40px}.starBtn span:not(.stateDot){font-size:13px}.starBtn small{font-size:10.5px}
+button,a.outlineBtn,a.primaryBtn{min-height:40px}
+.primaryBtn,.outlineBtn{padding:8px 14px;font-size:13px}
+.nav{padding:8px 12px;font-size:13px}.navGroup{margin-bottom:10px}
+.eyebrow,.navHeading{font-size:10px}
+.topbar{height:60px}.journey2{height:calc(100vh - 61px)}
+.factList{font-size:13px}.legend{font-size:11px}
+.storyDots button{width:32px;min-height:32px;font-size:12px}

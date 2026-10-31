@@ -41,3 +41,16 @@ Use illustrations sparingly: landing marketing hero, first-use setup and empty s
 
 ## Sample web scaffold
 The included dashboard implements primary type, theme selector and demo case queue, and is a starting reference rather than the completed spec.
+
+
+## Ember dusk tokens (adopted 31 October 2026)
+Chosen by the owner from four contrast-checked options. Source of truth: `apps/web/app/theme.css`.
+
+| Token | Light | Dark |
+|---|---|---|
+| bg / surface / raised | `#FAF6F0` / `#FFFFFF` / `#F2EBE2` | `#121011` / `#1B1719` / `#262023` |
+| text / muted | `#22160F` / `#62544B` | `#F1EAE5` / `#ADA29B` |
+| accent / on-accent | `#B5401F` / `#FFFFFF` | `#FF8E6B` / `#2A0E05` |
+| ok / warn / danger | `#1D7A4F` / `#8A5A00` / `#A3261A` | `#7BD3A8` / `#F4C76B` / `#FF9A8A` |
+
+Measured: text ≥ 15.9:1, muted ≥ 6.1:1 on every surface, accent ≥ 4.8:1 on wash, tinted badge pairs ≥ 4.6:1, control borders ≥ 4.0:1. Type: Bricolage Grotesque (display, headings only), Instrument Sans (body), IBM Plex Mono (minutes, IDs, hashes). The earlier "no fake 3D" rule stands: every 3D element mirrors real planner or studio data, with an accessible DOM equivalent.

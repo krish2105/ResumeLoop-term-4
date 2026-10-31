@@ -2,11 +2,11 @@
 // Story mode: the design-thinking process as constellations along the ember road. Each stop's
 // satellite stars are its real evidence items (fictional examples never count).
 import {Canvas, useFrame} from '@react-three/fiber';
-import {AdaptiveDpr, Billboard, Sparkles, Stars, Text} from '@react-three/drei';
+import {AdaptiveDpr, Sparkles, Stars} from '@react-three/drei';
 import {Bloom, EffectComposer} from '@react-three/postprocessing';
 import {useMemo, useRef} from 'react';
 import * as THREE from 'three';
-import {PALETTE, Ribbon, Star, type SceneColors} from './scene/primitives';
+import {PALETTE, Ribbon, ScreenLabel, Star, type SceneColors} from './scene/primitives';
 
 export type Stop = {key: string; title: string; evidence: number};
 
@@ -23,11 +23,10 @@ function Constellation({stop, index, active, colors, reducedMotion}: {stop: Stop
   useFrame((_, dt) => { if (ring.current && !reducedMotion) ring.current.rotation.y += dt * (active ? 0.25 : 0.06); });
   const core = stop.evidence > 0 ? (active ? colors.next : colors.completed) : colors.locked;
   return <group position={POS(index)}>
-    <Star color={core} radius={active ? 0.42 : 0.28} intensity={active ? 3.2 : 1.6} glow={colors.glow} pulse={active ? 0.1 : 0.03} reducedMotion={reducedMotion} />
+    <Star color={core} radius={active ? 0.42 : 0.28} intensity={active ? 1.9 : 1.3} glow={colors.glow} pulse={active ? 0.1 : 0.03} reducedMotion={reducedMotion} />
     <group ref={ring}>{sats.map((p, k) => <group key={k} position={p}><Star color={colors.planned} radius={0.06} intensity={1.6} glow={colors.glow} pulse={0} reducedMotion /></group>)}</group>
-    <Billboard position={[0, active ? 1.5 : 1.15, 0]}>
-      <Text fontSize={active ? 0.42 : 0.28} color={colors.label} outlineWidth={0.02} outlineColor={colors.labelOutline} anchorX="center" anchorY="bottom">{stop.title}</Text>
-    </Billboard>
+    {/* Only the active stop is labelled; distant labels collided. The numbered stop buttons name them all. */}
+    {active && <group position={[0, 1.3, 0]}><ScreenLabel text={stop.title} px={22} color={colors.label} outline={colors.labelOutline} anchorX="center" /></group>}
   </group>;
 }
 

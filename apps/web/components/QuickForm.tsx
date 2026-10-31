@@ -12,17 +12,20 @@ export function QuickForm({id, fields, submitLabel, onSubmit, initial = {}}: {
   const blank = () => Object.fromEntries(fields.map(f => [f.name, initial[f.name] ?? (f.type === 'select' ? f.options?.[0]?.[0] ?? '' : '')]));
   const [v, setV] = useState<Record<string, string>>(blank);
   const [error, setError] = useState('');
+  // A select whose options changed after mount (e.g. a member was just added) falls back to its first option.
+  const value = (f: FieldSpec) => f.type === 'select' && !f.options?.some(o => o[0] === v[f.name]) ? f.options?.[0]?.[0] ?? '' : v[f.name];
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const missing = fields.filter(f => f.required && !v[f.name]?.trim()).map(f => f.label);
+    const current = Object.fromEntries(fields.map(f => [f.name, value(f)]));
+    const missing = fields.filter(f => f.required && !current[f.name]?.trim()).map(f => f.label);
     if (missing.length) { setError('Fill in: ' + missing.join(', ')); return; }
     setError('');
-    if (await onSubmit(v)) setV(blank());
+    if (await onSubmit(current)) setV(blank());
   };
   return <form className="editor" onSubmit={submit} aria-describedby={id + '-err'} noValidate>
     <div className="formGrid">{fields.map(f => <label key={f.name} className={f.wide || f.type === 'textarea' ? 'wide' : ''}>{f.label}{f.required ? ' *' : ''}
       {f.type === 'textarea' ? <textarea rows={3} value={v[f.name]} placeholder={f.placeholder} onChange={e => setV({...v, [f.name]: e.target.value})} />
-        : f.type === 'select' ? <select value={v[f.name]} onChange={e => setV({...v, [f.name]: e.target.value})}>{f.options!.map(([val, lab]) => <option key={val} value={val}>{lab}</option>)}</select>
+        : f.type === 'select' ? <select value={value(f)} onChange={e => setV({...v, [f.name]: e.target.value})}>{f.options!.map(([val, lab]) => <option key={val} value={val}>{lab}</option>)}</select>
         : <input type={f.type || 'text'} min={f.min} max={f.max} value={v[f.name]} placeholder={f.placeholder} onChange={e => setV({...v, [f.name]: e.target.value})} />}
     </label>)}</div>
     <p id={id + '-err'} className="fieldError" role="alert">{error}</p>
