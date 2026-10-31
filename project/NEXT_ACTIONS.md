@@ -18,17 +18,18 @@ Updated 23 October 2026. Four project hours/week is the default; all five projec
 ## M1 — next executable slice and research access
 
 **Priority order by marks at stake (31 October 2026, see `project/BLOCKERS.md`):** (1) groupmates, solo permission and dates; (2) research permission and first fieldwork; (3) planner/schema slice. Items 1 and 2 are owner actions and are not blocked by code, so send the faculty questions before or alongside the planner work. The Week 12 presentation is about UN SDGs; frame ResumeLoop against SDG 4 only after faculty confirms. Participation and individual marks (20%) are in-class quizzes on readings and need study time, not software.
-- [ ] **NEXT:** Define typed synthetic course-action input with explicit duration, ID, prerequisites, completed state and source/version. Add tests for missing/unknown/duplicate/cyclic prerequisites and bounds.
-- [ ] Repair verified planner defects: exclude completed actions and schedule newly unlocked actions consistently without exceeding the budget. Document deterministic tie rules and abstention for missing authority.
+- [x] (31 Oct) Define typed synthetic course-action input with explicit duration, ID, prerequisites, completed state and source/version. Add tests for missing/unknown/duplicate/cyclic prerequisites and bounds.
+- [x] (31 Oct) Repair verified planner defects: exclude completed actions and schedule newly unlocked actions consistently without exceeding the budget. Document deterministic tie rules and abstention for missing authority.
 - [ ] Obtain faculty dates, solo submission permission, research/ethics requirements and required reflective frameworks. Do not infer dates from term start.
 - [ ] Obtain source owner authorization; declare allowed use, version, timezone, verification status, source pointer and checksum before any official course import.
 - [ ] Conduct first consented interviews and contextual observations with `research/STUDY_KIT.md`; no invented sample population or results.
 
 ## M2 — complete learner recovery workflow
-- [ ] Budget + last completed session → explainable feasible plan → chosen task → saved progress → refresh/resume.
+- [ ] **NEXT (engineering):** rewrite browser smoke + axe scripts for the new routes; run light/dark at 320–1440px; manual screen-reader pass.
+- [x] (31 Oct) Budget + last completed session → explainable feasible plan → chosen task → saved progress → refresh/resume (3D road + list view).
 - [ ] Versioned timeline/deadline verification and conflict/unknown states; no unsupported deadline assurances.
 - [ ] Fix cross-record review-note carryover, add scoped autosave and status recovery.
-- [ ] Local coordinator clarification queue; any actual external messages require explicit permission, idempotency and human gate.
+- [x] (31 Oct) Local coordinator clarification queue; any actual external messages require explicit permission, idempotency and human gate.
 - [ ] Tests for interruption, retries, source changes, stale plans, empty/error states; desktop/mobile/keyboard/screen-reader checks.
 
 ## M3 — academic evidence

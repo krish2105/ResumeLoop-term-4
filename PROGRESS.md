@@ -2,7 +2,29 @@
 
 Updated **23 October 2026**. Term starts **10 November 2026**. Solo developer; default allocation **4 hours/week** from 20 hours shared across five projects. Cross-account continuation instructions are in [`NEW_ACCOUNT_HANDOFF.md`](NEW_ACCOUNT_HANDOFF.md).
 
-## How much is done
+## 31 October 2026 build: spatial journey prototype
+
+**Public demo (fictional data, recorded AI answers): https://resumeloop-demo.vercel.app** · design spec: [`docs/superpowers/specs/2026-10-31-resumeloop-spatial-journey-design.md`](docs/superpowers/specs/2026-10-31-resumeloop-spatial-journey-design.md)
+
+| Area | Status | What exists |
+|---|---|---|
+| 3D night road (`/`) | Built, browser-checked | React Three Fiber road; one star per course task; time-budget slider re-plans live; dawn theme in light mode; reduced-motion and no-WebGL fallbacks; accessible star list beside the canvas |
+| List view (`/plan`) | Built | Same plan as an accessible table with reasons, checkboxes and reset |
+| Planner | Fixed and tested | Typed, versioned fictional course; completed tasks never reselected; unlocked dependents scheduled; duplicate/unknown/cyclic prerequisites rejected; unknown durations abstain; TypeScript copy matches Python on 60/60 cases |
+| Progress autosave | Built, tested | Version-checked saves (stale tab → 409 and reload prompt) |
+| What changed (`/digest`) | Built, live AI checked | Code computes the v1 → v2 changes; local `qwen2.5:7b` rephrases; skipped facts are added back verbatim |
+| Coach (`/coach`) | Built, live AI checked | `bge-m3` retrieval over fictional notes; answers must cite retrieved passages or abstain; offline fallback quotes the closest passage |
+| Coordinator queue (`/escalations`) | Built, tested | AI drafts, learner edits and approves, idempotent local queue; nothing is ever sent |
+| Empathy studio | Built, live AI checked | Consent-gated notes, privacy guard, AI code suggestions that must quote the note exactly and need accept/reject, empathy map, themes |
+| Ideate | Built | How might we (AI suggestions + manual), ideas, one vote per person, 3-alternative scoring matrix |
+| Experiment lab | Built, tested | Protocol freeze with SHA-256, AB/BA order, timed task recorder, medians/ranges/paired differences, chart |
+| Ethics and governance | Built | Model card, human-in-the-loop counts, consent overview, AI decision log (prompts stored as hashes) |
+| Story mode (`/story`) | Built, browser-checked | Six-stop 3D presentation (Empathise → Impact · SDG 4) with live evidence counts; fictional items never count |
+| Public demo | Deployed | Vercel project `resumeloop-demo`, `NEXT_PUBLIC_DEMO_MODE=1`, edits stay in the visitor's browser |
+
+Still not done: real fieldwork and participants, real usability sessions, faculty confirmation of dates/group/frameworks, screen-reader and Safari/Firefox testing, auth/tenancy. The old `scripts/browser-smoke.js` targets the previous single-page UI and has not been updated.
+
+## How much is done (22 October milestone)
 
 **Milestone M0 is implemented: the starter was audited and one complete synthetic import-to-saved-outcome journey was built and tested.** This is a working local research prototype. It is not a complete learner-recovery product or production SaaS. A percentage of the whole SaaS would be misleading because the research has not yet validated the scope.
 
@@ -63,6 +85,10 @@ PYTHONPATH=services/api .venv/bin/uvicorn app.main:app --host 127.0.0.1 --port 8
 cd apps/web
 npm run dev -- --hostname 127.0.0.1
 ```
+
+**Local AI (optional, recommended):** install [Ollama](https://ollama.com), then `ollama pull qwen2.5:7b` and `ollama pull bge-m3:567m`. Without Ollama the app still works: the digest uses its fixed text, the coach falls back to keyword search and quotes the closest passage, and code suggestions are disabled. Override models with `RL_GEN_MODEL`, `RL_EMBED_MODEL` and `OLLAMA_URL`.
+
+**Demo data scripts (from the project root):** `PYTHONPATH=services/api .venv/bin/python scripts/record_demo_ai.py` records real local-model answers on fictional data; `PYTHONPATH=services/api .venv/bin/python scripts/export_demo_fixtures.py` rebuilds `apps/web/demo/fixtures.json`; `cd apps/web && npm run test:parity` checks the TypeScript planner against Python. Demo build: `NEXT_DIST_DIR=.next-demo NEXT_PUBLIC_DEMO_MODE=1 npm run build`. Deploy: `vercel deploy --prod --build-env NEXT_PUBLIC_DEMO_MODE=1` from `apps/web`.
 
 Open **http://127.0.0.1:3000**. API documentation: **http://127.0.0.1:8014/docs**. Health check: **http://127.0.0.1:8014/api/health**. Stop either service with Ctrl+C in its terminal.
 

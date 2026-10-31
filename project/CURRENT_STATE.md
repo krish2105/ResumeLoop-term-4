@@ -2,6 +2,23 @@
 
 Last updated: **23 October 2026**. User requested a complete cross-account continuation package and publication to `https://github.com/krish2105/ResumeLoop-term-4`. **`PROGRESS.md`** remains the status/run authority; **`NEW_ACCOUNT_HANDOFF.md`** and **`prompts/10_NEW_ACCOUNT_HANDOFF.md`** provide the transfer checklist and paste-ready prompt.
 
+## 31 October 2026 build — spatial journey prototype (latest)
+
+Owner chose option C (full 3D journey, night-road art), all ten features, local Ollama AI, and a public Vercel demo. Spec: `docs/superpowers/specs/2026-10-31-resumeloop-spatial-journey-design.md`. Commits `14cf41e` → `abdcf34` (+ this documentation commit) pushed to `origin/main`; no AI co-author trailers.
+
+**VERIFIED (commands run this session):**
+- `PYTHONPATH=services/api .venv/bin/python -m pytest -q services/api/tests` → **54 passed** (planner, progress, AI validators with a fake LLM, escalations, studio).
+- `npm run test:parity` → **60/60** TypeScript planner cases match Python. `npm run typecheck` passes. Live build (`NEXT_DIST_DIR=.next-live`) and demo build (`NEXT_PUBLIC_DEMO_MODE=1`) → 16/16 static pages. `npm audit` → 0 vulnerabilities. `pip-audit` was **not run** (not installed in this venv).
+- Live Ollama (`qwen2.5:7b`, `bge-m3:567m`): digest grouped 7 changes (1 skipped change re-added); coach cited [S3-p2]/[S3-p1] and abstained on a grade-extension question; code suggestions kept exact quotes and auto-rejected invalid ones. `scripts/record_demo_ai.py` recorded these for the demo.
+- Built-in browser: 3D road renders, Mark complete saves (version 1) and re-plans; coach answers live; empathy studio loads fictional examples and AI suggestions; story mode advances with arrow keys; Vercel demo serves `/`, `/story`, `/coach` (200) and shows recorded answers labelled with model and date.
+- Bug found and fixed: SQLite cross-thread error under real uvicorn (tests had not caught it) → `check_same_thread=False` with one connection per request.
+
+**Changed/new files:** backend `course.py`, `planner.py`, `learning.py`, `storage.py`, `assist.py`, `studio.py`, `ai/llm.py`, `ai/retrieval.py`, `ai/features.py`, `main.py`; tests `test_planner.py`, `test_ai.py`, `test_studio.py`; data `fictional_course.json`, `fictional_studio.json`, `recorded_ai.json`; scripts `export_demo_fixtures.py`, `record_demo_ai.py`; frontend `components/` (AppShell, NightRoad, StoryScene, JourneyBits, StudioBits, AiBadge, LocalOnly), `lib/` (client, planner, assist, studio, stats, road, types, useJourney), all routes under `app/`, `journey.css`, `next.config.mjs`, `demo/fixtures.json`, `.vercelignore`.
+
+**UNTESTED / open:** screen readers, Safari/Firefox, real phones, automated axe scan of the new screens, updated browser smoke script (old one targets the previous UI), cross-tab demo storage, Ollama on other machines. No real participants, sessions or faculty answers; studio evidence counts are zero real items. Not production-ready.
+
+**Next runnable task:** owner sends faculty questions (groupmates, solo permission, dates, frameworks, ethics). Engineering: rewrite `scripts/browser-smoke.js` and the axe scan for the new routes, then run them in light/dark at 320–1440px.
+
 ## 31 October 2026 update — outline re-check and priority ranking (documentation only)
 
 - Re-verified from this checkout: `git status` clean and `HEAD` equal to `origin/main` (`d6cffe2`) at session start; `pytest` **24 passed** (1 httpx deprecation warning); `domain_example()` selects recap + exercise (40/45 minutes); `npm run typecheck` passed. Production build, the 23 browser checks, accessibility scans and dependency audits were **not rerun** and remain 22 October evidence.

@@ -20,8 +20,9 @@ The table below lists the remaining engineering and platform gaps, which are not
 | Participation and group dates conflict in original outline; final-session date and solo permission unknown | Assessment scheduling/submission risk | Student: obtain current faculty brief; no external message sent |
 | No approved participants or research permissions | No authentic qualitative/usability results | Student: faculty review, consent and voluntary recruitment using study kit |
 | No authorized course source/version/deadline owner | Cannot offer verified personal recovery plans/deadlines | Student/coordinator: establish rights and typed source contract |
-| Planner reselects completed actions and skips some newly feasible dependents | Incorrect recovery sequencing | Engineering: next synthetic schema/planner slice; reproduction saved locally |
-| Review-note draft is not scoped/autosaved per record | Potential note carryover/lost draft | Engineering: next review/session-restoration slice |
+| Planner reselects completed actions and skips some newly feasible dependents | **Resolved 31 Oct 2026** | New `planner.py` with tests for completed exclusion, unlock chains and invalid graphs |
+| Review-note draft is not scoped/autosaved per record | Carryover fixed 31 Oct (note clears on record change); autosave still absent | Engineering: autosave review notes |
+| New UI not yet covered by browser smoke or axe scripts | Accessibility of 3D/studio screens unverified by automation | Engineering: rewrite scripts for new routes and run light/dark at 320–1440px |
 | Local API unauthenticated, no tenant isolation, unencrypted SQLite/localStorage | Unsafe for real learner data or public service | Engineering: auth/privacy/tenant tests before pilot; keep localhost synthetic |
 | No screen-reader, Safari/Firefox or real-device participant tests | Accessibility not fully established | Engineering/research: assisted manual tests; automated scan limitations documented |
 | Four hours/week default for this project; five projects share 20 hours | Scope risk | Student: prioritize rubric evidence and one vertical slice per session |

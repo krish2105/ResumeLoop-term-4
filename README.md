@@ -1,5 +1,7 @@
 # ResumeLoop — Design Thinking (MAIB MGT 204)
 
+**Live demo:** https://resumeloop-demo.vercel.app (fictional course, recorded local-model answers). A 3D night-road journey for learners returning after a missed class, a grounded local AI coach, and a Design Thinking studio (empathy coding, ideation, experiment lab, ethics, 3D story mode for the SDG 4 presentation).
+
 **Current handoff:** [PROGRESS.md](PROGRESS.md) contains completed work, verified checks, the remaining end-to-end roadmap and setup/run instructions. For a different ChatGPT/Codex account, use [NEW_ACCOUNT_HANDOFF.md](NEW_ACCOUNT_HANDOFF.md) and the copy-ready prompt in [prompts/10_NEW_ACCOUNT_HANDOFF.md](prompts/10_NEW_ACCOUNT_HANDOFF.md).
 
 **Pack type:** research + product + engineering STARTER KIT. **Not:** a completed trained model, proven customer product, or deployed SaaS. The included API, dashboard, sample data, calculation and tests form a demo vertical slice.

@@ -52,3 +52,13 @@ Initial Git publication completed: root commit `29dfb5c6e20659ced07cf12736a6ddc1
 **Not done / untested:** Production build, browser and accessibility checks and audits were not rerun. No faculty message sent; groupmates, solo permission, dates, frameworks, ethics process and AI-use policy still unknown. Nothing committed or pushed in this session.
 
 **Next:** Owner sends faculty questions (rank 1) and starts research permission (rank 2); engineering next slice is the typed course-action schema and planner repair.
+
+### 2026-10-31 — Spatial journey build (brainstorm → spec → five slices → Vercel)
+
+**User steering:** Chose UI option C (full spatial 3D journey) and the night-constellation art direction; all ten learner and studio features; local Ollama (no API key); local app plus public read-only Vercel demo; 20+ hour sprint then 12 h/week; team undecided. Asked to build end to end without stopping, show progress in the built-in browser, push before limits expire, and remove Claude as a contributor (owner amended `96f0da5` → `e377364` and force-pushed after the agent's rewrite was blocked by the safety check).
+
+**Implementation:** Typed versioned fictional course + deterministic planner fix (completed exclusion, unlock re-evaluation, graph validation, abstention); version-checked progress autosave; R3F night road with accessible list twin, dawn theme, reduced-motion and no-WebGL fallbacks; local AI layer (Ollama client, bge-m3 retrieval with keyword fallback, validated digest/coach/escalation/code/HMW features, AI log); approval-gated local coordinator queue; Design Thinking studio (consent and privacy guards, exact-quote AI code suggestions with accept/reject, empathy map, themes, HMW, ideas, votes, alternatives matrix, frozen experiment protocols, timed session recorder, descriptive results, ethics panel); six-stop 3D story mode; demo client with TS planner parity and recorded answers; Vercel deployment `resumeloop-demo`.
+
+**Verification:** 54 pytest passed; 60/60 planner parity; typecheck; live and demo builds 16/16 pages; npm audit 0. Live Ollama checks of digest, coach (cites/abstains), code suggestions. Browser checks on local and Vercel. Found and fixed a real SQLite cross-thread bug under uvicorn. pip-audit not run.
+
+**Untested and next:** screen readers, Safari/Firefox, phones, new axe/smoke scripts, real fieldwork and sessions, faculty answers. Next: faculty questions (owner), then refresh browser and accessibility automation for the new routes.

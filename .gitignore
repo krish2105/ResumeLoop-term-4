@@ -44,3 +44,4 @@ output/playwright/*
 
 .next-demo/
 .vercel
+.next-live/
