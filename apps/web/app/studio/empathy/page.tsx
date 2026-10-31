@@ -3,7 +3,11 @@ import {useState} from 'react';
 import {AiBadge} from '@/components/AiBadge';
 import {PageHead} from '@/components/AppShell';
 import {FictionBanner, Msg, useStudio} from '@/components/StudioBits';
+import fixtures from '@/demo/fixtures.json';
+import {DEMO} from '@/lib/client';
 import {CATEGORIES, studio, type Item} from '@/lib/studio';
+
+const DEMO_INSIGHT = ((fixtures.recorded_ai as unknown as {hmw_insights?: string[]}).hmw_insights || [''])[0];
 
 const MAP: [string, string][] = [['says', 'Says'], ['does', 'Does'], ['thinks', 'Thinks (interpretation)'], ['feels', 'Feels (in their words)']];
 
@@ -19,7 +23,8 @@ export default function EmpathyPage() {
   const [ai, setAi] = useState<{mode: string; model: string | null; recorded_at?: string; rejected: number; message?: string} | null>(null);
   const [form, setForm] = useState({participant_code: 'P01', context: '', text: '', participation: false, anonymised_notes: false, quotes: false});
   const [code, setCode] = useState({label: '', quote: '', category: 'says'});
-  const [theme, setTheme] = useState({title: '', insight: ''});
+  // In the public demo, start from the insight whose How might we suggestions were recorded.
+  const [theme, setTheme] = useState({title: DEMO ? 'Conflicting sources of truth' : '', insight: DEMO ? DEMO_INSIGHT : ''});
   const codeOwner = (c: Item) => notes.find(n => n.id === c.parent_id)?.participant_code || '?';
 
   const addNote = () => {

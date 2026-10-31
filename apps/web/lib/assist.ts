@@ -17,7 +17,7 @@ export type AiLogEntry = {id: number; feature: string; model: string; status: st
 
 type Recorded = {recorded_at?: string; model?: string; digest?: Digest; coach?: {question: string; about: string | null; response: CoachAnswer}[];
   draft?: Draft; log?: AiLogEntry[]};
-export const recorded = (fixtures.recorded_ai || {}) as Recorded;
+export const recorded = (fixtures.recorded_ai || {}) as unknown as Recorded;
 const norm = (s: string) => s.toLowerCase().replace(/[^a-z0-9 ]/g, '').replace(/\s+/g, ' ').trim();
 const now = () => new Date().toISOString().slice(0, 19).replace('T', ' ');
 

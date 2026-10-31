@@ -1,0 +1,524 @@
+{
+ "recorded_at": "2026-10-31T12:40:06Z",
+ "model": "qwen2.5:7b",
+ "embed_model": "bge-m3:567m",
+ "notice": "Real answers from the local model on fictional data, recorded for the public demo.",
+ "digest": {
+  "from": "v1",
+  "to": "v2",
+  "facts": [
+   {
+    "id": "C1",
+    "fact": "New task added: Read: framing case study (session 4, 15 min)."
+   },
+   {
+    "id": "C2",
+    "fact": "New task added: Reflection journal (new format) (session 6, 25 min)."
+   },
+   {
+    "id": "C3",
+    "fact": "Task removed: Reflection log entry (session 6)."
+   },
+   {
+    "id": "C4",
+    "fact": "Reading check quiz: deadline changed from 24 Nov 2026 18:00 Dubai time to 26 Nov 2026 18:00 Dubai time."
+   },
+   {
+    "id": "C5",
+    "fact": "Reading check quiz: deadline status changed from \"verified by the coordinator\" to \"sources disagree, unconfirmed\"."
+   },
+   {
+    "id": "C6",
+    "fact": "Exercise: write a point-of-view statement: duration changed from 25 to 30."
+   },
+   {
+    "id": "C7",
+    "fact": "Group task: prepare the HMW workshop: prerequisites changed from s5-recap, s4-exercise to s5-recap, s4-exercise, s4-reading."
+   }
+  ],
+  "mode": "ai",
+  "model": "qwen2.5:7b",
+  "summary": "Several tasks have been added or modified, and one task has been removed.",
+  "items": [
+   {
+    "change_ids": [
+     "C1",
+     "C2"
+    ],
+    "text": "New tasks have been added: read a framing case study in session 4 (15 minutes) and start a reflection journal in session 6 (25 minutes). The reflection log entry for session 6 has been removed."
+   },
+   {
+    "change_ids": [
+     "C4",
+     "C5"
+    ],
+    "text": "The deadline for the reading check quiz has been extended to 26 November 2026 at 18:00 Dubai time, and the status of the quiz deadline has been changed to unconfirmed due to conflicting sources."
+   },
+   {
+    "change_ids": [
+     "C6"
+    ],
+    "text": "The duration of the exercise to write a point-of-view statement has been increased from 25 to 30 minutes."
+   },
+   {
+    "change_ids": [
+     "C7"
+    ],
+    "text": "The group task to prepare the HMW workshop now requires additional prerequisites: the s4-reading session in addition to the previous s5-recap and s4-exercise sessions."
+   },
+   {
+    "change_ids": [
+     "C3"
+    ],
+    "text": "Task removed: Reflection log entry (session 6).",
+    "from_facts": true
+   }
+  ],
+  "repaired": 1
+ },
+ "coach": [
+  {
+   "question": "When is the reading check quiz due?",
+   "about": null,
+   "response": {
+    "mode": "ai",
+    "model": "qwen2.5:7b",
+    "abstained": false,
+    "offer_escalation": false,
+    "answer": "The reading check quiz is due on 26 November, according to version 2 of the course page, but the coordinator has not yet confirmed this date.",
+    "citations": [
+     "S3-p2"
+    ],
+    "sources": [
+     {
+      "id": "S3-p2",
+      "title": "Session 3 notes: empathy mapping",
+      "text": "The empathy map exercise takes about thirty-five minutes and builds on your observation notes from session 2. The reading check quiz covers the observation primer. In version 1 of the course page the quiz was due on 24 November at 18:00 Dubai time. Version 2 lists 26 November, and the coordinator has not yet confirmed which date is correct.",
+      "score": 0.625
+     },
+     {
+      "id": "S1-p3",
+      "title": "Session 1 notes: what design thinking is",
+      "text": "The session 1 recap takes about fifteen minutes. The primer reading takes about twenty minutes and must be read before the session 2 exercise and the reading check quiz.",
+      "score": 0.606
+     }
+    ],
+    "retrieval": "embeddings"
+   }
+  },
+  {
+   "question": "What goes in an empathy map?",
+   "about": null,
+   "response": {
+    "mode": "ai",
+    "model": "qwen2.5:7b",
+    "abstained": false,
+    "offer_escalation": false,
+    "answer": "An empathy map includes four areas: says, does, thinks, and feels. Says and does are based on evidence collected, while thinks and feels are interpretations that must be labeled as such, supported by evidence [S3-p1].",
+    "citations": [
+     "S3-p1"
+    ],
+    "sources": [
+     {
+      "id": "S3-p1",
+      "title": "Session 3 notes: empathy mapping",
+      "text": "An empathy map has four areas: says, does, thinks and feels. Says and does come from evidence you collected. Thinks and feels are interpretations and must be labelled as such, with the evidence that supports them.",
+      "score": 0.737
+     },
+     {
+      "id": "S3-p2",
+      "title": "Session 3 notes: empathy mapping",
+      "text": "The empathy map exercise takes about thirty-five minutes and builds on your observation notes from session 2. The reading check quiz covers the observation primer. In version 1 of the course page the quiz was due on 24 November at 18:00 Dubai time. Version 2 lists 26 November, and the coordinator has not yet confirmed which date is correct.",
+      "score": 0.621
+     },
+     {
+      "id": "S4-p2",
+      "title": "Session 4 notes: problem framing",
+      "text": "Version 2 of the course adds a short framing case study reading of about fifteen minutes. The point-of-view exercise now takes about thirty minutes instead of twenty-five. It needs the session 4 recap and your empathy map.",
+      "score": 0.512
+     }
+    ],
+    "retrieval": "embeddings"
+   }
+  },
+  {
+   "question": "What changed in the point-of-view exercise?",
+   "about": null,
+   "response": {
+    "mode": "ai",
+    "model": "qwen2.5:7b",
+    "abstained": false,
+    "offer_escalation": false,
+    "answer": "The point-of-view exercise now takes about thirty minutes instead of twenty-five in Version 2 of the course [S4-p2]. It also requires the session 4 recap and your empathy map [S4-p2].",
+    "citations": [
+     "S4-p2"
+    ],
+    "sources": [
+     {
+      "id": "S4-p2",
+      "title": "Session 4 notes: problem framing",
+      "text": "Version 2 of the course adds a short framing case study reading of about fifteen minutes. The point-of-view exercise now takes about thirty minutes instead of twenty-five. It needs the session 4 recap and your empathy map.",
+      "score": 0.64
+     },
+     {
+      "id": "S5-p1",
+      "title": "Session 5 notes: how might we",
+      "text": "How might we questions reframe a point-of-view statement as an opportunity. They should be broad enough to allow many ideas and narrow enough to be useful. Teams generate many questions, then vote on the most promising.",
+      "score": 0.549
+     }
+    ],
+    "retrieval": "embeddings"
+   }
+  },
+  {
+   "question": "How long will this take and what do I need first?",
+   "about": "s3-exercise",
+   "response": {
+    "mode": "ai",
+    "model": "qwen2.5:7b",
+    "abstained": false,
+    "offer_escalation": false,
+    "answer": "To build an empathy map, it will take about thirty-five minutes. You will first need your observation notes from session 2 [S2-p2].",
+    "citations": [
+     "S2-p2",
+     "S3-p2"
+    ],
+    "sources": [
+     {
+      "id": "S3-p2",
+      "title": "Session 3 notes: empathy mapping",
+      "text": "The empathy map exercise takes about thirty-five minutes and builds on your observation notes from session 2. The reading check quiz covers the observation primer. In version 1 of the course page the quiz was due on 24 November at 18:00 Dubai time. Version 2 lists 26 November, and the coordinator has not yet confirmed which date is correct.",
+      "score": 0.733
+     },
+     {
+      "id": "S3-p1",
+      "title": "Session 3 notes: empathy mapping",
+      "text": "An empathy map has four areas: says, does, thinks and feels. Says and does come from evidence you collected. Thinks and feels are interpretations and must be labelled as such, with the evidence that supports them.",
+      "score": 0.674
+     },
+     {
+      "id": "S4-p2",
+      "title": "Session 4 notes: problem framing",
+      "text": "Version 2 of the course adds a short framing case study reading of about fifteen minutes. The point-of-view exercise now takes about thirty minutes instead of twenty-five. It needs the session 4 recap and your empathy map.",
+      "score": 0.654
+     },
+     {
+      "id": "S2-p2",
+      "title": "Session 2 notes: observing users",
+      "text": "The exercise asks for five observation notes. Each note should record time, place, action and a direct quote if the person agreed to be quoted. Do not record names. The exercise needs the session 2 recap and the observation primer first, and takes about thirty minutes.",
+      "score": 0.622
+     }
+    ],
+    "retrieval": "embeddings"
+   }
+  },
+  {
+   "question": "Can I get an extension on my grade?",
+   "about": null,
+   "response": {
+    "mode": "abstained",
+    "model": "qwen2.5:7b",
+    "abstained": true,
+    "offer_escalation": true,
+    "answer": "I can't find this in the course sources, so I won't guess. You can ask the coordinator instead.",
+    "citations": [],
+    "sources": [
+     {
+      "id": "S4-p2",
+      "title": "Session 4 notes: problem framing",
+      "text": "Version 2 of the course adds a short framing case study reading of about fifteen minutes. The point-of-view exercise now takes about thirty minutes instead of twenty-five. It needs the session 4 recap and your empathy map.",
+      "score": 0.514
+     }
+    ],
+    "retrieval": "embeddings"
+   }
+  }
+ ],
+ "draft": {
+  "mode": "ai",
+  "model": "qwen2.5:7b",
+  "subject": "Clarification Needed for Reading Check Quiz Date",
+  "body": "Hello, could you please confirm the correct date for the reading check quiz? I couldn't find it in the course calendar. Thank you!"
+ },
+ "codes": {
+  "P01": {
+   "codes": [
+    {
+     "label": "MissedSession",
+     "quote": "I missed session two because of a late shift.",
+     "category": "says"
+    },
+    {
+     "label": "Disagreement",
+     "quote": "none of them agreed on the quiz date.",
+     "category": "says"
+    },
+    {
+     "label": "TimeSpent",
+     "quote": "I spent twenty minutes just working out what I had missed.",
+     "category": "does"
+    },
+    {
+     "label": "FeelingBehind",
+     "quote": "I felt behind before I even started.",
+     "category": "feels"
+    }
+   ],
+   "rejected": 1,
+   "model": "qwen2.5:7b"
+  },
+  "P02": {
+   "codes": [
+    {
+     "label": "Uses_paper_list",
+     "quote": "I keep a paper list of tasks",
+     "category": "says"
+    },
+    {
+     "label": "List_outdated",
+     "quote": "but it goes out of date when the course page changes",
+     "category": "says"
+    },
+    {
+     "label": "Asks_classmate",
+     "quote": "I asked a classmate instead of the coordinator because I did not want to bother anyone",
+     "category": "says"
+    }
+   ],
+   "rejected": 1,
+   "model": "qwen2.5:7b"
+  },
+  "P03": {
+   "codes": [
+    {
+     "label": "RepeatedQuestions",
+     "quote": "Every week I answer the same three questions about deadlines",
+     "category": "does"
+    },
+    {
+     "label": "LateEmails",
+     "quote": "Students email me at midnight before a quiz",
+     "category": "says"
+    },
+    {
+     "label": "MissedAnnouncements",
+     "quote": "When a date changes I post an announcement, but people who were away never see it",
+     "category": "feels"
+    },
+    {
+     "label": "DesireForEfficiency",
+     "quote": "I would like questions to arrive with the task they refer to, so I can answer once and point others to it",
+     "category": "thinks"
+    }
+   ],
+   "rejected": 0,
+   "model": "qwen2.5:7b"
+  },
+  "P04": {
+   "codes": [
+    {
+     "label": "TimeConstraint",
+     "quote": "I usually only have half an hour on the train.",
+     "category": "feels"
+    },
+    {
+     "label": "DifficultyFindingInfo",
+     "quote": "it takes me a long time to find the current one.",
+     "category": "feels"
+    },
+    {
+     "label": "PreferenceForLists",
+     "quote": "Visual timelines are hard for me unless there is a list version.",
+     "category": "says"
+    }
+   ],
+   "rejected": 1,
+   "model": "qwen2.5:7b"
+  }
+ },
+ "hmw": {
+  "Returning learners lose time reconciling course sources that disagree": {
+   "model": "qwen2.5:7b",
+   "questions": [
+    "How might we streamline the course source information to reduce confusion for returning learners?",
+    "How might we provide a clear and consistent reference guide for course sources to help returning learners?",
+    "How might we implement a feedback mechanism for course sources to quickly address discrepancies?",
+    "How might we design a summary document for each course that highlights key source information to assist returning learners?"
+   ]
+  },
+  "Learners with short study windows want to start something useful immediately": {
+   "model": "qwen2.5:7b",
+   "questions": [
+    "How might we design activities that allow learners to see immediate results after starting their study session?",
+    "How might we create a system that provides quick wins to engage learners who have limited time for studying?",
+    "How might we structure our content to offer practical, bite-sized tasks that can be completed in short study windows?",
+    "How might we develop a method to show learners the relevance and applicability of the material they are studying within a short timeframe?"
+   ]
+  }
+ },
+ "hmw_insights": [
+  "Returning learners lose time reconciling course sources that disagree",
+  "Learners with short study windows want to start something useful immediately"
+ ],
+ "log": [
+  {
+   "id": 13,
+   "feature": "hmw_suggestions",
+   "model": "qwen2.5:7b",
+   "status": "ok",
+   "prompt_sha256": "e6f3f260b3f7df66df9d5173f1297cc2b5ae64fd59d583eb3b8a54d6948dde41",
+   "created_at": "2026-10-31 12:40:06",
+   "detail": {
+    "kept": 4
+   }
+  },
+  {
+   "id": 12,
+   "feature": "hmw_suggestions",
+   "model": "qwen2.5:7b",
+   "status": "ok",
+   "prompt_sha256": "c6054d8b74765f03ae4477c68097a482474944fcad3a448e2fa55000a928bcb9",
+   "created_at": "2026-10-31 12:40:00",
+   "detail": {
+    "kept": 4
+   }
+  },
+  {
+   "id": 11,
+   "feature": "code_suggestions",
+   "model": "qwen2.5:7b",
+   "status": "ok",
+   "prompt_sha256": "9c8a68fc495ee46bb785b3109c456571999fc3ca7a1712a76925478f0992aa62",
+   "created_at": "2026-10-31 12:39:55",
+   "detail": {
+    "kept": 3,
+    "rejected": 1
+   }
+  },
+  {
+   "id": 10,
+   "feature": "code_suggestions",
+   "model": "qwen2.5:7b",
+   "status": "ok",
+   "prompt_sha256": "826e610d905fbcfd5721a3fecf966cdf37aae43ee936f347825250b4a4671420",
+   "created_at": "2026-10-31 12:39:47",
+   "detail": {
+    "kept": 4,
+    "rejected": 0
+   }
+  },
+  {
+   "id": 9,
+   "feature": "code_suggestions",
+   "model": "qwen2.5:7b",
+   "status": "ok",
+   "prompt_sha256": "6283e2a78bb7541ecb673150edf8f4365071f48ed892870f0851eae7115cb99b",
+   "created_at": "2026-10-31 12:39:37",
+   "detail": {
+    "kept": 3,
+    "rejected": 1
+   }
+  },
+  {
+   "id": 8,
+   "feature": "code_suggestions",
+   "model": "qwen2.5:7b",
+   "status": "ok",
+   "prompt_sha256": "75584e55b28a8b651da888113f0f7e31a4ab461757a1465fdb3147cdcd815f27",
+   "created_at": "2026-10-31 12:39:29",
+   "detail": {
+    "kept": 4,
+    "rejected": 1
+   }
+  },
+  {
+   "id": 7,
+   "feature": "escalation_draft",
+   "model": "qwen2.5:7b",
+   "status": "ok",
+   "prompt_sha256": "bfeab53c1ea7a7b8b00e68e43c16a252be6031d9a6f8b85f01187a070ae077c7",
+   "created_at": "2026-10-31 12:39:20",
+   "detail": {}
+  },
+  {
+   "id": 6,
+   "feature": "coach",
+   "model": "qwen2.5:7b",
+   "status": "abstained",
+   "prompt_sha256": "a7bb257ec69ab7b1fd8dd6b3c33f71b5be899f469c605c732cb0c606495ba65a",
+   "created_at": "2026-10-31 12:39:17",
+   "detail": {
+    "cited": [],
+    "allowed": [
+     "S4-p2"
+    ]
+   }
+  },
+  {
+   "id": 5,
+   "feature": "coach",
+   "model": "qwen2.5:7b",
+   "status": "ok",
+   "prompt_sha256": "ed6a530845a7e6a4f8b76fa49d1c11441828a8e9257912c8f88884ba63938a39",
+   "created_at": "2026-10-31 12:39:14",
+   "detail": {
+    "cited": [
+     "S2-p2",
+     "S3-p2"
+    ]
+   }
+  },
+  {
+   "id": 4,
+   "feature": "coach",
+   "model": "qwen2.5:7b",
+   "status": "ok",
+   "prompt_sha256": "7b581ee46cb7f68809431d0d9d52d84a0116ecf1717b2fa2ff5678b5b096f995",
+   "created_at": "2026-10-31 12:39:10",
+   "detail": {
+    "cited": [
+     "S4-p2"
+    ]
+   }
+  },
+  {
+   "id": 3,
+   "feature": "coach",
+   "model": "qwen2.5:7b",
+   "status": "ok",
+   "prompt_sha256": "5639fab8f4dedeac69ada9f196a84d2daa4e906c545f4b504018b93f2d6dc8f0",
+   "created_at": "2026-10-31 12:39:05",
+   "detail": {
+    "cited": [
+     "S3-p1"
+    ]
+   }
+  },
+  {
+   "id": 2,
+   "feature": "coach",
+   "model": "qwen2.5:7b",
+   "status": "ok",
+   "prompt_sha256": "b8b56382aaa11e72b220d6a2a312f80c4ceac1cb26ebf5ec4466c9f002fe68ba",
+   "created_at": "2026-10-31 12:39:00",
+   "detail": {
+    "cited": [
+     "S3-p2"
+    ]
+   }
+  },
+  {
+   "id": 1,
+   "feature": "digest",
+   "model": "qwen2.5:7b",
+   "status": "ok",
+   "prompt_sha256": "8e416d60f5561e22f5640aaabce32d62a95aba8135036b8b11de2a04c21aee01",
+   "created_at": "2026-10-31 12:38:55",
+   "detail": {
+    "changes": 7,
+    "items": 5,
+    "repaired": 1
+   }
+  }
+ ]
+}

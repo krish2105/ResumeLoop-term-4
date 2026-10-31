@@ -41,3 +41,6 @@ output/playwright/*
 !output/playwright/import-desktop-dark-viewport.png
 !output/playwright/import-mobile-dark-viewport.png
 !output/playwright/recovery-empty-desktop-viewport.png
+
+.next-demo/
+.vercel

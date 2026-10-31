@@ -11,7 +11,7 @@ export const CRITERIA = ['source traceability', 'accessibility', 'learner effort
 
 type RecordedCodes = Record<string, {codes: {label: string; quote: string; category: string}[]; rejected: number; model: string}>;
 type RecordedHmw = Record<string, {questions: string[]; model: string}>;
-const rec = (fixtures.recorded_ai || {}) as {codes?: RecordedCodes; hmw?: RecordedHmw; recorded_at?: string};
+const rec = (fixtures.recorded_ai || {}) as unknown as {codes?: RecordedCodes; hmw?: RecordedHmw; recorded_at?: string};
 const examples = (fixtures as unknown as {studio_examples?: {notice: string; notes: Record<string, unknown>[]; experiment: Record<string, unknown>}}).studio_examples;
 
 const norm = (s: string) => s.replace(/\s+/g, ' ').trim().toLowerCase();

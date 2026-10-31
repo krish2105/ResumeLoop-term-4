@@ -121,3 +121,8 @@ blockquote{margin:6px 0 0;padding-left:10px;border-left:3px solid var(--border);
 .miniStats{grid-template-columns:repeat(2,minmax(0,1fr))}
 td input[type=number]{width:84px}
 @media(max-width:760px){.formGrid,.empathyMap,.kv{grid-template-columns:1fr}}
+
+/* Story mode */
+.storyCard{left:18px;bottom:18px;width:min(460px,calc(100% - 36px))}
+.storyDots{list-style:none;display:flex;gap:6px;padding:0;margin:10px 0 4px}.storyDots button{min-height:36px;width:36px;border-radius:50%;border:1px solid var(--border);background:var(--surface);color:var(--text);font-weight:700}
+.storyDots button.on{background:var(--accent);color:var(--accentFg);border-color:var(--accent)}
