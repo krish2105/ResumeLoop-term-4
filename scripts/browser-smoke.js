@@ -7,7 +7,7 @@ async (page) => {
   const API = 'http://127.0.0.1:8014';
   const AI = 150000;
   const checks = [];
-  const check = (condition, label) => { if (!condition) throw Error('FAILED: ' + label); checks.push(label); };
+  const check = (condition, label) => { if (!condition) throw Error('FAILED: ' + label); checks.push(label.split(': ')[0]); };
   const go = async path => { await page.goto(BASE + path); await page.locator('.hero, .journey2, .deckWrap').first().waitFor({timeout: 30000}); };
   const settle = () => page.evaluate(async () => { await Promise.all(document.getAnimations().map(a => a.finished.catch(() => null))); await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r))); });
   const text = loc => loc.innerText();
@@ -40,7 +40,7 @@ async (page) => {
   await page.getByRole('button', {name: 'Mark complete'}).click();
   await putDone;
   await page.reload(); await page.locator('.journey2').waitFor();
-  await stars.first().waitFor();
+  await help.filter({hasText: 'tasks lit'}).waitFor();
   check(await stars.filter({hasText: next}).filter({hasText: 'Completed'}).count() === 1, 'Completed task persists after refresh');
   const saved = await (await page.request.get(API + '/api/learner/progress')).json();
   await page.request.put(API + '/api/learner/progress', {data: {expected_version: saved.version, state: saved.state}});
@@ -51,7 +51,9 @@ async (page) => {
   await page.getByRole('status').filter({hasText: 'Progress loaded'}).waitFor();
   check(await page.getByRole('link', {name: /The course changed/}).isVisible(), 'Course-change banner links to the digest');
   await stars.nth(0).focus();
-  await page.keyboard.press('Tab');
+  // Safari moves Tab only through form fields unless Option is held; Option+Tab is its "every item" key.
+  const engine = page.context().browser()?.browserType().name();
+  await page.keyboard.press(engine === 'webkit' ? 'Alt+Tab' : 'Tab');
   check(await stars.nth(1).evaluate(el => el === document.activeElement && el.matches(':focus-visible') && getComputedStyle(el).outlineStyle !== 'none'), 'Tab moves between star buttons with a visible focus ring');
 
   // ---------- List view twin ----------
@@ -419,7 +421,7 @@ async (page) => {
   }
   await page.setViewportSize({width: 1440, height: 1000});
   await page.emulateMedia({colorScheme: 'dark', reducedMotion: 'no-preference'});
-  const hydration = consoleErrors.filter(e => /hydrat|unmount a root/i.test(e));
-  check(hydration.length === 0, 'No hydration or root-unmount console errors');
+  const hydration = consoleErrors.filter(e => /\bhydrat|unmount a root/i.test(e)); // \b skips the 3D label worker's 'rehydrate' notice
+  check(hydration.length === 0, 'No hydration or root-unmount console errors: ' + hydration.slice(0, 3).join(' || ').slice(0, 600));
   return {kind: 'SYNTHETIC ENGINEERING VERIFICATION', ai_available: ai.available, count: checks.length, checks, other_console_errors: consoleErrors.slice(0, 10)};
 }

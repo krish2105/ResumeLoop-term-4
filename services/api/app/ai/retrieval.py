@@ -63,7 +63,10 @@ def cached_vectors(conn: sqlite3.Connection, llm, items: list[dict]) -> list[lis
     return [vectors[c['chunk_id']] for c in items]
 
 
-def search(conn: sqlite3.Connection, llm, query: str, k: int = 4) -> dict:
+def search(conn: sqlite3.Connection, llm, query: str, k: int = 4, pin_source: str | None = None) -> dict:
+    """Top passages above the threshold. When the learner asks about a specific task, the best passage from
+    that task's own source is pinned in: it is the authority for "this task" questions, which carry too
+    little text to retrieve on their own. Out-of-scope questions without a task still find nothing."""
     items = chunks()
     vectors = cached_vectors(conn, llm, items)
     qv = llm.embed([query]) if vectors is not None else None
@@ -73,7 +76,11 @@ def search(conn: sqlite3.Connection, llm, query: str, k: int = 4) -> dict:
     else:
         scores = keyword_scores(query, items)
         method, threshold = 'keywords', 0.05
-    ranked = sorted(zip(scores, items), key=lambda x: -x[0])[:k]
-    hits = [{**c, 'score': round(s, 3)} for s, c in ranked if s >= threshold]
-    return {'method': method, 'threshold': threshold, 'hits': hits,
-            'best_score': round(ranked[0][0], 3) if ranked else 0.0}
+    order = sorted(range(len(items)), key=lambda i: -scores[i])
+    picked = [i for i in order[:k] if scores[i] >= threshold]
+    pinned = next((i for i in order if items[i]['source_id'] == pin_source), None) if pin_source else None
+    if pinned is not None and pinned not in picked:
+        picked = [pinned] + picked[:k - 1]
+    hits = [{**items[i], 'score': round(scores[i], 3), **({'pinned': True} if i == pinned else {})} for i in picked]
+    return {'method': method, 'threshold': threshold, 'hits': hits, 'pinned': items[pinned]['chunk_id'] if pinned is not None else None,
+            'best_score': round(scores[order[0]], 3) if order else 0.0}

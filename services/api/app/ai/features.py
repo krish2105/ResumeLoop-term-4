@@ -106,7 +106,7 @@ def facts_in(text: str) -> set[str]:
 # ---------- Grounded coach ----------
 def coach(conn, llm, question: str, about: dict | None = None) -> dict:
     query = question + (f" ({about['title']})" if about else '')
-    found = search(conn, llm, query)
+    found = search(conn, llm, query, pin_source=about.get('source_ref') if about else None)
     hits = found['hits']
     sources = [{'id': h['chunk_id'], 'title': h['title'], 'text': h['text'], 'score': h['score']} for h in hits]
     abstain = {'mode': 'abstained', 'model': llm.gen_model, 'abstained': True, 'offer_escalation': True,

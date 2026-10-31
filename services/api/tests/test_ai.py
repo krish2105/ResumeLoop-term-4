@@ -70,6 +70,15 @@ def test_coach_abstains_on_invented_citation_or_unanswerable(client, fake):
     assert client.post('/api/coach', json=q).json()['abstained'] is True
 
 
+def test_coach_pins_the_selected_task_source_for_this_task_questions(client, fake):
+    task = next(a for a in client.get('/api/course').json()['actions'] if a['id'] == 's6-journal')
+    f = fake(replies=[{'answerable': True, 'answer': 'It is a reflective journal [x].', 'citations': []}])
+    client.post('/api/coach', json={'question': 'What is this task about?', 'about': 's6-journal'})
+    assert f'[{task["source_ref"]}-p' in f.prompts[0]
+    fake(replies=[])
+    assert client.post('/api/coach', json={'question': 'What is the parking fee at the zoo?'}).json()['sources'] == []
+
+
 def test_coach_abstains_without_sources_and_offline_fallback_cites(client, fake):
     fake(replies=[])
     assert client.post('/api/coach', json={'question': 'What is the parking fee at the zoo?'}).json()['abstained'] is True

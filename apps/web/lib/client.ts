@@ -18,7 +18,7 @@ export async function api<T>(path: string, init?: RequestInit & {timeoutMs?: num
   try {
     let token = '';
     try { token = localStorage.getItem('rl-token') || ''; } catch { /* ignore */ }
-    response = await fetch(API + path, {...init, headers: {'Content-Type': 'application/json', ...(token ? {Authorization: `Bearer ${token}`} : {}), ...(init?.headers || {})},
+    response = await fetch(API + path, {cache: 'no-store', ...init, headers: {'Content-Type': 'application/json', ...(token ? {Authorization: `Bearer ${token}`} : {}), ...(init?.headers || {})},
       signal: AbortSignal.timeout(init?.timeoutMs ?? 15000)});
   } catch (e) {
     throw new ApiError(0, 'The local API is not reachable. Start it and retry.', String(e));

@@ -1,5 +1,5 @@
 {
- "recorded_at": "2026-10-31T17:51:46Z",
+ "recorded_at": "2026-10-31T18:37:59Z",
  "model": "qwen2.5:7b",
  "embed_model": "bge-m3:567m",
  "notice": "Real answers from the local model on fictional data, recorded for the public demo.",
@@ -38,33 +38,33 @@
   ],
   "mode": "ai",
   "model": "qwen2.5:7b",
-  "summary": "Several changes have been made to the course schedule and tasks, including new readings, modified exercise durations, and updated deadlines.",
+  "summary": "Several changes have been made to the course schedule and requirements, including new tasks, removed tasks, and updated deadlines and durations.",
   "items": [
    {
     "change_ids": [
      "C1",
      "C2"
     ],
-    "text": "New tasks have been added: read a framing case study (session 4) and start a reflection journal (session 6). The reflection log entry for session 6 has been removed."
+    "text": "New tasks have been added: read a framing case study in session 4 (15 minutes) and start a reflection journal in session 6 (25 minutes). The reflection log entry for session 6 has been removed."
    },
    {
     "change_ids": [
      "C4",
      "C5"
     ],
-    "text": "The deadline for the reading check quiz has been extended to 26 Nov 2026 18:00 Dubai time, and its status has been updated to sources disagree, unconfirmed."
+    "text": "The deadline for the reading check quiz has been extended to 26 Nov 2026 18:00 Dubai time, and its status has been updated to 'sources disagree, unconfirmed'."
    },
    {
     "change_ids": [
      "C6"
     ],
-    "text": "The duration of the exercise to write a point-of-view statement has been increased from 25 to 30 minutes."
+    "text": "The duration for the exercise to write a point-of-view statement has been increased from 25 to 30 minutes."
    },
    {
     "change_ids": [
      "C7"
     ],
-    "text": "The group task to prepare the HMW workshop now requires additional prerequisites: s5-recap, s4-exercise, and s4-reading."
+    "text": "The group task to prepare the HMW workshop now requires prerequisites from sessions 5-recap, 4-exercise, and 4-reading."
    },
    {
     "change_ids": [
@@ -149,7 +149,7 @@
     "model": "qwen2.5:7b",
     "abstained": false,
     "offer_escalation": false,
-    "answer": "In Version 2 of the course, the point-of-view exercise now takes about thirty minutes instead of twenty-five. This change requires the inclusion of the session 4 recap and the empathy map. [S4-p2]",
+    "answer": "In Version 2 of the course, the point-of-view exercise now takes about thirty minutes instead of twenty-five. It also requires the session 4 recap and your empathy map. [S4-p2]",
     "citations": [
      "S4-p2"
     ],
@@ -178,7 +178,7 @@
     "model": "qwen2.5:7b",
     "abstained": false,
     "offer_escalation": false,
-    "answer": "To build an empathy map, it will take about thirty-five minutes and you will need the observation notes from session 2 first, as these provide the evidence for the 'says' and 'does' sections. The 'thinks' and 'feels' sections are interpretations based on this evidence.",
+    "answer": "To build an empathy map, it will take about thirty-five minutes and you will need the observation notes from session 2 first, as these provide the evidence for the 'says' and 'does' sections. Interpretations for 'thinks' and 'feels' should be labeled with the supporting evidence.",
     "citations": [
      "S3-p2"
     ],
@@ -237,7 +237,7 @@
   "mode": "ai",
   "model": "qwen2.5:7b",
   "subject": "Clarification Needed for Reading Check Quiz Date",
-  "body": "Hello, could you please confirm the correct date for the reading check quiz? I couldn't find this information in the course materials. Thank you!"
+  "body": "Hello, could you please confirm the correct date for the reading check quiz? Thank you!"
  },
  "codes": {
   "P01": {
@@ -274,7 +274,7 @@
      "category": "says"
     },
     {
-     "label": "List_goes_out_of_date",
+     "label": "List_outdated",
      "quote": "but it goes out of date when the course page changes",
      "category": "says"
     },
@@ -305,7 +305,7 @@
      "category": "does"
     },
     {
-     "label": "DesiredClarity",
+     "label": "DesiredImprovement",
      "quote": "I would like questions to arrive with the task they refer to, so I can answer once and point others to it",
      "category": "thinks"
     }
@@ -328,7 +328,7 @@
     {
      "label": "PrefersListOverTimeline",
      "quote": "Visual timelines are hard for me unless there is a list version.",
-     "category": "says"
+     "category": "feels"
     }
    ],
    "rejected": 1,
@@ -339,19 +339,19 @@
   "Returning learners lose time reconciling course sources that disagree": {
    "model": "qwen2.5:7b",
    "questions": [
-    "How might we streamline the course source information to reduce confusion for returning learners?",
-    "How might we provide a clear and consistent reference guide for course sources to help returning learners?",
-    "How might we implement a feedback mechanism for course sources to quickly address discrepancies?",
-    "How might we design a personalized dashboard for returning learners to easily access and reconcile course information?"
+    "How might we streamline the alignment of course sources to reduce confusion for returning learners?",
+    "How might we provide a centralized platform for course information to ensure consistency for all learners?",
+    "How might we implement a feedback mechanism for learners to report discrepancies in course sources?",
+    "How might we design a quick reference guide for returning learners to help them navigate course sources more efficiently?"
    ]
   },
   "Learners with short study windows want to start something useful immediately": {
    "model": "qwen2.5:7b",
    "questions": [
-    "How might we design activities that allow learners to start seeing results within the first session?",
-    "How might we create modular content that can be completed in short, focused study windows?",
-    "How might we develop quick-start guides or tutorials to engage learners immediately?",
-    "How might we incorporate bite-sized challenges or exercises to keep learners engaged throughout their short study sessions?"
+    "How might we design activities that allow learners to see immediate results after starting their study session?",
+    "How might we create a system that provides quick, actionable insights to learners within the first 10 minutes of their study?",
+    "How might we structure our content to offer practical, bite-sized tasks that learners can complete in short study windows?",
+    "How might we develop a feature that allows learners to track their progress and achievements even in very short study periods?"
    ]
   }
  },
@@ -366,7 +366,8 @@
    "model": "qwen2.5:7b",
    "status": "ok",
    "prompt_sha256": "e6f3f260b3f7df66df9d5173f1297cc2b5ae64fd59d583eb3b8a54d6948dde41",
-   "created_at": "2026-10-31 17:51:46",
+   "created_at": "2026-10-31 18:37:59",
+   "org_id": "local",
    "detail": {
     "kept": 4
    }
@@ -377,7 +378,8 @@
    "model": "qwen2.5:7b",
    "status": "ok",
    "prompt_sha256": "c6054d8b74765f03ae4477c68097a482474944fcad3a448e2fa55000a928bcb9",
-   "created_at": "2026-10-31 17:51:44",
+   "created_at": "2026-10-31 18:37:57",
+   "org_id": "local",
    "detail": {
     "kept": 4
    }
@@ -388,7 +390,8 @@
    "model": "qwen2.5:7b",
    "status": "ok",
    "prompt_sha256": "9c8a68fc495ee46bb785b3109c456571999fc3ca7a1712a76925478f0992aa62",
-   "created_at": "2026-10-31 17:51:42",
+   "created_at": "2026-10-31 18:37:55",
+   "org_id": "local",
    "detail": {
     "kept": 3,
     "rejected": 1
@@ -400,7 +403,8 @@
    "model": "qwen2.5:7b",
    "status": "ok",
    "prompt_sha256": "826e610d905fbcfd5721a3fecf966cdf37aae43ee936f347825250b4a4671420",
-   "created_at": "2026-10-31 17:51:39",
+   "created_at": "2026-10-31 18:37:52",
+   "org_id": "local",
    "detail": {
     "kept": 4,
     "rejected": 0
@@ -412,7 +416,8 @@
    "model": "qwen2.5:7b",
    "status": "ok",
    "prompt_sha256": "6283e2a78bb7541ecb673150edf8f4365071f48ed892870f0851eae7115cb99b",
-   "created_at": "2026-10-31 17:51:36",
+   "created_at": "2026-10-31 18:37:49",
+   "org_id": "local",
    "detail": {
     "kept": 3,
     "rejected": 1
@@ -424,7 +429,8 @@
    "model": "qwen2.5:7b",
    "status": "ok",
    "prompt_sha256": "75584e55b28a8b651da888113f0f7e31a4ab461757a1465fdb3147cdcd815f27",
-   "created_at": "2026-10-31 17:51:33",
+   "created_at": "2026-10-31 18:37:46",
+   "org_id": "local",
    "detail": {
     "kept": 4,
     "rejected": 1
@@ -436,7 +442,8 @@
    "model": "qwen2.5:7b",
    "status": "ok",
    "prompt_sha256": "bfeab53c1ea7a7b8b00e68e43c16a252be6031d9a6f8b85f01187a070ae077c7",
-   "created_at": "2026-10-31 17:51:30",
+   "created_at": "2026-10-31 18:37:42",
+   "org_id": "local",
    "detail": {}
   },
   {
@@ -445,7 +452,8 @@
    "model": "qwen2.5:7b",
    "status": "abstained",
    "prompt_sha256": "010d33f17bbd8ba39db6572ce7f942a69812a2aded33ef8a4bac40728e4ec0b8",
-   "created_at": "2026-10-31 17:51:28",
+   "created_at": "2026-10-31 18:37:41",
+   "org_id": "local",
    "detail": {
     "cited": [],
     "allowed": [
@@ -459,7 +467,8 @@
    "model": "qwen2.5:7b",
    "status": "ok",
    "prompt_sha256": "b344be4c56b2e8722e689bfa9b71a39d36ba04119d1dfefb59ad799ef684f3fe",
-   "created_at": "2026-10-31 17:51:28",
+   "created_at": "2026-10-31 18:37:41",
+   "org_id": "local",
    "detail": {
     "cited": [
      "S3-p2"
@@ -472,7 +481,8 @@
    "model": "qwen2.5:7b",
    "status": "ok",
    "prompt_sha256": "999ef03c27cb25ea104bc2f6e9e9ec76f2464744b8765ddd02d224f40071db4b",
-   "created_at": "2026-10-31 17:51:26",
+   "created_at": "2026-10-31 18:37:39",
+   "org_id": "local",
    "detail": {
     "cited": [
      "S4-p2"
@@ -485,7 +495,8 @@
    "model": "qwen2.5:7b",
    "status": "ok",
    "prompt_sha256": "92246c3bc8b1574098ad10b0cf76532f5956a2e59b86e4f77777c95d882a85a2",
-   "created_at": "2026-10-31 17:51:24",
+   "created_at": "2026-10-31 18:37:37",
+   "org_id": "local",
    "detail": {
     "cited": [
      "S3-p1"
@@ -498,7 +509,8 @@
    "model": "qwen2.5:7b",
    "status": "ok",
    "prompt_sha256": "170768423e5ed2030d18bee753af71b93b03a9fc50d78be72b788720cf5b45a8",
-   "created_at": "2026-10-31 17:51:22",
+   "created_at": "2026-10-31 18:37:35",
+   "org_id": "local",
    "detail": {
     "cited": [
      "S3-p2"
@@ -511,7 +523,8 @@
    "model": "qwen2.5:7b",
    "status": "ok",
    "prompt_sha256": "8e416d60f5561e22f5640aaabce32d62a95aba8135036b8b11de2a04c21aee01",
-   "created_at": "2026-10-31 17:51:20",
+   "created_at": "2026-10-31 18:37:33",
+   "org_id": "local",
    "detail": {
     "changes": 7,
     "items": 5,

@@ -33,6 +33,16 @@ def route_key(request: Request) -> str:
     return f"{request.method} {getattr(route, 'path', request.url.path)}"
 
 
+SECURITY_HEADERS = {
+    'Cache-Control': 'no-store',
+    'X-Content-Type-Options': 'nosniff',
+    'X-Frame-Options': 'DENY',
+    'Referrer-Policy': 'no-referrer',
+    'Content-Security-Policy': "default-src 'none'; frame-ancestors 'none'",
+    'Cross-Origin-Resource-Policy': 'same-site',
+}
+
+
 async def access_middleware(request: Request, call_next):
     """Adds X-Request-ID, logs one JSON line per request (no bodies, no personal data), records latency."""
     rid = request.headers.get('x-request-id') or uuid.uuid4().hex[:16]
@@ -42,6 +52,9 @@ async def access_middleware(request: Request, call_next):
         response = await call_next(request)
         status = response.status_code
         response.headers['X-Request-ID'] = rid
+        # Learner data must never come from a browser cache (Safari reused a stale GET after a refresh).
+        for name, value in SECURITY_HEADERS.items():
+            response.headers.setdefault(name, value)
         return response
     finally:
         ms = round((time.perf_counter() - start) * 1000, 1)
