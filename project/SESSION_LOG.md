@@ -38,3 +38,17 @@ Initial Git publication completed: root commit `29dfb5c6e20659ced07cf12736a6ddc1
 **Verification:** This was a documentation-only milestone. `git diff --check` passed and every named handoff/continuity file was confirmed present. Application tests, build, and browser journeys were not rerun because application code did not change; the 22 October results remain historical evidence. The GitHub push and remote SHA comparison are the final checks for the commit containing this entry.
 
 **Untested and next:** Whether the other account has GitHub access and can read the private DOCX cannot be tested from this account. No application behavior, new research evidence, course date, or production control was added. The next runnable engineering task remains the typed synthetic course-action schema and deterministic planner repairs in M1.
+
+### 2026-10-31 — Status review, outline re-check and priority ranking
+
+**User steering:** Asked for a full end-to-end status, then whether `Downloads/Design Thinking Dr Chris Abraham MAIB 2026.docx` belongs to this subject, then to apply the SupplyLens-style treatment (docs, priorities, memory).
+
+**VERIFIED OBSERVATION:** Worktree clean, `HEAD` = `origin/main` = `d6cffe2`. `pytest` 24 passed (1 warning); demo output recap + exercise; typecheck passed. Downloaded DOCX is byte-identical to `course/outline.docx` (SHA-256 `9dc244376b8a8d4acb3f98ef47f8dffce20475598e45939801bdb8348e4d00cf`). Planner defects (completed actions not excluded; single-pass priority sort skips later-sorted dependents; no duplicate/unknown/cyclic checks) confirmed by reading `domain.py`.
+
+**Findings added to docs:** Week 12 group presentation is "AI-Driven Solutions for UN SDGs using Design Thinking Frameworks"; participation and individual assignments (20%) are in-class quizzes. Neither was previously recorded. The outline contains no AI-use policy and no exact dates.
+
+**Changes (documentation only):** `docs/ASSESSMENT.md` (re-read section, SDG framing as hypothesis, marks-vs-project table), `project/BLOCKERS.md` (ranked table), `project/NEXT_ACTIONS.md` (priority note), `project/DECISIONS.md` (two rows), `project/CURRENT_STATE.md`, this log. Outside the repo: a Design Thinking unit memory in the Claude project memory folder.
+
+**Not done / untested:** Production build, browser and accessibility checks and audits were not rerun. No faculty message sent; groupmates, solo permission, dates, frameworks, ethics process and AI-use policy still unknown. Nothing committed or pushed in this session.
+
+**Next:** Owner sends faculty questions (rank 1) and starts research permission (rank 2); engineering next slice is the typed course-action schema and planner repair.

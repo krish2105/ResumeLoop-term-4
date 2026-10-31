@@ -2,6 +2,14 @@
 
 Last updated: **23 October 2026**. User requested a complete cross-account continuation package and publication to `https://github.com/krish2105/ResumeLoop-term-4`. **`PROGRESS.md`** remains the status/run authority; **`NEW_ACCOUNT_HANDOFF.md`** and **`prompts/10_NEW_ACCOUNT_HANDOFF.md`** provide the transfer checklist and paste-ready prompt.
 
+## 31 October 2026 update — outline re-check and priority ranking (documentation only)
+
+- Re-verified from this checkout: `git status` clean and `HEAD` equal to `origin/main` (`d6cffe2`) at session start; `pytest` **24 passed** (1 httpx deprecation warning); `domain_example()` selects recap + exercise (40/45 minutes); `npm run typecheck` passed. Production build, the 23 browser checks, accessibility scans and dependency audits were **not rerun** and remain 22 October evidence.
+- `~/Downloads/Design Thinking Dr Chris Abraham MAIB 2026.docx` is byte-identical to `course/outline.docx` (SHA-256 `9dc24437…4d00cf`); no new requirements.
+- `docs/ASSESSMENT.md` now records two findings the docs lacked: the Week 12 presentation is about UN SDGs (SDG 4 framing proposed, unconfirmed), and participation plus individual work (20%) are in-class quizzes that software cannot earn.
+- `project/BLOCKERS.md` now ranks blockers by marks at stake: groupmates/solo permission/dates, then research permission, then the planner fix. `project/NEXT_ACTIONS.md` and `project/DECISIONS.md` carry the same order.
+- No application code changed. No faculty message was sent; groupmates, dates and AI-use policy remain unknown.
+
 ## Cross-account handoff milestone
 
 - Added a two-route attachment checklist: repository URL for an account with GitHub access, or the GitHub source ZIP when direct access is unavailable.

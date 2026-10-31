@@ -58,4 +58,28 @@ Source: original `course/outline.docx`, text extracted into `evidence/2026-10-22
 
 §3.3 individual rubric evaluates relevant framework, data/information analysis, understanding key issues, decision among alternatives and articulation. §3.4 group rubric adds research relevance, feasible recommendation/impact, presentation/visual presentation and individual oral defence. A polished UI alone does not satisfy these criteria. §3.5 asks the student to explain a concept in their own words, its organizational value and a detailed practical application; faculty will specify frameworks. No generated fieldwork reflection is supplied.
 
+### Re-read of the outline — 31 October 2026
+
+`~/Downloads/Design Thinking Dr Chris Abraham MAIB 2026.docx` was compared with `course/outline.docx`: **byte-identical** (same SHA-256 `9dc24437…4d00cf`). It is the same document, so it adds no new requirements. The outline's §2.4 and §3.1–3.5 were re-read in full. Two points were missing from this file and are recorded here.
+
+**1. The Week 12 group presentation is about UN SDGs (VERIFIED, §2.4).** Topic: "AI-Driven Solutions for UN SDGs using Design Thinking Frameworks", delivered as peer group presentations followed by critique. This is the 40% Group Assignment. Unit outcome D also asks for solutions that are "creative and sustainable".
+- ResumeLoop's learner-recovery problem is best framed against **SDG 4 (Quality Education)**. This is a framing proposal (HYPOTHESIS): confirm with the faculty which SDG and which design-thinking frameworks the group must use.
+- The presentation must show the Design Thinking process (observe, empathise, define, ideate, prototype, test), not just a working product. Real fieldwork evidence (M3) is what satisfies the rubric; the prototype is supporting material.
+
+**2. 20% of the marks come from in-class quizzing, not project work (VERIFIED, §3.1).**
+- Participation (10%): "reflect upon the lessons learnt from each session through in-class quizzing". The §3.2 rubric scores preparation for learning (45%), level of engagement (45%) and class decorum (10%).
+- Individual assignments (10%): "reflect upon the readings through in-class quizzing", scored on the §3.3 rubric.
+- ResumeLoop software cannot earn these marks. They depend on attendance, doing the pre-session readings in §2.4/§2.7 and speaking in class. Protect study time for them before extra feature work.
+
+**Mark weight versus where ResumeLoop evidence helps** (outline weights; the "help" column is an assessment of this project, not a faculty statement):
+
+| Component | Weight | Can the project evidence help? |
+|---|---|---|
+| Group assignment + SDG presentation | 40% | Yes, strongly, if built on real fieldwork and a group agreement |
+| Reflective paper | 40% | Yes: the student's own first-person account of fieldwork; faculty will name the frameworks |
+| Class participation | 10% | No (quizzes, preparation and engagement) |
+| Individual assignments | 10% | No (reading quizzes) |
+
+**Open dependency:** the group assignment assumes a team (§3.4 lists Students 1–4). Who the groupmates are, and whether this project can be one group member's contribution or a solo submission, is still unknown.
+
 **TODO for owner:** Ask faculty which schedule applies, the final-session date, solo/group policy, required frameworks and permission/ethics process. No email has been sent and no date has been marked verified in the software.

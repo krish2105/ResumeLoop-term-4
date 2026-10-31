@@ -2,6 +2,19 @@
 
 Updated 23 October 2026.
 
+## Ranked by marks at stake (added 31 October 2026)
+
+Marks come from the outline weights (Group 40%, Reflection 40%, Participation 10%, Individual 10%). Ranking is an assessment, not a faculty statement.
+
+| Rank | Blocker | Marks it gates | Why this order |
+|---|---|---|---|
+| 1 | **Groupmates and solo-submission permission** unknown; conflicting schedules (§2.5 vs §3.1); final-session date unknown | Group 40% (Weeks 10-12, Week 12 UN SDG presentation) and the reflection deadline (within two weeks of the final session) | Everything else depends on who is in the group, what the group delivers and when. One faculty message resolves several unknowns; **no message sent, owner must send** |
+| 2 | **Research permission and participants** (consent, ethics process, voluntary recruitment) | Group 40% and Reflection 40% rubric items: framework, data analysis, key issues, content quality | Without real fieldwork there is no qualitative evidence to analyse, so both 40% components lose their evidence base. Fieldwork needs lead time |
+| 3 | **Planner defects and course-action schema** (completed actions reselected, dependents skipped) | Only the supporting prototype inside the 40% group work | Engineering correctness, not a rubric criterion; a polished UI alone does not satisfy the rubric. Do it, but after rank 1 and 2 |
+| not blocked | Participation and individual quizzes (20%) | 20% | Needs attendance, pre-session readings and class contribution, no software or permission. Schedule study time from the first session |
+
+The table below lists the remaining engineering and platform gaps, which are not ranked.
+
 | Blocker / verified gap | Impact | Owner / next action |
 |---|---|---|
 | Participation and group dates conflict in original outline; final-session date and solo permission unknown | Assessment scheduling/submission risk | Student: obtain current faculty brief; no external message sent |

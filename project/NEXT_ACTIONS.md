@@ -16,6 +16,8 @@ Updated 23 October 2026. Four project hours/week is the default; all five projec
 - [x] Add a repository-backed new-account handoff guide, private attachment checklist and copy-ready continuation prompt.
 
 ## M1 — next executable slice and research access
+
+**Priority order by marks at stake (31 October 2026, see `project/BLOCKERS.md`):** (1) groupmates, solo permission and dates; (2) research permission and first fieldwork; (3) planner/schema slice. Items 1 and 2 are owner actions and are not blocked by code, so send the faculty questions before or alongside the planner work. The Week 12 presentation is about UN SDGs; frame ResumeLoop against SDG 4 only after faculty confirms. Participation and individual marks (20%) are in-class quizzes on readings and need study time, not software.
 - [ ] **NEXT:** Define typed synthetic course-action input with explicit duration, ID, prerequisites, completed state and source/version. Add tests for missing/unknown/duplicate/cyclic prerequisites and bounds.
 - [ ] Repair verified planner defects: exclude completed actions and schedule newly unlocked actions consistently without exceeding the budget. Document deterministic tie rules and abstention for missing authority.
 - [ ] Obtain faculty dates, solo submission permission, research/ethics requirements and required reflective frameworks. Do not infer dates from term start.
