@@ -158,3 +158,11 @@ select,input,textarea{max-width:100%}
 .vivaList{display:grid;gap:12px;padding-left:20px}.vivaList li{display:grid;gap:6px}.vivaList textarea{min-height:56px}
 .authCard{max-width:460px}.authCard input{width:100%}
 .dangerBtn{color:var(--danger);border-color:color-mix(in srgb,var(--danger) 50%,var(--border))}
+/* Top bar on phones: theme and learner selectors wrap instead of pushing the page wider (CI 320px check) */
+.toolbar{min-width:0;flex-wrap:wrap;justify-content:flex-end}
+@media(max-width:560px){
+ .topbar{height:auto;min-height:56px;flex-wrap:wrap;gap:6px;padding:8px 16px}
+ .toolbar{gap:6px}.toolbar select{max-width:120px;padding:6px 8px;font-size:12px}
+ .demoPill{display:none}
+ .journey2{height:auto}
+}

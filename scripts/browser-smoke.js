@@ -8,7 +8,7 @@ async (page) => {
   const AI = 150000;
   const checks = [];
   const check = (condition, label) => { if (!condition) throw Error('FAILED: ' + label); checks.push(label); };
-  const go = async path => { await page.goto(BASE + path); await page.locator('.hero, .journey2').first().waitFor({timeout: 30000}); };
+  const go = async path => { await page.goto(BASE + path); await page.locator('.hero, .journey2, .deckWrap').first().waitFor({timeout: 30000}); };
   const settle = () => page.evaluate(async () => { await Promise.all(document.getAnimations().map(a => a.finished.catch(() => null))); await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r))); });
   const text = loc => loc.innerText();
   const toast = page.locator('.toast');
@@ -317,6 +317,39 @@ async (page) => {
   await page.getByRole('heading', {name: 'Research'}).waitFor();
   check((await text(page.locator('.report'))).includes('consented participants') && await page.getByRole('button', {name: 'Download Markdown'}).isEnabled(), 'Evidence report compiles the studio in rubric order');
 
+  // ---------- Coordinator, deck, viva, calendar, account ----------
+  await go('/coordinator');
+  const template = await page.evaluate(async () => (await fetch('/course-template.json')).text());
+  await page.getByRole('textbox', {name: 'Package JSON'}).fill(template.replace('Fictional demo course: Human-Centred Design Sprint', 'Imported smoke course'));
+  await page.getByRole('button', {name: 'Check package'}).click();
+  await page.getByText(/Replaces “/).waitFor();
+  await page.getByRole('button', {name: 'Import and activate'}).click();
+  await toast.filter({hasText: 'Imported and activated'}).waitFor();
+  await page.getByText('Active now: Imported smoke course').waitFor();
+  await page.getByRole('button', {name: 'Use the fictional demo course'}).click();
+  await toast.filter({hasText: 'Back to the fictional demo course'}).waitFor();
+  check(true, 'Coordinator imports, activates and reverts a course package');
+  await page.getByRole('textbox', {name: 'Package JSON'}).fill('{"course": "x"}');
+  await page.getByRole('button', {name: 'Check package'}).click();
+  await page.getByText('Fix these before importing').waitFor();
+  check(true, 'An invalid course package is rejected with reasons');
+  await go('/deck');
+  check(await page.locator('.slide').count() === 8, 'Slide deck renders a title, six stops and a closing slide');
+  await go('/learn');
+  await page.getByRole('textbox', {name: /^Your answer to: Which design thinking framework/}).fill('IDEO human-centred design, because it starts from observation.');
+  await page.getByRole('button', {name: 'Make flashcard'}).first().click();
+  await toast.filter({hasText: 'Flashcard created from your answer.'}).waitFor();
+  check(true, 'Viva answers become flashcards');
+  await go('/plan');
+  check(await page.getByRole('button', {name: /Add plan and deadlines to my calendar/}).isEnabled(), 'Plan offers a calendar export');
+  await go('/login');
+  await page.getByText('No sign-in needed here').waitFor();
+  await go('/privacy');
+  await page.getByRole('heading', {name: 'Your controls'}).waitFor();
+  await go('/settings');
+  await page.getByRole('heading', {name: 'Account and data'}).waitFor();
+  check(true, 'Single-user mode explains accounts; privacy and data controls are reachable');
+
   // ---------- Resizable panels ----------
   await go('/');
   const sideSep = page.getByRole('separator', {name: 'Resize sidebar'});
@@ -373,7 +406,7 @@ async (page) => {
   await go('/');
   await page.locator('.stage3d canvas').waitFor();
   await page.screenshot({path: 'output/playwright/journey-mobile-dark.png', fullPage: true});
-  for (const route of ['/', '/plan', '/digest', '/coach', '/escalations', '/studio/observe', '/studio/empathy', '/studio/define', '/studio/envision', '/studio/ideate', '/studio/journeys', '/studio/prototypes', '/studio/experiments', '/studio/ethics', '/story', '/reflect', '/course', '/learn', '/studio/research', '/studio/synthesis', '/report']) {
+  for (const route of ['/', '/plan', '/digest', '/coach', '/escalations', '/studio/observe', '/studio/empathy', '/studio/define', '/studio/envision', '/studio/ideate', '/studio/journeys', '/studio/prototypes', '/studio/experiments', '/studio/ethics', '/story', '/reflect', '/course', '/learn', '/studio/research', '/studio/synthesis', '/report', '/coordinator', '/deck', '/privacy']) {
     for (const width of [320, 768, 1440]) {
       await page.setViewportSize({width, height: 900});
       await go(route); await settle();

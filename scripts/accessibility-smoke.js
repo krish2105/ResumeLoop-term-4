@@ -4,7 +4,7 @@
 // Automated checks find some barriers only; this is not WCAG certification.
 async (page) => {
   const BASE = 'http://127.0.0.1:3000';
-  const ROUTES = ['/', '/plan', '/digest', '/coach', '/escalations', '/studio/observe', '/studio/empathy', '/studio/define', '/studio/envision', '/studio/ideate', '/studio/journeys', '/studio/prototypes', '/studio/experiments', '/studio/ethics', '/story', '/reflect', '/course', '/learn', '/studio/research', '/studio/synthesis', '/report', '/imports', '/review', '/settings'];
+  const ROUTES = ['/', '/plan', '/digest', '/coach', '/escalations', '/studio/observe', '/studio/empathy', '/studio/define', '/studio/envision', '/studio/ideate', '/studio/journeys', '/studio/prototypes', '/studio/experiments', '/studio/ethics', '/story', '/reflect', '/course', '/learn', '/studio/research', '/studio/synthesis', '/report', '/coordinator', '/deck', '/login', '/privacy', '/imports', '/review', '/settings'];
   const results = [];
   for (const mode of ['light', 'dark']) {
     await page.emulateMedia({colorScheme: mode, reducedMotion: 'reduce'});
@@ -12,7 +12,7 @@ async (page) => {
       await page.setViewportSize({width, height: 1000});
       for (const route of ROUTES) {
         await page.goto(BASE + route);
-        await page.locator('.hero, .journey2').first().waitFor({timeout: 30000});
+        await page.locator('.hero, .journey2, .deckWrap').first().waitFor({timeout: 30000});
         await page.evaluate(() => { try { localStorage.setItem('ResumeLoop-theme', 'system'); } catch { /* ignore */ } });
         await page.waitForFunction(m => document.documentElement.dataset.theme === m, mode);
         await page.evaluate(async () => { await Promise.all(document.getAnimations().map(a => a.finished.catch(() => null))); await new Promise(r => setTimeout(r, 300)); });
