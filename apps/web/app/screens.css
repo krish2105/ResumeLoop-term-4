@@ -78,3 +78,7 @@
  .showPanel{display:none}
  .roadFallback,.roadError{position:static;transform:none;margin:16px}
 }
+.stageField{display:grid;gap:4px;font-size:12px;font-weight:700;color:var(--muted)}
+.stageField textarea,.stageField input{font-weight:400;color:var(--text)}
+.storyCard{left:auto;bottom:auto;width:auto}
+.lead{color:var(--text)}

@@ -1,7 +1,8 @@
 "use client";
 import {useEffect, useState} from 'react';
 import {PageHead} from '@/components/AppShell';
-import {useStudio} from '@/components/StudioBits';
+import {RiskRegister, RolePlay} from '@/components/RiskRegister';
+import {Msg, useStudio} from '@/components/StudioBits';
 import {assist, type AiLogEntry, type AiStatus} from '@/lib/assist';
 import {DEMO} from '@/lib/client';
 
@@ -54,7 +55,10 @@ export default function EthicsPage() {
         </ul>
       </section>
     </div>
-    <section className="panel" aria-labelledby="log-h">
+    <Msg text={s.msg} />
+    <RiskRegister risks={s.of('risks')} run={s.run} />
+    <RolePlay plays={s.of('roleplays')} run={s.run} />
+    <section className="panel sectionGap" aria-labelledby="log-h">
       <h2 id="log-h">AI decision log</h2>
       {log && <p>{Object.entries(log.counts).map(([k, v]) => `${v} ${k}`).join(' · ') || 'No AI calls yet.'}{DEMO ? ' (recorded from the local app)' : ''}</p>}
       <div className="tableWrap" role="region" tabIndex={0} aria-label="AI decision log, scroll horizontally for all columns"><table><thead><tr><th>When</th><th>Feature</th><th>Model</th><th>Outcome</th><th>Detail</th></tr></thead><tbody>

@@ -13,7 +13,8 @@ export type RoadState = 'completed' | 'next' | 'planned' | 'locked' | 'does-not-
 export type RoadNode = {id: string; title: string; state: RoadState; prerequisites: string[]; minutes: number | null};
 
 const SIZE: Record<RoadState, number> = {next: 0.34, planned: 0.2, completed: 0.17, locked: 0.11, 'does-not-fit': 0.13, abstained: 0.11};
-const GLOW: Record<RoadState, number> = {next: 3.4, planned: 1.9, completed: 2.1, locked: 0.7, 'does-not-fit': 0.9, abstained: 0.7};
+// Kept modest so bloom adds glow without washing hues out to white.
+const GLOW: Record<RoadState, number> = {next: 1.9, planned: 1.35, completed: 1.45, locked: 0.6, 'does-not-fit': 0.7, abstained: 0.6};
 const LIFT = new THREE.Vector3(0, 0.42, 0);
 
 function CameraRig({target, reducedMotion}: {target: THREE.Vector3; reducedMotion: boolean}) {

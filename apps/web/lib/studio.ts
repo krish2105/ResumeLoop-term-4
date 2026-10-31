@@ -4,7 +4,22 @@ import fixtures from '../demo/fixtures.json';
 import {api, ApiError, DEMO, store} from './client';
 
 export type Item = {id: string; kind: string; parent_id: string | null; created_at: string; updated_at: string; [k: string]: any}; // eslint-disable-line @typescript-eslint/no-explicit-any
-export type Kind = 'notes' | 'codes' | 'themes' | 'hmw' | 'ideas' | 'votes' | 'scores' | 'experiments' | 'sessions';
+export const KINDS = ['notes', 'codes', 'themes', 'hmw', 'ideas', 'votes', 'scores', 'experiments', 'sessions',
+  'observations', 'personas', 'povs', 'storyboards', 'hills', 'scenarios', 'journeys', 'sprints', 'prototypes', 'risks', 'roleplays',
+  'reflections', 'members', 'contributions', 'milestones', 'rubric', 'sdg'] as const;
+export type Kind = typeof KINDS[number];
+
+// Mirrors services/api/app/studio.py COMPONENTS / RUBRIC (from the outline, as recorded in docs/ASSESSMENT.md).
+export const COURSE_HUB = {
+  components: [['Class participation (in-class quizzes)', 10], ['Individual assignments (reading quizzes)', 10],
+    ['Group assignment and Week 12 UN SDG presentation', 40], ['Reflective paper', 40]] as [string, number][],
+  rubric: {
+    'Individual (§3.3)': ['Use of a relevant framework', 'Analysis of data and information', 'Understanding of key issues', 'Decision among alternatives', 'Articulation of thoughts'],
+    'Group (§3.4)': ['Use of a relevant framework', 'Analysis of data and information', 'Understanding of key issues', 'Quality of content (research and relevance)',
+      'Quality of recommendation (feasibility and impact)', 'Quality of presentation', 'Quality of visual presentation', 'Individual oral presentation and defence'],
+    'Reflective paper (§3.5)': ['Concept explained in my own words', 'How it helps an organisation achieve its objectives', 'Detailed, practical real-world example'],
+  } as Record<string, string[]>,
+};
 export const CATEGORIES = ['says', 'does', 'thinks', 'feels', 'need'] as const;
 export const ALTERNATIVES = [['lms-checklist', 'Improved LMS checklist'], ['coordinator-brief', 'Coordinator recovery brief'], ['resumeloop', 'ResumeLoop plan']] as const;
 export const CRITERIA = ['source traceability', 'accessibility', 'learner effort', 'privacy', 'coordinator effort'] as const;
@@ -40,8 +55,7 @@ export const studio = {
     : api(`/api/studio/${kind}${parent ? `?parent=${parent}` : ''}`),
   everything: async (): Promise<Item[]> => {
     if (DEMO) return all();
-    const kinds: Kind[] = ['notes', 'codes', 'themes', 'hmw', 'ideas', 'votes', 'scores', 'experiments', 'sessions'];
-    return (await Promise.all(kinds.map(k => api<Item[]>(`/api/studio/${k}`)))).flat();
+    return (await Promise.all(KINDS.map(k => api<Item[]>(`/api/studio/${k}`)))).flat();
   },
   create: async (kind: Kind, body: Record<string, unknown>, parent_id?: string | null): Promise<Item> => {
     if (!DEMO) return api(`/api/studio/${kind}`, {method: 'POST', body: JSON.stringify({parent_id: parent_id || null, body})});
@@ -97,6 +111,16 @@ export const studio = {
     for (const n of examples!.notes) await studio.create('notes', {...n, consent: {participation: true, anonymised_notes: true, quotes: true}, synthetic: true});
     await studio.create('experiments', {...examples!.experiment, frozen_at: null, protocol_sha256: null, synthetic: true});
     return {loaded: examples!.notes.length + 1, notice: examples!.notice};
+  },
+  seedCourseHub: async (): Promise<{loaded: number}> => {
+    if (!DEMO) return api('/api/studio-examples/course-hub', {method: 'POST'});
+    if (all().some(i => i.kind === 'milestones')) return {loaded: 0};
+    let n = 0;
+    for (const [title, weight] of COURSE_HUB.components) { await studio.create('milestones', {title, weight, when_text: 'date not confirmed', status: 'unverified', source: 'Unit outline §2.5 / §3.1'}); n++; }
+    for (const [component, criteria] of Object.entries(COURSE_HUB.rubric)) for (const criterion of criteria) { await studio.create('rubric', {component, criterion, status: 'missing', evidence: ''}); n++; }
+    await studio.create('sdg', {goal: 'SDG 4 Quality Education (proposed, confirm with faculty)', targets: '4.3 equal access to education; 4.4 skills for youth and adults',
+      problem: '', impact_hypothesis: '', indicator: '', evidence: '', risks: ''});
+    return {loaded: n + 1};
   },
   clearExamples: async (): Promise<void> => {
     if (!DEMO) { await api('/api/studio-examples', {method: 'DELETE'}); return; }

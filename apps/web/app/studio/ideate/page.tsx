@@ -3,6 +3,7 @@ import Link from 'next/link';
 import {useEffect, useState} from 'react';
 import {AiBadge} from '@/components/AiBadge';
 import {PageHead} from '@/components/AppShell';
+import {CrazyEights} from '@/components/CrazyEights';
 import {Msg, useStudio} from '@/components/StudioBits';
 import {ALTERNATIVES, CRITERIA, studio} from '@/lib/studio';
 
@@ -31,6 +32,7 @@ export default function IdeatePage() {
       <label className="nameField">Your name for votes and scores<input value={name} onChange={e => saveName(e.target.value)} placeholder="Optional" /></label>
     </PageHead>
     <Msg text={s.msg} />
+    <CrazyEights run={s.run} sprints={s.of('sprints') as never} />
     {!s.loading && themes.length === 0 && <section className="panel"><h2>No themes yet</h2><p>Create themes from accepted codes in the <Link href="/studio/empathy">Empathy studio</Link> first.</p></section>}
     {themes.map(t => {
       const hmws = s.of('hmw', t.id);
