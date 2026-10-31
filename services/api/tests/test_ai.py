@@ -79,6 +79,16 @@ def test_coach_pins_the_selected_task_source_for_this_task_questions(client, fak
     assert client.post('/api/coach', json={'question': 'What is the parking fee at the zoo?'}).json()['sources'] == []
 
 
+def test_coach_cites_the_computed_change_log_and_rejects_invented_ones(client, fake):
+    f = fake(replies=[{'answerable': True, 'answer': 'Its duration changed [CL-s4-exercise].', 'citations': ['CL-s4-exercise']},
+                      {'answerable': True, 'answer': 'It was cancelled [CL-s9-made-up].', 'citations': ['CL-s9-made-up']}])
+    r = client.post('/api/coach', json={'question': 'What changed about this task?', 'about': 's4-exercise'}).json()
+    assert '[CL-s4-exercise] Course change log' in f.prompts[0]
+    assert r['mode'] == 'ai' and r['citations'] == ['CL-s4-exercise']
+    assert any(s['id'] == 'CL-s4-exercise' for s in r['sources'])
+    assert client.post('/api/coach', json={'question': 'What changed about this task?', 'about': 's4-exercise'}).json()['abstained'] is True
+
+
 def test_coach_abstains_without_sources_and_offline_fallback_cites(client, fake):
     fake(replies=[])
     assert client.post('/api/coach', json={'question': 'What is the parking fee at the zoo?'}).json()['abstained'] is True
@@ -122,3 +132,14 @@ def test_coach_declines_answers_with_dates_not_in_the_cited_passage(client, fake
 def test_coach_declines_status_changes_not_in_the_sources(client, fake):
     fake(replies=[{'answerable': True, 'answer': 'The reading check quiz was cancelled [S3-p2].', 'citations': ['S3-p2']}])
     assert client.post('/api/coach', json={'question': 'When is the reading check quiz due?'}).json()['abstained'] is True
+
+
+def test_facts_guard_reads_compound_number_words():
+    from app.ai.features import facts_in
+    assert facts_in('thirty minutes instead of twenty-five minutes') == {'30 min', '25 min'}
+    assert facts_in('twenty five minutes') == {'25 min'} and facts_in('five minutes') == {'5 min'}
+
+
+def test_coach_declines_version_claims_the_cited_passage_does_not_make(client, fake):
+    fake(replies=[{'answerable': True, 'answer': 'The primer reading was added in version 2 [S1-p3].', 'citations': ['S1-p3']}])
+    assert client.post('/api/coach', json={'question': 'Which reading was added in version 2 of the course?'}).json()['abstained'] is True

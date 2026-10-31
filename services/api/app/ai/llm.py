@@ -35,7 +35,7 @@ class OllamaLLM:
         try:
             r = httpx.post(self.url + '/api/chat', timeout=timeout, json={
                 'model': self.gen_model, 'stream': False, 'format': 'json',
-                'options': {'temperature': 0.1, 'num_ctx': 8192},
+                'options': {'temperature': 0, 'seed': 7, 'num_ctx': 8192},
                 'messages': [{'role': 'system', 'content': system}, {'role': 'user', 'content': user}]})
             r.raise_for_status()
             return json.loads(r.json()['message']['content'])

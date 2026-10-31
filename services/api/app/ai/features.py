@@ -8,6 +8,7 @@ import json
 import re
 import sqlite3
 
+from ..course import diff_versions, load_course
 from .retrieval import search
 from .. import tenancy
 
@@ -28,7 +29,8 @@ def describe(c: dict) -> str:
     if c['type'] == 'removed':
         return f"Task removed: {c['title']} (session {c['session']})."
     field = {'due': 'deadline', 'due_status': 'deadline status', 'minutes': 'duration', 'prerequisites': 'prerequisites'}.get(c['field'], c['field'])
-    return f"{c['title']}: {field} changed from {fmt(c['before'])} to {fmt(c['after'])}."
+    unit = ' min' if c['field'] == 'minutes' else ''
+    return f"{c['title']}: {field} changed from {fmt(c['before'])}{unit} to {fmt(c['after'])}{unit}."
 
 
 DUE_WORDS = {'none': 'no deadline', 'unverified': 'not verified', 'verified': 'verified by the coordinator',
@@ -81,17 +83,25 @@ def digest(conn, llm, changes: list[dict]) -> dict:
 
 MONTHS = 'january|february|march|april|may|june|july|august|september|october|november|december'
 FACT = re.compile(rf'\b(\d{{1,2}})\s+({MONTHS})\b|\b({MONTHS})\s+(\d{{1,2}})\b|\b(\d{{1,3}})\s*(?:minutes?|mins?)\b', re.I)
-WORDS = {'five': 5, 'ten': 10, 'fifteen': 15, 'twenty': 20, 'twenty-five': 25, 'thirty': 30, 'thirty-five': 35, 'forty': 40}
+UNITS = {'one': 1, 'two': 2, 'three': 3, 'four': 4, 'five': 5, 'six': 6, 'seven': 7, 'eight': 8, 'nine': 9, 'ten': 10,
+         'eleven': 11, 'twelve': 12, 'fifteen': 15, 'twenty': 20, 'thirty': 30, 'forty': 40, 'forty-five': 45, 'fifty': 50, 'sixty': 60, 'ninety': 90}
+TENS = {'twenty': 20, 'thirty': 30, 'forty': 40, 'fifty': 50}
+# "twenty-five minutes" and "twenty five minutes" must read as 25, not as "five minutes".
+WORD_NUMBER = re.compile(rf"\b(?:({'|'.join(TENS)})[-\s]({'|'.join(u for u in UNITS if UNITS[u] < 10)})|({'|'.join(sorted(UNITS, key=len, reverse=True))}))\s+(minutes?)")
 
 
-STATUS_WORDS = ('cancel', 'optional', 'skip', 'waive', 'no longer', 'not required', 'postpone', 'exempt', 'extension', 'extended', 'not mandatory')
+def words_to_digits(t: str) -> str:
+    return WORD_NUMBER.sub(lambda m: f"{TENS[m.group(1)] + UNITS[m.group(2)] if m.group(1) else UNITS[m.group(3)]} {m.group(4)}", t)
+
+
+# 'version': a claim about what a course version changed must cite a passage that talks about versions.
+STATUS_WORDS = ('cancel', 'optional', 'skip', 'waive', 'no longer', 'not required', 'postpone', 'exempt', 'extension', 'extended', 'not mandatory', 'version')
 
 
 def facts_in(text: str) -> set[str]:
     """Normalised dates ('26 november') and durations ('30 min') mentioned in a text."""
     t = text.lower()
-    for w, n in WORDS.items():
-        t = re.sub(rf'\b{w}\s+(minutes?)', f'{n} \\1', t)
+    t = words_to_digits(t)
     found = set()
     for m in FACT.finditer(t):
         if m.group(1):
@@ -104,10 +114,20 @@ def facts_in(text: str) -> set[str]:
 
 
 # ---------- Grounded coach ----------
+def change_log(about: dict) -> dict:
+    """The task's computed change history as a citable passage, so "what changed?" is answered from code, not the model."""
+    versions = load_course().versions
+    first, last = versions[0], versions[-1]
+    changes = [c for c in diff_versions(first, last) if c['action_id'] == about['id']]
+    text = (' '.join(describe(c) for c in changes) if changes else f"{about['title']}: no changes.") + f' (course version {first.version} to version {last.version})'
+    return {'chunk_id': f"CL-{about['id']}", 'title': 'Course change log (computed from the versions)', 'text': text, 'score': 1.0}
+
+
+
 def coach(conn, llm, question: str, about: dict | None = None) -> dict:
     query = question + (f" ({about['title']})" if about else '')
     found = search(conn, llm, query, pin_source=about.get('source_ref') if about else None)
-    hits = found['hits']
+    hits = found['hits'] + ([change_log(about)] if about else [])
     sources = [{'id': h['chunk_id'], 'title': h['title'], 'text': h['text'], 'score': h['score']} for h in hits]
     abstain = {'mode': 'abstained', 'model': llm.gen_model, 'abstained': True, 'offer_escalation': True,
                'answer': "I can't find this in the course sources, so I won't guess. You can ask the coordinator instead.",
@@ -118,7 +138,7 @@ def coach(conn, llm, question: str, about: dict | None = None) -> dict:
     numbered = '\n\n'.join(f"[{h['chunk_id']}] {h['title']}\n{h['text']}" for h in hits)
     prompt = (f'Sources:\n{numbered}\n\nQuestion: {question}\n'
               + (f"The learner is looking at: {about['title']} ({about.get('minutes')} min).\n" if about else '')
-              + 'Answer in at most 4 sentences using only the sources. Cite every claim with source ids like [S3-p2]. '
+              + 'Answer in at most 4 sentences using only the sources. Cite every claim with source ids like [S3-p2] or [CL-s3-quiz]. '
                 'If the sources address the question even partly, answer with what they say. Set "answerable" to false only when they '
                 'do not address it at all. Never repeat a date, duration or decision that appears only in the question. '
                 'Return {"answerable": true, "answer": "...", "citations": ["S3-p2"]}.')
@@ -131,7 +151,7 @@ def coach(conn, llm, question: str, about: dict | None = None) -> dict:
                 'citations': [top['chunk_id']], 'sources': sources, 'retrieval': found['method']}
     allowed = {h['chunk_id'] for h in hits}
     answer = str(out.get('answer', '')).strip()
-    cited = set(re.findall(r'\[(S\d+-p\d+)\]', answer)) | {str(c) for c in out.get('citations', []) if isinstance(c, str)}
+    cited = set(re.findall(r'\[(S\d+-p\d+|CL-[a-z0-9-]+)\]', answer)) | {str(c) for c in out.get('citations', []) if isinstance(c, str)}
     # Facts guard: every date and duration in the answer must appear in the passages it cites.
     cited_text = ' '.join(h['text'] for h in hits if h['chunk_id'] in cited).lower()
     unsupported = [f for f in facts_in(answer) if f not in facts_in(cited_text)]
