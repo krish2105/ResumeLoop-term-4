@@ -108,3 +108,8 @@ def test_coach_declines_answers_with_dates_not_in_the_cited_passage(client, fake
     assert r['abstained'] is True
     fake(replies=[{'answerable': True, 'answer': 'Version 2 lists 26 November, not yet confirmed [S3-p2].', 'citations': ['S3-p2']}])
     assert client.post('/api/coach', json={'question': 'When is the reading check quiz due?'}).json()['mode'] == 'ai'
+
+
+def test_coach_declines_status_changes_not_in_the_sources(client, fake):
+    fake(replies=[{'answerable': True, 'answer': 'The reading check quiz was cancelled [S3-p2].', 'citations': ['S3-p2']}])
+    assert client.post('/api/coach', json={'question': 'When is the reading check quiz due?'}).json()['abstained'] is True

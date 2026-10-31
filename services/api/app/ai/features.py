@@ -83,6 +83,9 @@ FACT = re.compile(rf'\b(\d{{1,2}})\s+({MONTHS})\b|\b({MONTHS})\s+(\d{{1,2}})\b|\
 WORDS = {'five': 5, 'ten': 10, 'fifteen': 15, 'twenty': 20, 'twenty-five': 25, 'thirty': 30, 'thirty-five': 35, 'forty': 40}
 
 
+STATUS_WORDS = ('cancel', 'optional', 'skip', 'waive', 'no longer', 'not required', 'postpone', 'exempt', 'extension', 'extended', 'not mandatory')
+
+
 def facts_in(text: str) -> set[str]:
     """Normalised dates ('26 november') and durations ('30 min') mentioned in a text."""
     t = text.lower()
@@ -115,7 +118,8 @@ def coach(conn, llm, question: str, about: dict | None = None) -> dict:
     prompt = (f'Sources:\n{numbered}\n\nQuestion: {question}\n'
               + (f"The learner is looking at: {about['title']} ({about.get('minutes')} min).\n" if about else '')
               + 'Answer in at most 4 sentences using only the sources. Cite every claim with source ids like [S3-p2]. '
-                'If the sources do not answer the question, set "answerable" to false. '
+                'If the sources address the question even partly, answer with what they say. Set "answerable" to false only when they '
+                'do not address it at all. Never repeat a date, duration or decision that appears only in the question. '
                 'Return {"answerable": true, "answer": "...", "citations": ["S3-p2"]}.')
     out = llm.chat_json(GROUNDING, prompt)
     if out is None:
@@ -130,6 +134,8 @@ def coach(conn, llm, question: str, about: dict | None = None) -> dict:
     # Facts guard: every date and duration in the answer must appear in the passages it cites.
     cited_text = ' '.join(h['text'] for h in hits if h['chunk_id'] in cited).lower()
     unsupported = [f for f in facts_in(answer) if f not in facts_in(cited_text)]
+    # Status guard: claims that change what a learner must do have to be stated by the cited passage.
+    unsupported += [w for w in STATUS_WORDS if w in answer.lower() and w not in cited_text]
     if unsupported:
         log(conn, llm, 'coach', 'invalid', prompt, {'reason': 'unsupported facts', 'facts': unsupported})
         return abstain
