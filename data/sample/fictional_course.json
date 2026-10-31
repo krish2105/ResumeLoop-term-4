@@ -1,0 +1,56 @@
+{
+  "course": "Fictional demo course: Human-Centred Design Sprint",
+  "notice": "FICTIONAL. Not the MAIB outline, not a real timetable. Created for ResumeLoop demonstrations only.",
+  "source_owner": "ResumeLoop demo (fictional coordinator)",
+  "timezone": "Asia/Dubai",
+  "versions": [
+    {
+      "version": "v1",
+      "published_at": "2026-11-02T09:00:00+04:00",
+      "actions": [
+        {"id": "s1-recap", "title": "Session 1 recap: what design thinking is", "session": 1, "kind": "recap", "minutes": 15, "prerequisites": [], "due": null, "due_status": "none", "source_ref": "S1"},
+        {"id": "s1-reading", "title": "Read: observation methods primer", "session": 1, "kind": "reading", "minutes": 20, "prerequisites": ["s1-recap"], "due": null, "due_status": "none", "source_ref": "S1"},
+        {"id": "s2-recap", "title": "Session 2 recap: observing users", "session": 2, "kind": "recap", "minutes": 15, "prerequisites": ["s1-recap"], "due": null, "due_status": "none", "source_ref": "S2"},
+        {"id": "s2-exercise", "title": "Exercise: write five observation notes", "session": 2, "kind": "exercise", "minutes": 30, "prerequisites": ["s2-recap", "s1-reading"], "due": null, "due_status": "none", "source_ref": "S2"},
+        {"id": "s3-recap", "title": "Session 3 recap: empathy mapping", "session": 3, "kind": "recap", "minutes": 15, "prerequisites": ["s2-recap"], "due": null, "due_status": "none", "source_ref": "S3"},
+        {"id": "s3-quiz", "title": "Reading check quiz", "session": 3, "kind": "assessment", "minutes": 10, "prerequisites": ["s1-reading"], "due": "2026-11-24T18:00:00+04:00", "due_status": "verified", "source_ref": "S3"},
+        {"id": "s3-exercise", "title": "Exercise: build an empathy map", "session": 3, "kind": "exercise", "minutes": 35, "prerequisites": ["s3-recap", "s2-exercise"], "due": null, "due_status": "none", "source_ref": "S3"},
+        {"id": "s4-recap", "title": "Session 4 recap: problem framing", "session": 4, "kind": "recap", "minutes": 15, "prerequisites": ["s3-recap"], "due": null, "due_status": "none", "source_ref": "S4"},
+        {"id": "s4-exercise", "title": "Exercise: write a point-of-view statement", "session": 4, "kind": "exercise", "minutes": 25, "prerequisites": ["s4-recap", "s3-exercise"], "due": null, "due_status": "none", "source_ref": "S4"},
+        {"id": "s5-recap", "title": "Session 5 recap: how might we", "session": 5, "kind": "recap", "minutes": 15, "prerequisites": ["s4-recap"], "due": null, "due_status": "none", "source_ref": "S5"},
+        {"id": "s5-group", "title": "Group task: prepare the HMW workshop", "session": 5, "kind": "assessment", "minutes": 40, "prerequisites": ["s5-recap", "s4-exercise"], "due": "2026-12-08T18:00:00+04:00", "due_status": "unverified", "source_ref": "S5"},
+        {"id": "s6-recap", "title": "Session 6 recap: envisioning futures", "session": 6, "kind": "recap", "minutes": 15, "prerequisites": ["s5-recap"], "due": null, "due_status": "none", "source_ref": "S6"},
+        {"id": "s6-reflection", "title": "Reflection log entry", "session": 6, "kind": "reflection", "minutes": 20, "prerequisites": ["s6-recap"], "due": null, "due_status": "none", "source_ref": "S6"}
+      ]
+    },
+    {
+      "version": "v2",
+      "published_at": "2026-11-16T09:00:00+04:00",
+      "actions": [
+        {"id": "s1-recap", "title": "Session 1 recap: what design thinking is", "session": 1, "kind": "recap", "minutes": 15, "prerequisites": [], "due": null, "due_status": "none", "source_ref": "S1"},
+        {"id": "s1-reading", "title": "Read: observation methods primer", "session": 1, "kind": "reading", "minutes": 20, "prerequisites": ["s1-recap"], "due": null, "due_status": "none", "source_ref": "S1"},
+        {"id": "s2-recap", "title": "Session 2 recap: observing users", "session": 2, "kind": "recap", "minutes": 15, "prerequisites": ["s1-recap"], "due": null, "due_status": "none", "source_ref": "S2"},
+        {"id": "s2-exercise", "title": "Exercise: write five observation notes", "session": 2, "kind": "exercise", "minutes": 30, "prerequisites": ["s2-recap", "s1-reading"], "due": null, "due_status": "none", "source_ref": "S2"},
+        {"id": "s3-recap", "title": "Session 3 recap: empathy mapping", "session": 3, "kind": "recap", "minutes": 15, "prerequisites": ["s2-recap"], "due": null, "due_status": "none", "source_ref": "S3"},
+        {"id": "s3-quiz", "title": "Reading check quiz", "session": 3, "kind": "assessment", "minutes": 10, "prerequisites": ["s1-reading"], "due": "2026-11-26T18:00:00+04:00", "due_status": "conflict", "source_ref": "S3"},
+        {"id": "s3-exercise", "title": "Exercise: build an empathy map", "session": 3, "kind": "exercise", "minutes": 35, "prerequisites": ["s3-recap", "s2-exercise"], "due": null, "due_status": "none", "source_ref": "S3"},
+        {"id": "s4-recap", "title": "Session 4 recap: problem framing", "session": 4, "kind": "recap", "minutes": 15, "prerequisites": ["s3-recap"], "due": null, "due_status": "none", "source_ref": "S4"},
+        {"id": "s4-reading", "title": "Read: framing case study", "session": 4, "kind": "reading", "minutes": 15, "prerequisites": ["s4-recap"], "due": null, "due_status": "none", "source_ref": "S4"},
+        {"id": "s4-exercise", "title": "Exercise: write a point-of-view statement", "session": 4, "kind": "exercise", "minutes": 30, "prerequisites": ["s4-recap", "s3-exercise"], "due": null, "due_status": "none", "source_ref": "S4"},
+        {"id": "s5-recap", "title": "Session 5 recap: how might we", "session": 5, "kind": "recap", "minutes": 15, "prerequisites": ["s4-recap"], "due": null, "due_status": "none", "source_ref": "S5"},
+        {"id": "s5-group", "title": "Group task: prepare the HMW workshop", "session": 5, "kind": "assessment", "minutes": 40, "prerequisites": ["s5-recap", "s4-exercise", "s4-reading"], "due": "2026-12-08T18:00:00+04:00", "due_status": "unverified", "source_ref": "S5"},
+        {"id": "s6-recap", "title": "Session 6 recap: envisioning futures", "session": 6, "kind": "recap", "minutes": 15, "prerequisites": ["s5-recap"], "due": null, "due_status": "none", "source_ref": "S6"},
+        {"id": "s6-journal", "title": "Reflection journal (new format)", "session": 6, "kind": "reflection", "minutes": 25, "prerequisites": ["s6-recap"], "due": null, "due_status": "none", "source_ref": "S6"}
+      ]
+    }
+  ],
+  "sources": [
+    {"id": "S1", "session": 1, "title": "Session 1 notes: what design thinking is", "text": "Design thinking is a human-centred way of solving problems. Teams start by understanding people before proposing solutions. The process moves through empathise, define, ideate, prototype and test, and teams often loop back when they learn something new.\n\nThe observation methods primer explains how to watch people doing a task in their own setting. Note what they do, what tools they use and where they pause. Record what you saw separately from what you think it means.\n\nThe session 1 recap takes about fifteen minutes. The primer reading takes about twenty minutes and must be read before the session 2 exercise and the reading check quiz."},
+    {"id": "S2", "session": 2, "title": "Session 2 notes: observing users", "text": "Session 2 practised observation. Extreme users, people with very high or very low use of a product, often reveal needs that average users hide. Analogies from other industries help teams notice patterns.\n\nThe exercise asks for five observation notes. Each note should record time, place, action and a direct quote if the person agreed to be quoted. Do not record names. The exercise needs the session 2 recap and the observation primer first, and takes about thirty minutes."},
+    {"id": "S3", "session": 3, "title": "Session 3 notes: empathy mapping", "text": "An empathy map has four areas: says, does, thinks and feels. Says and does come from evidence you collected. Thinks and feels are interpretations and must be labelled as such, with the evidence that supports them.\n\nThe empathy map exercise takes about thirty-five minutes and builds on your observation notes from session 2. The reading check quiz covers the observation primer. In version 1 of the course page the quiz was due on 24 November at 18:00 Dubai time. Version 2 lists 26 November, and the coordinator has not yet confirmed which date is correct."},
+    {"id": "S4", "session": 4, "title": "Session 4 notes: problem framing", "text": "Problem framing turns research into a clear point-of-view statement: a user, a need and an insight. A good statement is specific enough to guide ideas but does not contain a solution.\n\nVersion 2 of the course adds a short framing case study reading of about fifteen minutes. The point-of-view exercise now takes about thirty minutes instead of twenty-five. It needs the session 4 recap and your empathy map."},
+    {"id": "S5", "session": 5, "title": "Session 5 notes: how might we", "text": "How might we questions reframe a point-of-view statement as an opportunity. They should be broad enough to allow many ideas and narrow enough to be useful. Teams generate many questions, then vote on the most promising.\n\nThe group task is to prepare the HMW workshop. It takes about forty minutes. The course page lists 8 December, but this date has not been verified by the coordinator. In version 2 the task also needs the framing case study reading."},
+    {"id": "S6", "session": 6, "title": "Session 6 notes: envisioning futures", "text": "Envisioning uses hill statements to describe a future outcome for a specific user, written as who, what and wow. Future-state journey maps show how the experience should feel after the change.\n\nVersion 1 asked for a short reflection log entry. Version 2 replaces it with a reflection journal in a new format, which takes about twenty-five minutes."}
+  ],
+  "demo_learner": {"learner_id": "demo-learner", "last_completed_session": 2, "completed": ["s1-recap", "s1-reading", "s2-recap"], "budget_minutes": 60, "seen_version": "v1"}
+}

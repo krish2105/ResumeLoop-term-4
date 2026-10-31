@@ -149,3 +149,8 @@ def import_demo(x: CSVImport):
             db.execute('INSERT INTO demo_imports (id,sha256,schema_version,raw_csv,snapshot_json,receipt_json) VALUES (?,?,?,?,?,?)',
                 (receipt['id'], source['sha256'], source['schema_version'], x.csv_text, json.dumps(rows), json.dumps(receipt)))
     return {**receipt, 'replayed': False}
+
+
+from .learning import router as learning_router  # noqa: E402  (routers import connect lazily)
+
+app.include_router(learning_router)
