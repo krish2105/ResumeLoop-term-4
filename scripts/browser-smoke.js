@@ -27,6 +27,7 @@ async (page) => {
   const road = webgl ? page.locator('.stage3d canvas') : page.getByRole('heading', {name: '3D view unavailable'});
   await road.waitFor({timeout: 30000});
   check(true, webgl ? '3D canvas renders on the journey' : 'Without WebGL the journey shows the 2D fallback and list link');
+  await page.locator('#budget-help').filter({hasText: 'tasks lit'}).waitFor();
   const stars = page.getByRole('region', {name: 'Stars on your road'}).getByRole('button');
   check(await stars.count() >= 10, 'Every course task is listed as a focusable star button');
   const help = page.locator('#budget-help');
