@@ -21,7 +21,7 @@ ROOT=HERE.parents[3]
 SAMPLE=ROOT / 'data' / 'sample' / 'demo_cases.csv'
 STATE=Path(os.environ.get('DEMO_DB_PATH', str(ROOT / 'services' / 'api' / '.state' / 'demo.sqlite3')))
 app=FastAPI(title=APP_NAME+' local starter API',version='0.1.0')
-app.add_middleware(CORSMiddleware,allow_origins=['http://localhost:3000','http://127.0.0.1:3000'],allow_credentials=False,allow_methods=['*'],allow_headers=['*'])
+app.add_middleware(CORSMiddleware,allow_origins=[o for o in os.environ.get('RL_CORS_ORIGINS','http://localhost:3000,http://127.0.0.1:3000').split(',') if o],allow_credentials=False,allow_methods=['*'],allow_headers=['*'],expose_headers=['X-Request-ID'])
 VALID_STATUS={'ready','needs-review','blocked','approved','rejected'}
 
 @contextmanager
@@ -61,7 +61,9 @@ class Review(BaseModel):
     note: str=Field(min_length=3,max_length=2000)
 
 @app.get('/api/health')
-def health():return {'ok':True,'project':APP_NAME,'mode':'LOCAL_SYNTHETIC_DEMO','version':'0.1.0'}
+def health():
+    from .tenancy import auth_required
+    return {'ok':True,'project':APP_NAME,'mode':'LOCAL_SYNTHETIC_DEMO','version':'0.1.0','auth_required':auth_required()}
 
 @app.get('/api/demo/records')
 def records():
@@ -157,9 +159,12 @@ from .learning import router as learning_router  # noqa: E402
 from .coordinator import router as coordinator_router  # noqa: E402
 from .studio import examples_router, router as studio_router  # noqa: E402
 
+from .auth import auth_middleware, router as auth_router  # noqa: E402
 from .ops import access_middleware, router as ops_router  # noqa: E402
 
+app.middleware('http')(auth_middleware)
 app.middleware('http')(access_middleware)
+app.include_router(auth_router)
 app.include_router(ops_router)
 app.include_router(learning_router)
 app.include_router(coordinator_router)

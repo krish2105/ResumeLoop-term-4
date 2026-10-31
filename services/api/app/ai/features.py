@@ -9,6 +9,7 @@ import re
 import sqlite3
 
 from .retrieval import search
+from .. import tenancy
 
 GROUNDING = ('You are ResumeLoop, a careful study assistant for a FICTIONAL demo course. '
              'Use only the facts you are given. Never invent dates, tasks, grades or policies. Reply with JSON only.')
@@ -17,8 +18,8 @@ CATEGORIES = ('says', 'does', 'thinks', 'feels', 'need')
 
 def log(conn: sqlite3.Connection, llm, feature: str, status: str, prompt: str, detail: dict) -> None:
     with conn:
-        conn.execute('INSERT INTO ai_log (feature, model, status, prompt_sha256, detail_json) VALUES (?,?,?,?,?)',
-                     (feature, llm.gen_model, status, hashlib.sha256(prompt.encode()).hexdigest(), json.dumps(detail)))
+        conn.execute('INSERT INTO ai_log (feature, model, status, prompt_sha256, detail_json, org_id) VALUES (?,?,?,?,?,?)',
+                     (feature, llm.gen_model, status, hashlib.sha256(prompt.encode()).hexdigest(), json.dumps(detail), tenancy.org()))
 
 
 def describe(c: dict) -> str:

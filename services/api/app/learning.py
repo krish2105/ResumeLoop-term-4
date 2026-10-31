@@ -8,6 +8,7 @@ from pydantic import BaseModel, ConfigDict, Field
 from .course import SCHEMA_VERSION, diff_versions, get_version, latest_version, load_course
 from .planner import PlanInputError, build_plan
 from .storage import db
+from . import tenancy
 
 router = APIRouter(prefix='/api')
 
@@ -82,7 +83,7 @@ def default_progress(learner: str = 'demo-learner') -> dict:
 
 @router.get('/learner/progress')
 def get_progress(learner: str = LEARNER, conn: sqlite3.Connection = Depends(db)):
-    row = conn.execute('SELECT * FROM learner_progress WHERE learner_id=?', (learner,)).fetchone()
+    row = conn.execute('SELECT * FROM learner_progress WHERE org_id=? AND learner_id=?', (tenancy.org(), learner)).fetchone()
     if row is None:
         return {'version': 0, 'state': default_progress(learner), 'updated_at': None}
     return {'version': row['version'], 'state': json.loads(row['state_json']), 'updated_at': row['updated_at']}
@@ -96,19 +97,20 @@ def put_progress(x: ProgressWrite, learner: str = LEARNER, conn: sqlite3.Connect
         raise HTTPException(422, {'message': 'Unknown action IDs', 'errors': unknown})
     with conn:
         conn.execute('BEGIN IMMEDIATE')
-        row = conn.execute('SELECT version FROM learner_progress WHERE learner_id=?', (learner,)).fetchone()
+        row = conn.execute('SELECT version FROM learner_progress WHERE org_id=? AND learner_id=?', (tenancy.org(), learner)).fetchone()
         current = row['version'] if row else 0
         if current != x.expected_version:
             raise HTTPException(409, {'message': 'Progress changed in another tab. Reload before saving.', 'current_version': current})
         state = json.dumps(x.state.model_dump())
-        conn.execute('''INSERT INTO learner_progress (learner_id, version, state_json) VALUES (?,?,?)
-            ON CONFLICT(learner_id) DO UPDATE SET version=excluded.version, state_json=excluded.state_json,
-            updated_at=CURRENT_TIMESTAMP''', (learner, current + 1, state))
+        conn.execute('''INSERT INTO learner_progress (org_id, learner_id, version, state_json) VALUES (?,?,?,?)
+            ON CONFLICT(org_id, learner_id) DO UPDATE SET version=excluded.version, state_json=excluded.state_json,
+            updated_at=CURRENT_TIMESTAMP''', (tenancy.org(), learner, current + 1, state))
+    tenancy.audit(conn, 'progress.saved', learner)
     return get_progress(learner, conn)
 
 
 @router.delete('/learner/progress')
 def reset_progress(learner: str = LEARNER, conn: sqlite3.Connection = Depends(db)):
     with conn:
-        conn.execute('DELETE FROM learner_progress WHERE learner_id=?', (learner,))
+        conn.execute('DELETE FROM learner_progress WHERE org_id=? AND learner_id=?', (tenancy.org(), learner))
     return {'ok': True}

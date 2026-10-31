@@ -156,3 +156,5 @@ select,input,textarea{max-width:100%}
  .deckWrap{gap:0}.slide{width:100vw;height:100vh;aspect-ratio:auto;border:0;border-radius:0;box-shadow:none;break-after:page;page-break-after:always}
 }
 .vivaList{display:grid;gap:12px;padding-left:20px}.vivaList li{display:grid;gap:6px}.vivaList textarea{min-height:56px}
+.authCard{max-width:460px}.authCard input{width:100%}
+.dangerBtn{color:var(--danger);border-color:color-mix(in srgb,var(--danger) 50%,var(--border))}

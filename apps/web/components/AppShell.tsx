@@ -17,7 +17,7 @@ export const NAV: {heading: string; links: [string, string][]}[] = [
     ['/studio/ideate', 'Ideate'], ['/studio/journeys', 'Journey maps'], ['/studio/prototypes', 'Prototype log'], ['/studio/experiments', 'Experiment lab'], ['/studio/ethics', 'Ethics and governance']]},
   {heading: 'Class prep', links: [['/learn', 'Readings and quizzes']]},
   {heading: 'Present and reflect', links: [['/story', 'Story mode'], ['/reflect', 'Reflection journal'], ['/report', 'Evidence report'], ['/course', 'Course hub']]},
-  {heading: 'Coordinator and data', links: [['/coordinator', 'Coordinator workspace'], ['/review', 'Review queue'], ['/imports', 'Imports'], ['/settings', 'Settings']]},
+  {heading: 'Coordinator and data', links: [['/coordinator', 'Coordinator workspace'], ['/review', 'Review queue'], ['/imports', 'Imports'], ['/settings', 'Settings and account'], ['/privacy', 'Privacy']]},
 ];
 
 export default function AppShell({children}: {children: React.ReactNode}) {

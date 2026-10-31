@@ -12,6 +12,8 @@ from pydantic import BaseModel, ConfigDict, ValidationError
 from .course import Course, diff_versions, fictional_course, load_course, set_active
 from .planner import PlanInputError, validate_graph
 from .storage import db
+from . import tenancy
+from .auth import require
 
 router = APIRouter(prefix='/api')
 
@@ -46,7 +48,7 @@ def check(package: dict) -> tuple[Course | None, list[str]]:
     return course, errors
 
 
-@router.post('/course/import/preview')
+@router.post('/course/import/preview', dependencies=[Depends(require('coordinator'))])
 def preview(x: PackageIn):
     course, errors = check(x.package)
     if course is None or errors:
@@ -58,7 +60,7 @@ def preview(x: PackageIn):
             'changes_vs_current': diff_versions(current.versions[-1], course.versions[-1])}
 
 
-@router.post('/course/import')
+@router.post('/course/import', dependencies=[Depends(require('coordinator'))])
 def import_package(x: PackageIn, conn: sqlite3.Connection = Depends(db)):
     course, errors = check(x.package)
     if course is None or errors:
@@ -67,57 +69,59 @@ def import_package(x: PackageIn, conn: sqlite3.Connection = Depends(db)):
     digest = hashlib.sha256(raw.encode()).hexdigest()
     with conn:
         conn.execute('BEGIN IMMEDIATE')
-        existing = conn.execute('SELECT id FROM course_packages WHERE sha256=?', (digest,)).fetchone()
-        conn.execute('UPDATE course_packages SET active=0')
+        existing = conn.execute('SELECT id FROM course_packages WHERE sha256=? AND org_id=?', (digest, tenancy.org())).fetchone()
+        conn.execute('UPDATE course_packages SET active=0 WHERE org_id=?', (tenancy.org(),))
         if existing:
-            conn.execute('UPDATE course_packages SET active=1 WHERE id=?', (existing['id'],))
+            conn.execute('UPDATE course_packages SET active=1 WHERE id=? AND org_id=?', (existing['id'], tenancy.org()))
             pid, replayed = existing['id'], True
         else:
             pid, replayed = str(uuid.uuid4()), False
-            conn.execute('INSERT INTO course_packages (id, sha256, title, package_json, active) VALUES (?,?,?,?,1)', (pid, digest, course.course, raw))
+            conn.execute('INSERT INTO course_packages (id, sha256, title, package_json, active, org_id) VALUES (?,?,?,?,1,?)', (pid, digest, course.course, raw, tenancy.org()))
     set_active(course)
+    tenancy.audit(conn, 'course.imported', course.course)
     return {'ok': True, 'id': pid, 'sha256': digest, 'replayed': replayed, 'active': course.course}
 
 
-@router.get('/course/packages')
+@router.get('/course/packages', dependencies=[Depends(require('coordinator'))])
 def packages(conn: sqlite3.Connection = Depends(db)):
-    rows = conn.execute('SELECT id, sha256, title, active, imported_at FROM course_packages ORDER BY rowid DESC').fetchall()
+    rows = conn.execute('SELECT id, sha256, title, active, imported_at FROM course_packages WHERE org_id=? ORDER BY rowid DESC', (tenancy.org(),)).fetchall()
     return {'active': load_course().course, 'fictional': fictional_course().course, 'packages': [dict(r) for r in rows]}
 
 
-@router.post('/course/packages/{package_id}/activate')
+@router.post('/course/packages/{package_id}/activate', dependencies=[Depends(require('coordinator'))])
 def activate(package_id: str, conn: sqlite3.Connection = Depends(db)):
-    row = conn.execute('SELECT package_json FROM course_packages WHERE id=?', (package_id,)).fetchone()
+    row = conn.execute('SELECT package_json FROM course_packages WHERE id=? AND org_id=?', (package_id, tenancy.org())).fetchone()
     if row is None:
         raise HTTPException(404, 'Unknown course package')
     with conn:
-        conn.execute('UPDATE course_packages SET active=CASE WHEN id=? THEN 1 ELSE 0 END', (package_id,))
+        conn.execute('UPDATE course_packages SET active=CASE WHEN id=? THEN 1 ELSE 0 END WHERE org_id=?', (package_id, tenancy.org()))
     set_active(Course.model_validate(json.loads(row['package_json'])))
     return {'ok': True, 'active': load_course().course}
 
 
-@router.post('/course/reset')
+@router.post('/course/reset', dependencies=[Depends(require('coordinator'))])
 def reset(conn: sqlite3.Connection = Depends(db)):
     with conn:
-        conn.execute('UPDATE course_packages SET active=0')
+        conn.execute('UPDATE course_packages SET active=0 WHERE org_id=?', (tenancy.org(),))
     set_active(None)
+    tenancy.audit(conn, 'course.reset')
     return {'ok': True, 'active': fictional_course().course}
 
 
-@router.get('/learners')
+@router.get('/learners', dependencies=[Depends(require('coordinator'))])
 def learners(conn: sqlite3.Connection = Depends(db)):
-    rows = conn.execute('SELECT learner_id, version, state_json, updated_at FROM learner_progress ORDER BY learner_id').fetchall()
+    rows = conn.execute('SELECT learner_id, version, state_json, updated_at FROM learner_progress WHERE org_id=? ORDER BY learner_id', (tenancy.org(),)).fetchall()
     total = len(load_course().versions[-1].actions)
     return [{'learner_id': r['learner_id'], 'completed': len(json.loads(r['state_json'])['completed']), 'of': total,
              'saves': r['version'], 'updated_at': r['updated_at']} for r in rows]
 
 
-@router.get('/coordinator/insights')
+@router.get('/coordinator/insights', dependencies=[Depends(require('coordinator'))])
 def insights(conn: sqlite3.Connection = Depends(db)):
-    coach = conn.execute("SELECT status, detail_json FROM ai_log WHERE feature='coach'").fetchall()
+    coach = conn.execute("SELECT status, detail_json FROM ai_log WHERE feature='coach' AND org_id=?", (tenancy.org(),)).fetchall()
     cited = Counter(c for r in coach for c in json.loads(r['detail_json']).get('cited', []))
     titles = {f'{s.id}-p{i}': s.title for s in load_course().sources for i in range(1, 10)}
-    open_q = conn.execute("SELECT body_json FROM escalations WHERE status='queued'").fetchall()
+    open_q = conn.execute("SELECT body_json FROM escalations WHERE status='queued' AND org_id=?", (tenancy.org(),)).fetchall()
     return {'coach_calls': len(coach), 'answered': sum(r['status'] == 'ok' for r in coach),
             'declined': sum(r['status'] in ('abstained', 'invalid') for r in coach),
             'top_sources': [{'chunk': k, 'title': titles.get(k, k), 'citations': n} for k, n in cited.most_common(6)],

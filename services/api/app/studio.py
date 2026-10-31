@@ -15,6 +15,7 @@ from pydantic import BaseModel, ConfigDict, Field, ValidationError, field_valida
 from .ai import features
 from .ai.llm import get_llm
 from .storage import db
+from . import tenancy
 
 router = APIRouter(prefix='/api/studio')
 EXAMPLES = Path(__file__).resolve().parents[3] / 'data' / 'sample' / 'fictional_studio.json'
@@ -383,7 +384,7 @@ def out(row) -> dict:
 
 
 def get_row(conn, kind: str, item_id: str):
-    row = conn.execute('SELECT * FROM studio_items WHERE id=? AND kind=?', (item_id, kind)).fetchone()
+    row = conn.execute('SELECT * FROM studio_items WHERE id=? AND kind=? AND org_id=?', (item_id, kind, tenancy.org())).fetchone()
     if row is None:
         raise HTTPException(404, f'Unknown {kind[:-1] if kind.endswith("s") else kind} item')
     return row
@@ -411,14 +412,15 @@ def protocol_hash(exp: dict) -> str:
 def insert(conn, kind: str, parent_id: str | None, body: dict) -> dict:
     item_id = str(uuid.uuid4())
     with conn:
-        conn.execute('INSERT INTO studio_items (id, kind, parent_id, body_json) VALUES (?,?,?,?)', (item_id, kind, parent_id, json.dumps(body)))
+        conn.execute('INSERT INTO studio_items (id, kind, parent_id, body_json, org_id) VALUES (?,?,?,?,?)', (item_id, kind, parent_id, json.dumps(body), tenancy.org()))
+    tenancy.audit(conn, f'{kind}.created', item_id)
     return out(get_row(conn, kind, item_id))
 
 
 @router.get('/{kind}')
 def list_items(kind: str, parent: str | None = None, conn: sqlite3.Connection = Depends(db)):
     model_for(kind)
-    q, args = 'SELECT * FROM studio_items WHERE kind=?', [kind]
+    q, args = 'SELECT * FROM studio_items WHERE kind=? AND org_id=?', [kind, tenancy.org()]
     if parent:
         q, args = q + ' AND parent_id=?', args + [parent]
     return [out(r) for r in conn.execute(q + ' ORDER BY created_at, rowid', args)]
@@ -441,17 +443,17 @@ def create(kind: str, x: Create, conn: sqlite3.Connection = Depends(db)):
                 if features.normalise(body['quote']) not in features.normalise(note):
                     raise HTTPException(422, {'message': 'The quote must be copied exactly from the note', 'errors': []})
     if kind == 'votes':
-        dup = conn.execute("SELECT 1 FROM studio_items WHERE kind='votes' AND parent_id=? AND json_extract(body_json,'$.voter')=?",
-                           (x.parent_id, body['voter'])).fetchone()
+        dup = conn.execute("SELECT 1 FROM studio_items WHERE kind='votes' AND org_id=? AND parent_id=? AND json_extract(body_json,'$.voter')=?",
+                           (tenancy.org(), x.parent_id, body['voter'])).fetchone()
         if dup:
             raise HTTPException(409, 'This person already voted for this idea')
     if kind == 'experiments':
         body.update(frozen_at=None, protocol_sha256=None)
     if kind == 'scores':
         with conn:
-            conn.execute("""DELETE FROM studio_items WHERE kind='scores' AND json_extract(body_json,'$.alternative')=?
+            conn.execute("""DELETE FROM studio_items WHERE kind='scores' AND org_id=? AND json_extract(body_json,'$.alternative')=?
                 AND json_extract(body_json,'$.criterion')=? AND json_extract(body_json,'$.scorer')=?""",
-                         (body['alternative'], body['criterion'], body['scorer']))
+                         (tenancy.org(), body['alternative'], body['criterion'], body['scorer']))
     return insert(conn, kind, x.parent_id, body)
 
 
@@ -464,7 +466,8 @@ def update(kind: str, item_id: str, patch: dict, conn: sqlite3.Connection = Depe
         raise HTTPException(409, 'The protocol is frozen. Create a new experiment version instead.')
     body = validate(model, {**current, **patch})
     with conn:
-        conn.execute('UPDATE studio_items SET body_json=?, updated_at=CURRENT_TIMESTAMP WHERE id=?', (json.dumps(body), item_id))
+        conn.execute('UPDATE studio_items SET body_json=?, updated_at=CURRENT_TIMESTAMP WHERE id=? AND org_id=?', (json.dumps(body), item_id, tenancy.org()))
+    tenancy.audit(conn, f'{kind}.updated', item_id)
     return out(get_row(conn, kind, item_id))
 
 
@@ -473,7 +476,8 @@ def delete(kind: str, item_id: str, conn: sqlite3.Connection = Depends(db)):
     model_for(kind)
     get_row(conn, kind, item_id)
     with conn:
-        conn.execute('DELETE FROM studio_items WHERE id=? OR parent_id=?', (item_id, item_id))
+        conn.execute('DELETE FROM studio_items WHERE (id=? OR parent_id=?) AND org_id=?', (item_id, item_id, tenancy.org()))
+    tenancy.audit(conn, f'{kind}.deleted', item_id)
     return {'ok': True}
 
 
@@ -486,7 +490,7 @@ def freeze(item_id: str, conn: sqlite3.Connection = Depends(db)):
     stamp = conn.execute("SELECT strftime('%Y-%m-%dT%H:%M:%SZ','now')").fetchone()[0]
     body.update(frozen_at=stamp, protocol_sha256=protocol_hash(body))
     with conn:
-        conn.execute('UPDATE studio_items SET body_json=?, updated_at=CURRENT_TIMESTAMP WHERE id=?', (json.dumps(body), item_id))
+        conn.execute('UPDATE studio_items SET body_json=?, updated_at=CURRENT_TIMESTAMP WHERE id=? AND org_id=?', (json.dumps(body), item_id, tenancy.org()))
     return out(get_row(conn, 'experiments', item_id))
 
 
@@ -518,7 +522,7 @@ examples_router = APIRouter(prefix='/api/studio-examples')
 @examples_router.post('')
 def load_examples(conn: sqlite3.Connection = Depends(db)):
     data = json.loads(EXAMPLES.read_text(encoding='utf-8'))
-    if conn.execute("SELECT 1 FROM studio_items WHERE kind='notes' AND json_extract(body_json,'$.synthetic')=1").fetchone():
+    if conn.execute("SELECT 1 FROM studio_items WHERE kind='notes' AND org_id=? AND json_extract(body_json,'$.synthetic')=1", (tenancy.org(),)).fetchone():
         return {'ok': True, 'loaded': 0, 'notice': data['notice']}
     consent = {'participation': True, 'anonymised_notes': True, 'quotes': True}
     for n in data['notes']:
@@ -530,10 +534,10 @@ def load_examples(conn: sqlite3.Connection = Depends(db)):
 
 @examples_router.delete('')
 def clear_examples(conn: sqlite3.Connection = Depends(db)):
-    ids = [r['id'] for r in conn.execute("SELECT id FROM studio_items WHERE kind IN ('notes','experiments') AND json_extract(body_json,'$.synthetic')=1")]
+    ids = [r['id'] for r in conn.execute("SELECT id FROM studio_items WHERE kind IN ('notes','experiments') AND org_id=? AND json_extract(body_json,'$.synthetic')=1", (tenancy.org(),))]
     with conn:
         for i in ids:
-            conn.execute('DELETE FROM studio_items WHERE id=? OR parent_id=?', (i, i))
+            conn.execute('DELETE FROM studio_items WHERE (id=? OR parent_id=?) AND org_id=?', (i, i, tenancy.org()))
     return {'ok': True, 'removed': len(ids)}
 
 
@@ -554,7 +558,7 @@ RUBRIC = {
 def seed_course_hub(conn: sqlite3.Connection = Depends(db)):
     """Assessment components and rubric criteria from the outline (as recorded in docs/ASSESSMENT.md).
     Dates stay unverified: the outline's schedules conflict and faculty have not confirmed them."""
-    if conn.execute("SELECT 1 FROM studio_items WHERE kind='milestones'").fetchone():
+    if conn.execute("SELECT 1 FROM studio_items WHERE kind='milestones' AND org_id=?", (tenancy.org(),)).fetchone():
         return {'ok': True, 'loaded': 0}
     n = 0
     for title, weight in COMPONENTS:
@@ -598,7 +602,7 @@ READINGS = [  # Bibliographic references from the unit outline (sections 2.4 and
 
 @examples_router.post('/readings')
 def seed_readings(conn: sqlite3.Connection = Depends(db)):
-    if conn.execute("SELECT 1 FROM studio_items WHERE kind='readings'").fetchone():
+    if conn.execute("SELECT 1 FROM studio_items WHERE kind='readings' AND org_id=?", (tenancy.org(),)).fetchone():
         return {'ok': True, 'loaded': 0}
     for week, title, authors, year, kind, required in READINGS:
         insert(conn, 'readings', None, validate(Reading, {'week': week, 'title': title, 'authors': authors, 'year': year,
@@ -624,7 +628,7 @@ def review_card(item_id: str, x: Grade, conn: sqlite3.Connection = Depends(db)):
     due = (date.fromisoformat(x.today) + timedelta(days=LEITNER_DAYS[box])).isoformat()
     card.update(box=box, due=due, reviews=card['reviews'] + 1, correct=card['correct'] + int(x.correct))
     with conn:
-        conn.execute('UPDATE studio_items SET body_json=?, updated_at=CURRENT_TIMESTAMP WHERE id=?', (json.dumps(validate(Flashcard, card)), item_id))
+        conn.execute('UPDATE studio_items SET body_json=?, updated_at=CURRENT_TIMESTAMP WHERE id=? AND org_id=?', (json.dumps(validate(Flashcard, card)), item_id, tenancy.org()))
     return out(get_row(conn, 'flashcards', item_id))
 
 
@@ -634,7 +638,7 @@ def interview_to_note(item_id: str, conn: sqlite3.Connection = Depends(db)):
     iv = json.loads(get_row(conn, 'interviews', item_id)['body_json'])
     if iv.get('converted_note_id'):
         raise HTTPException(409, 'Already converted to a note')
-    p = conn.execute("SELECT body_json FROM studio_items WHERE kind='participants' AND json_extract(body_json,'$.code')=?", (iv['participant_code'],)).fetchone()
+    p = conn.execute("SELECT body_json FROM studio_items WHERE kind='participants' AND org_id=? AND json_extract(body_json,'$.code')=?", (tenancy.org(), iv['participant_code'])).fetchone()
     if p is None or json.loads(p['body_json'])['consent'] != 'consented':
         raise HTTPException(409, 'Record consent for this participant in the tracker first')
     text = '\n'.join(f"[{m['t'] // 60:02d}:{m['t'] % 60:02d}] {m['text']}" for m in iv['moments'])
@@ -648,7 +652,7 @@ def interview_to_note(item_id: str, conn: sqlite3.Connection = Depends(db)):
                                                 'origin': 'human', 'theme_id': None, 'contributor': None})
     iv['converted_note_id'] = note['id']
     with conn:
-        conn.execute('UPDATE studio_items SET body_json=?, updated_at=CURRENT_TIMESTAMP WHERE id=?', (json.dumps(iv), item_id))
+        conn.execute('UPDATE studio_items SET body_json=?, updated_at=CURRENT_TIMESTAMP WHERE id=? AND org_id=?', (json.dumps(iv), item_id, tenancy.org()))
     return {'note': note, 'codes': sum(m['tag'] in CATEGORIES_SET for m in iv['moments'])}
 
 

@@ -10,6 +10,7 @@ from .ai import features
 from .ai.llm import get_llm
 from .course import diff_versions, get_version, latest_version
 from .storage import db
+from . import tenancy
 
 router = APIRouter(prefix='/api')
 STATUSES = {'queued', 'answered', 'withdrawn'}
@@ -90,7 +91,7 @@ def row_out(row) -> dict:
 
 @router.get('/escalations')
 def list_escalations(conn: sqlite3.Connection = Depends(db)):
-    return [row_out(r) for r in conn.execute('SELECT * FROM escalations ORDER BY created_at DESC, rowid DESC LIMIT 200')]
+    return [row_out(r) for r in conn.execute('SELECT * FROM escalations WHERE org_id=? ORDER BY created_at DESC, rowid DESC LIMIT 200', (tenancy.org(),))]
 
 
 @router.post('/escalations')
@@ -100,19 +101,19 @@ def create_escalation(x: EscalationCreate, conn: sqlite3.Connection = Depends(db
     action(x.about)
     with conn:
         conn.execute('BEGIN IMMEDIATE')
-        existing = conn.execute('SELECT * FROM escalations WHERE idempotency_key=?', (x.idempotency_key,)).fetchone()
+        existing = conn.execute('SELECT * FROM escalations WHERE org_id=? AND idempotency_key=?', (tenancy.org(), x.idempotency_key)).fetchone()
         if existing:
             return {**row_out(existing), 'replayed': True}
         body = x.model_dump(exclude={'idempotency_key'}) | {'answer': None, 'external_delivery': 'none (local queue only)'}
-        conn.execute('INSERT INTO escalations (id, idempotency_key, status, body_json) VALUES (?,?,?,?)',
-                     (str(uuid.uuid4()), x.idempotency_key, 'queued', json.dumps(body)))
-        row = conn.execute('SELECT * FROM escalations WHERE idempotency_key=?', (x.idempotency_key,)).fetchone()
+        conn.execute('INSERT INTO escalations (id, org_id, idempotency_key, status, body_json) VALUES (?,?,?,?,?)',
+                     (str(uuid.uuid4()), tenancy.org(), x.idempotency_key, 'queued', json.dumps(body)))
+        row = conn.execute('SELECT * FROM escalations WHERE org_id=? AND idempotency_key=?', (tenancy.org(), x.idempotency_key)).fetchone()
     return {**row_out(row), 'replayed': False}
 
 
 @router.patch('/escalations/{escalation_id}')
 def update_escalation(escalation_id: str, x: EscalationUpdate, conn: sqlite3.Connection = Depends(db)):
-    row = conn.execute('SELECT * FROM escalations WHERE id=?', (escalation_id,)).fetchone()
+    row = conn.execute('SELECT * FROM escalations WHERE id=? AND org_id=?', (escalation_id, tenancy.org())).fetchone()
     if row is None:
         raise HTTPException(404, 'Unknown escalation')
     if row['status'] != 'queued':
@@ -121,13 +122,14 @@ def update_escalation(escalation_id: str, x: EscalationUpdate, conn: sqlite3.Con
         raise HTTPException(422, 'An answer is required')
     body = json.loads(row['body_json']) | {'answer': x.answer if x.status == 'answered' else None}
     with conn:
-        conn.execute('UPDATE escalations SET status=?, body_json=?, updated_at=CURRENT_TIMESTAMP WHERE id=?',
-                     (x.status, json.dumps(body), escalation_id))
-    return row_out(conn.execute('SELECT * FROM escalations WHERE id=?', (escalation_id,)).fetchone())
+        conn.execute('UPDATE escalations SET status=?, body_json=?, updated_at=CURRENT_TIMESTAMP WHERE id=? AND org_id=?',
+                     (x.status, json.dumps(body), escalation_id, tenancy.org()))
+    tenancy.audit(conn, f'escalation.{x.status}', escalation_id)
+    return row_out(conn.execute('SELECT * FROM escalations WHERE id=? AND org_id=?', (escalation_id, tenancy.org())).fetchone())
 
 
 @router.get('/ai/log')
 def ai_log(conn: sqlite3.Connection = Depends(db)):
-    rows = conn.execute('SELECT * FROM ai_log ORDER BY id DESC LIMIT 200').fetchall()
-    counts = {r['status']: r['n'] for r in conn.execute('SELECT status, COUNT(*) n FROM ai_log GROUP BY status')}
+    rows = conn.execute('SELECT * FROM ai_log WHERE org_id=? ORDER BY id DESC LIMIT 200', (tenancy.org(),)).fetchall()
+    counts = {r['status']: r['n'] for r in conn.execute('SELECT status, COUNT(*) n FROM ai_log WHERE org_id=? GROUP BY status', (tenancy.org(),))}
     return {'counts': counts, 'entries': [{**dict(r), 'detail': json.loads(r['detail_json'])} for r in rows]}

@@ -1,0 +1,15 @@
+# Self-host ResumeLoop with accounts switched on. Ollama runs on the host (install it and pull
+# qwen2.5:7b and bge-m3:567m); without it the app uses its offline fallbacks.
+#   docker compose up --build    then open http://localhost:3000/login
+services:
+  api:
+    build: {context: ., dockerfile: services/api/Dockerfile}
+    ports: ["8014:8014"]
+    volumes: ["resumeloop-data:/data"]
+    extra_hosts: ["host.docker.internal:host-gateway"]
+  web:
+    build: {context: ., dockerfile: apps/web/Dockerfile, args: {NEXT_PUBLIC_API_URL: "http://localhost:8014"}}
+    ports: ["3000:3000"]
+    depends_on: [api]
+volumes:
+  resumeloop-data: {}

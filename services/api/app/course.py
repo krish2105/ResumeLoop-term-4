@@ -72,15 +72,15 @@ def fictional_course() -> Course:
 
 
 # Active course per database file: a coordinator-imported package when one is active, else the fictional course.
-_active: dict[str, Course | None] = {}
+_active: dict[str, Course | None] = {}  # keyed by database file and organisation
 
 
-def _read_active(path: str) -> Course | None:
+def _read_active(path: str, org_id: str) -> Course | None:
     if not Path(path).exists():
         return None
     conn = sqlite3.connect(path)
     try:
-        row = conn.execute('SELECT package_json FROM course_packages WHERE active=1 ORDER BY rowid DESC LIMIT 1').fetchone()
+        row = conn.execute('SELECT package_json FROM course_packages WHERE active=1 AND org_id=? ORDER BY rowid DESC LIMIT 1', (org_id,)).fetchone()
     except sqlite3.OperationalError:
         return None
     finally:
@@ -91,16 +91,16 @@ def _read_active(path: str) -> Course | None:
 def load_course() -> Course:
     if os.environ.get('RL_FICTIONAL_ONLY') == '1':
         return fictional_course()
-    from . import main
-    key = str(main.STATE)
+    from . import main, tenancy
+    key = f'{main.STATE}|{tenancy.org()}'
     if key not in _active:
-        _active[key] = _read_active(key)
+        _active[key] = _read_active(str(main.STATE), tenancy.org())
     return _active[key] or fictional_course()
 
 
 def set_active(course: 'Course | None') -> None:
-    from . import main
-    _active[str(main.STATE)] = course
+    from . import main, tenancy
+    _active[f'{main.STATE}|{tenancy.org()}'] = course
 
 
 def get_version(version: str) -> CourseVersion:
