@@ -272,6 +272,51 @@ async (page) => {
   await toast.filter({hasText: 'Contribution logged.'}).waitFor();
   check(await page.locator('.matrix td.mono', {hasText: '1'}).count() >= 1, 'Course hub: rubric self-check and contribution matrix work');
 
+  // ---------- Class prep, research ops, synthesis, report ----------
+  await go('/learn');
+  await page.getByRole('button', {name: 'Load the reading list'}).click();
+  await page.getByText('0/18').waitFor();
+  check(true, 'Reading list loads from the outline with 18 required readings');
+  await box('Question').fill('What three parts make a Hill statement?');
+  await box('Answer').fill('Who, what and a measurable wow');
+  await page.getByRole('button', {name: 'Add card'}).click();
+  await toast.filter({hasText: 'Card added.'}).waitFor();
+  await page.getByRole('button', {name: 'Show answer'}).click();
+  await page.getByRole('button', {name: 'I knew it'}).click();
+  await page.getByText('Nothing due today').waitFor();
+  check(true, 'Flashcard self-quiz moves a known card to a later day');
+  await box('Session').fill('Session 3: Observe');
+  await page.getByRole('button', {name: 'Log session'}).click();
+  await toast.filter({hasText: 'Session logged.'}).waitFor();
+  check(true, 'Participation log saves a session');
+  await go('/studio/research');
+  await box('Code').fill('P21');
+  await page.getByRole('button', {name: 'Add participant'}).click();
+  await toast.filter({hasText: 'Participant added.'}).waitFor();
+  await page.getByRole('combobox', {name: 'Participant'}).selectOption('P21');
+  await page.getByRole('button', {name: 'Start interview'}).click();
+  await page.getByRole('radio', {name: 'Does'}).click();
+  await page.getByRole('textbox', {name: 'What happened or was said'}).fill('Checked three apps before finding the quiz date');
+  await page.keyboard.press('Enter');
+  await page.getByRole('button', {name: 'Save interview'}).click();
+  await toast.filter({hasText: 'Interview saved.'}).waitFor();
+  await page.getByRole('button', {name: 'Turn into note and codes'}).click();
+  await toast.filter({hasText: 'Record consent'}).waitFor();
+  check(true, 'An interview cannot become research data before consent is recorded');
+  await page.getByRole('combobox', {name: 'Consent for P21'}).selectOption('consented');
+  await page.getByText('consent ' + new Date().toISOString().slice(0, 10)).waitFor();
+  await page.getByRole('button', {name: 'Turn into note and codes'}).click();
+  await toast.filter({hasText: 'Converted to a note with codes'}).waitFor();
+  check(true, 'After consent, a captured interview becomes a note with coded moments');
+  await go('/studio/synthesis');
+  await page.locator('.affCard', {hasText: 'Checked three apps'}).first().waitFor();
+  await page.getByRole('combobox', {name: /^Move Checked three apps/}).first().selectOption({label: 'Conflicting sources of truth'});
+  await page.locator('.traceTree', {hasText: 'Checked three apps'}).waitFor();
+  check(true, 'Synthesis board moves a code into a theme and the evidence trace updates');
+  await go('/report');
+  await page.getByRole('heading', {name: 'Research'}).waitFor();
+  check((await text(page.locator('.report'))).includes('consented participants') && await page.getByRole('button', {name: 'Download Markdown'}).isEnabled(), 'Evidence report compiles the studio in rubric order');
+
   // ---------- Resizable panels ----------
   await go('/');
   const sideSep = page.getByRole('separator', {name: 'Resize sidebar'});
@@ -328,7 +373,7 @@ async (page) => {
   await go('/');
   await page.locator('.stage3d canvas').waitFor();
   await page.screenshot({path: 'output/playwright/journey-mobile-dark.png', fullPage: true});
-  for (const route of ['/', '/plan', '/digest', '/coach', '/escalations', '/studio/observe', '/studio/empathy', '/studio/define', '/studio/envision', '/studio/ideate', '/studio/journeys', '/studio/prototypes', '/studio/experiments', '/studio/ethics', '/story', '/reflect', '/course']) {
+  for (const route of ['/', '/plan', '/digest', '/coach', '/escalations', '/studio/observe', '/studio/empathy', '/studio/define', '/studio/envision', '/studio/ideate', '/studio/journeys', '/studio/prototypes', '/studio/experiments', '/studio/ethics', '/story', '/reflect', '/course', '/learn', '/studio/research', '/studio/synthesis', '/report']) {
     for (const width of [320, 768, 1440]) {
       await page.setViewportSize({width, height: 900});
       await go(route); await settle();

@@ -2,6 +2,12 @@
 
 Updated **23 October 2026**. Term starts **10 November 2026**. Solo developer; default allocation **4 hours/week** from 20 hours shared across five projects. Cross-account continuation instructions are in [`NEW_ACCOUNT_HANDOFF.md`](NEW_ACCOUNT_HANDOFF.md).
 
+## 1 November 2026: everything buildable for the outline
+
+New screens: **Readings and quizzes** (`/learn`), **Research ops** (`/studio/research`), **Synthesis board** (`/studio/synthesis`), **Evidence report** (`/report`), a paper assembler in the Reflection journal, a sign test in the Experiment lab, and a **Coach evaluation** panel in Ethics. AI facts guard added after the evaluation caught an injected date. CI now runs the browser suite. Scores and the honest ceiling are in [`docs/SCORECARD.md`](docs/SCORECARD.md).
+
+Run the coach evaluation (Ollama required): `PYTHONPATH=services/api .venv/bin/python scripts/eval_coach.py`, then `PYTHONPATH=services/api .venv/bin/python scripts/export_demo_fixtures.py`.
+
 ## 31 October 2026 (evening): Ember dusk redesign and outline-aligned screens
 
 The owner chose the **Ember dusk** palette after comparing four contrast-checked options. Changes:

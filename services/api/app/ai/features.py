@@ -78,6 +78,27 @@ def digest(conn, llm, changes: list[dict]) -> dict:
             'repaired': len(skipped)}
 
 
+MONTHS = 'january|february|march|april|may|june|july|august|september|october|november|december'
+FACT = re.compile(rf'\b(\d{{1,2}})\s+({MONTHS})\b|\b({MONTHS})\s+(\d{{1,2}})\b|\b(\d{{1,3}})\s*(?:minutes?|mins?)\b', re.I)
+WORDS = {'five': 5, 'ten': 10, 'fifteen': 15, 'twenty': 20, 'twenty-five': 25, 'thirty': 30, 'thirty-five': 35, 'forty': 40}
+
+
+def facts_in(text: str) -> set[str]:
+    """Normalised dates ('26 november') and durations ('30 min') mentioned in a text."""
+    t = text.lower()
+    for w, n in WORDS.items():
+        t = re.sub(rf'\b{w}\s+(minutes?)', f'{n} \\1', t)
+    found = set()
+    for m in FACT.finditer(t):
+        if m.group(1):
+            found.add(f'{int(m.group(1))} {m.group(2)}')
+        elif m.group(3):
+            found.add(f'{int(m.group(4))} {m.group(3)}')
+        else:
+            found.add(f'{int(m.group(5))} min')
+    return found
+
+
 # ---------- Grounded coach ----------
 def coach(conn, llm, question: str, about: dict | None = None) -> dict:
     query = question + (f" ({about['title']})" if about else '')
@@ -106,6 +127,12 @@ def coach(conn, llm, question: str, about: dict | None = None) -> dict:
     allowed = {h['chunk_id'] for h in hits}
     answer = str(out.get('answer', '')).strip()
     cited = set(re.findall(r'\[(S\d+-p\d+)\]', answer)) | {str(c) for c in out.get('citations', []) if isinstance(c, str)}
+    # Facts guard: every date and duration in the answer must appear in the passages it cites.
+    cited_text = ' '.join(h['text'] for h in hits if h['chunk_id'] in cited).lower()
+    unsupported = [f for f in facts_in(answer) if f not in facts_in(cited_text)]
+    if unsupported:
+        log(conn, llm, 'coach', 'invalid', prompt, {'reason': 'unsupported facts', 'facts': unsupported})
+        return abstain
     if not out.get('answerable', False) or not answer or not cited or not cited <= allowed:
         log(conn, llm, 'coach', 'abstained' if not out.get('answerable', False) else 'invalid', prompt,
             {'cited': sorted(cited), 'allowed': sorted(allowed)})

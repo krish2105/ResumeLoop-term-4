@@ -84,3 +84,11 @@ Initial Git publication completed: root commit `29dfb5c6e20659ced07cf12736a6ddc1
 **Verification:** 80 pytest; smoke 109/109 (live Ollama); axe 80 scans, 0 violations. Bugs found by the runs and fixed: journey maps hidden by a shadowed `kind` field, stale select values, 320px overflow (grid min-width, board min size, sr-only labels escaping a scroller, risk grid), ARIA table rows, unfocusable scroller, animation-abort crash in the test helper.
 
 **Untested:** assistive technology, other browsers, phones; manual contrast over the canvas.
+
+### 2026-11-01 — Remaining outline features, AI evaluation and CI browser suite
+
+**User steering:** build everything possible for the outline to push the score above 95.
+
+**Work:** readings and spaced-repetition quiz prep plus participation log (the quiz-based 20%); research operations with consent-gated live interview capture; synthesis board with evidence trace and quality checks; exact sign test; evidence report and reflective-paper assembler (own words only); 28-question coach gold set and harness; facts guard after the evaluation exposed an injected-date failure; CI browser job; scorecard update (≈ 68 overall; the remaining gap is real fieldwork and the student's own writing, which cannot be fabricated).
+
+**Verification:** 83 pytest; coach eval 95/100/100/100 (answer/citation/abstain/injection). Browser and axe results recorded in `evidence/2026-10-31/` after the final run.

@@ -1,6 +1,7 @@
 "use client";
 import {useEffect, useState} from 'react';
 import {PageHead} from '@/components/AppShell';
+import {CoachEval} from '@/components/CoachEval';
 import {RiskRegister, RolePlay} from '@/components/RiskRegister';
 import {Msg, useStudio} from '@/components/StudioBits';
 import {assist, type AiLogEntry, type AiStatus} from '@/lib/assist';
@@ -56,6 +57,7 @@ export default function EthicsPage() {
       </section>
     </div>
     <Msg text={s.msg} />
+    <CoachEval />
     <RiskRegister risks={s.of('risks')} run={s.run} />
     <RolePlay plays={s.of('roleplays')} run={s.run} />
     <section className="panel sectionGap" aria-labelledby="log-h">

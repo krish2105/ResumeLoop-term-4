@@ -15,6 +15,7 @@ from app.planner import build_plan
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / 'apps' / 'web' / 'demo' / 'fixtures.json'
 RECORDED = ROOT / 'data' / 'sample' / 'recorded_ai.json'
+EVAL = ROOT / 'evidence' / 'eval' / 'coach-eval.json'
 
 
 def course_payload(version):
@@ -52,6 +53,7 @@ def main():
         'planner_parity': parity_cases(),
         'recorded_ai': json.loads(RECORDED.read_text(encoding='utf-8')) if RECORDED.exists() else {},
         'studio_examples': json.loads((ROOT / 'data' / 'sample' / 'fictional_studio.json').read_text(encoding='utf-8')),
+        'coach_eval': json.loads(EVAL.read_text(encoding='utf-8')) if EVAL.exists() else None,
     }
     OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text(json.dumps(data, indent=1) + '\n', encoding='utf-8')

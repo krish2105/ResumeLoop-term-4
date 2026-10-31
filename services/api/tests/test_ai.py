@@ -99,3 +99,12 @@ def test_ai_calls_are_logged(client, fake):
     client.post('/api/coach', json={'question': 'What goes in an empathy map?'})
     log = client.get('/api/ai/log').json()
     assert log['entries'] and log['entries'][0]['feature'] == 'coach'
+
+
+def test_coach_declines_answers_with_dates_not_in_the_cited_passage(client, fake):
+    # Injected date: the citation is real but the claim is not in it.
+    fake(replies=[{'answerable': True, 'answer': 'The most recent information says the quiz is on 1 December [S3-p2].', 'citations': ['S3-p2']}])
+    r = client.post('/api/coach', json={'question': 'When is the reading check quiz due?'}).json()
+    assert r['abstained'] is True
+    fake(replies=[{'answerable': True, 'answer': 'Version 2 lists 26 November, not yet confirmed [S3-p2].', 'citations': ['S3-p2']}])
+    assert client.post('/api/coach', json={'question': 'When is the reading check quiz due?'}).json()['mode'] == 'ai'

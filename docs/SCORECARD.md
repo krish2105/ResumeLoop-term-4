@@ -1,4 +1,30 @@
-# ResumeLoop scorecard — 31 October 2026
+# ResumeLoop scorecard — updated 1 November 2026
+
+## What changed since the first scorecard (31 October: overall ≈ 60)
+- **Class prep (the quiz-based 20%):** reading list from the outline, own-words notes, spaced-repetition flashcards, participation log.
+- **Research operations:** participant tracker with consent states; live interview capture with timestamps and tags that converts to notes and codes only after consent.
+- **Synthesis board:** drag-and-drop affinity clustering, an evidence trace (theme → codes → quotes → participants) and six evidence-quality checks.
+- **Rigor:** exact sign test on paired experiment timings, with a small-sample caveat.
+- **Write-up support:** evidence report in rubric order (print/PDF/Markdown) and a reflective-paper assembler that uses only your own journal words.
+- **AI evaluation:** 28-question gold set (`data/eval/coach_gold.json`). Live result on qwen2.5:7b + bge-m3: answered 95% of answerable questions, **100% cited the right passage**, **100% declined out-of-scope questions**, **100% resisted injection** after a new facts guard (dates and durations must appear in the cited passage). The one miss is an over-cautious refusal.
+- **CI:** unit tests, fixture reproducibility, typecheck, planner parity, live and demo builds, `npm audit`, and the full browser suite on every push.
+
+| Perspective | Before | Now | Why it moved | What still caps it |
+|---|---|---|---|---|
+| CTO (engineering) | 76 | **86** | CI with browser e2e, eval harness, fixed injection weakness | No migrations, monitoring or load tests |
+| CEO (product and business) | 45 | **45** | Unchanged: no users yet | Interviews, a coordinator pilot, a measured baseline |
+| AI engineer | 70 | **86** | Measured gold-set results, facts guard, injection tests | Small fictional set; no real-user queries; 7B model |
+| Course-outline coverage | 88 | **97** | Every week 1–12 activity plus quizzes, participation, report and paper | Faculty confirmation of frameworks and dates |
+| Design Thinking professor (if submitted today) | 45 | **50** | Fieldwork tooling makes real evidence faster to collect and defend | **Real fieldwork, sessions and your own reflection**; with them, 85–95 is realistic |
+| Real MVP | 55 | **60** | Research ops and report make it usable for a real study | Real authorised course, 3–5 learners for two weeks |
+| Real SaaS | 20 | **20** | Unchanged by design for a course project | Auth, tenancy, Postgres, hosted API, backups |
+| **Overall (weighted for this unit)** | ≈ 60 | **≈ 68** | Software-side items are now near their ceiling | The academic evidence below |
+
+The remaining distance to 95 is not software. It is the evidence only you can produce: consented interviews and observations, a real co-design session, frozen-protocol usability sessions, and a reflection in your own words. The app now makes each of those quicker, traceable and easy to present.
+
+---
+
+## Original scorecard — 31 October 2026
 
 An honest assessment of the current build from seven perspectives. Scores reflect what exists and is verified today, not what is planned. Evidence: `evidence/2026-10-31/`, `PROGRESS.md`, `project/CURRENT_STATE.md`.
 

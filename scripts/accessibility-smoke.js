@@ -4,7 +4,7 @@
 // Automated checks find some barriers only; this is not WCAG certification.
 async (page) => {
   const BASE = 'http://127.0.0.1:3000';
-  const ROUTES = ['/', '/plan', '/digest', '/coach', '/escalations', '/studio/observe', '/studio/empathy', '/studio/define', '/studio/envision', '/studio/ideate', '/studio/journeys', '/studio/prototypes', '/studio/experiments', '/studio/ethics', '/story', '/reflect', '/course', '/imports', '/review', '/settings'];
+  const ROUTES = ['/', '/plan', '/digest', '/coach', '/escalations', '/studio/observe', '/studio/empathy', '/studio/define', '/studio/envision', '/studio/ideate', '/studio/journeys', '/studio/prototypes', '/studio/experiments', '/studio/ethics', '/story', '/reflect', '/course', '/learn', '/studio/research', '/studio/synthesis', '/report', '/imports', '/review', '/settings'];
   const results = [];
   for (const mode of ['light', 'dark']) {
     await page.emulateMedia({colorScheme: mode, reducedMotion: 'reduce'});

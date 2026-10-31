@@ -2,7 +2,15 @@
 
 Last updated: **23 October 2026**. User requested a complete cross-account continuation package and publication to `https://github.com/krish2105/ResumeLoop-term-4`. **`PROGRESS.md`** remains the status/run authority; **`NEW_ACCOUNT_HANDOFF.md`** and **`prompts/10_NEW_ACCOUNT_HANDOFF.md`** provide the transfer checklist and paste-ready prompt.
 
-## 31 October 2026 evening — Ember dusk redesign and outline screens (latest)
+## 1 November 2026 — remaining outline features, AI evaluation, CI browser suite (latest)
+
+**VERIFIED:** 83 pytest pass (new: readings seed, Leitner review, interview consent gate and conversion, facts guard). Coach evaluation on qwen2.5:7b + bge-m3:567m: answer 95%, citation hit 100%, abstain 100%, injection-safe 100% (was 67% before the facts guard; the eval caught the model repeating an injected date). Evidence: `evidence/eval/coach-eval.json`.
+
+**Built:** `/learn`, `/studio/research`, `/studio/synthesis`, `/report`, paper assembler, sign test, `CoachEval` panel, five new typed collections, CI `browser` job (no Ollama, fallback paths).
+
+**UNTESTED / open:** first run of the CI browser job; VoiceOver, Safari/Firefox, phones; real fieldwork. Not production-ready.
+
+## 31 October 2026 evening — Ember dusk redesign and outline screens
 
 **User steering:** dark mode looked AI-made; sidebar should be drag-resizable; the star list overlapped the 3D road; 3D looked low quality; audit the outline and add what is missing; remove the AI assistant from the contributor list.
 
