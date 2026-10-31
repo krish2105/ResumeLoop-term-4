@@ -4,8 +4,8 @@ import {useSearchParams} from 'next/navigation';
 import {Suspense, useEffect, useRef, useState} from 'react';
 import {AiBadge} from '@/components/AiBadge';
 import {PageHead} from '@/components/AppShell';
-import {assist, SUGGESTED, type AiStatus, type CoachAnswer} from '@/lib/assist';
-import {learning} from '@/lib/client';
+import {assist, suggestions, type AiStatus, type CoachAnswer} from '@/lib/assist';
+import {courseLabel, learning} from '@/lib/client';
 
 type Turn = {question: string; about: string | null; answer?: CoachAnswer; error?: string};
 
@@ -23,7 +23,10 @@ function Coach() {
   const [busy, setBusy] = useState(false);
   const [inputError, setInputError] = useState('');
   const endRef = useRef<HTMLDivElement>(null);
+  const [sugs, setSugs] = useState<string[]>([]);
+  const [label, setLabel] = useState('fictional course');
   useEffect(() => {
+    setSugs(suggestions()); setLabel(courseLabel());  // read after mount: the pilot lives in this browser only
     assist.status().then(setStatus).catch(() => setStatus(null));
     learning.course().then(c => setTitles(Object.fromEntries(c.actions.map(a => [a.id, a.title])))).catch(() => {});
     try { const saved = sessionStorage.getItem('rl-coach'); if (saved) setTurns(JSON.parse(saved)); } catch { /* ignore */ }
@@ -42,14 +45,14 @@ function Coach() {
     } finally { setBusy(false); }
   };
   return <>
-    <PageHead eyebrow="Learner" title="Recovery coach" intro="Answers only from the fictional course notes, with a citation for every claim. If the notes don't cover it, the coach says so and offers to ask the coordinator.">
-      <span className={'aiStatus ' + (status?.available ? 'on' : 'off')}>{status ? (status.available ? `Live · ${status.gen_model} via Ollama` : status.runtime.includes('recorded') ? 'Recorded answers' : 'AI offline · keyword search only') : 'Checking AI…'}</span>
+    <PageHead eyebrow="Learner" title="Recovery coach" intro={`Answers only from the ${label} notes, with a citation for every claim. If the notes don't cover it, the coach says so and offers to ask the coordinator.`}>
+      <span className={'aiStatus ' + (status?.available ? 'on' : 'off')}>{status ? (status.available ? `Live · ${status.gen_model} via Ollama` : status.runtime.includes('recorded') ? 'Recorded answers' : status.runtime.includes('pilot') ? 'Browser pilot · no AI, closest passage' : 'AI offline · keyword search only') : 'Checking AI…'}</span>
     </PageHead>
     <div className="twoCol coachLayout">
       <section className="panel chat" aria-label="Conversation">
         {about && <p className="aboutChip">Asking about: <strong>{titles[about] || about}</strong> <button className="textBtn" onClick={() => setAbout(null)}>Clear</button></p>}
         {turns.length === 0 && <div className="emptyChat"><h2>Ask anything about the course</h2><p>Try one of these:</p></div>}
-        <div className="suggestions">{SUGGESTED.map(s => <button key={s} className="chipBtn" disabled={busy} onClick={() => ask(s)}>{s}</button>)}</div>
+        <div className="suggestions">{sugs.map(s => <button key={s} className="chipBtn" disabled={busy} onClick={() => ask(s)}>{s}</button>)}</div>
         <ol className="turns" aria-live="polite">
           {turns.map((t, i) => <li key={i}>
             <p className="bubble you"><span className="sr-only">You asked: </span>{t.question}</p>

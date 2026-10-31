@@ -11,7 +11,7 @@ export type Source = {id: string; session: number; title: string; text: string};
 export type CourseInfo = {
   course: string; notice: string; source_owner: string; timezone: string; schema_version: string;
   versions: string[]; version: string; published_at: string; actions: CourseAction[]; sources: Source[];
-  source_type: 'SYNTHETIC';
+  source_type: 'SYNTHETIC' | 'PILOT';
 };
 
 export type ItemState = 'completed' | 'planned' | 'locked' | 'does-not-fit' | 'abstained';

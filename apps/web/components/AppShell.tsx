@@ -3,6 +3,7 @@ import Link from 'next/link';
 import {usePathname} from 'next/navigation';
 import {createContext, useContext, useEffect, useState} from 'react';
 import {DEMO} from '@/lib/client';
+import {activePilot} from '@/lib/pilot';
 import {LearnerSwitch} from './LearnerSwitch';
 import {Splitter, useResizable} from './Splitter';
 
@@ -27,6 +28,8 @@ export default function AppShell({children}: {children: React.ReactNode}) {
   const [reducedMotion, setReducedMotion] = useState(false);
   const [ready, setReady] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [pilotName, setPilotName] = useState('');
+  useEffect(() => { if (DEMO) setPilotName(activePilot()?.course.course || ''); }, []);
   const side = useResizable('sidebar', {initial: 248, min: 200, max: 380, edge: 'left'});
   useEffect(() => {
     try { const saved = localStorage.getItem('ResumeLoop-theme') as Mode | null; if (saved && ['light', 'dark', 'system'].includes(saved)) setMode(saved); } catch { /* storage blocked */ }
@@ -57,7 +60,7 @@ export default function AppShell({children}: {children: React.ReactNode}) {
             {group.links.map(([href, label]) => <Link key={href} href={href} className={path === href ? 'nav active' : 'nav'} aria-current={path === href ? 'page' : undefined}>{label}</Link>)}
           </div>)}
         </nav>
-        <div className="sideFoot"><strong>{DEMO ? 'Public demo' : 'Local app'}</strong><p>{DEMO ? 'Fictional course and recorded AI answers. Your edits stay in this browser.' : 'Fictional course data. AI runs on this computer through Ollama.'}</p></div>
+        <div className="sideFoot"><strong>{DEMO ? (pilotName ? 'Browser pilot' : 'Public demo') : 'Local app'}</strong><p>{DEMO ? (pilotName ? `${pilotName}. No AI; your progress stays in this browser until you download it.` : 'Fictional course and recorded AI answers. Your edits stay in this browser.') : 'Fictional course data. AI runs on this computer through Ollama.'}</p></div>
       </aside>
       <Splitter r={side} label="Resize sidebar" controls="sidebar" />
       <main className="main" id="main-content" tabIndex={-1}>

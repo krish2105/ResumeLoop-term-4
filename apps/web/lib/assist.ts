@@ -2,6 +2,7 @@
 // endpoints by scripts/record_demo_ai.py, always labelled with model and date.
 import fixtures from '../demo/fixtures.json';
 import {api, DEMO, store} from './client';
+import {activePilot, pilotCoach, pilotDigest, pilotSuggestions} from './pilot';
 
 export type AiStatus = {available: boolean; embeddings: boolean; gen_model: string; embed_model: string; runtime: string; recorded_at?: string};
 export type DigestItem = {change_ids: string[]; text: string; from_facts?: boolean};
@@ -21,21 +22,30 @@ export const recorded = (fixtures.recorded_ai || {}) as unknown as Recorded;
 const norm = (s: string) => s.toLowerCase().replace(/[^a-z0-9 ]/g, '').replace(/\s+/g, ' ').trim();
 const now = () => new Date().toISOString().slice(0, 19).replace('T', ' ');
 
-export const SUGGESTED = (recorded.coach || []).map(c => c.question).length
-  ? (recorded.coach || []).map(c => c.question)
-  : ['When is the reading check quiz due?', 'What goes in an empathy map?', 'What changed in the point-of-view exercise?'];
+export function suggestions(): string[] {
+  const p = DEMO ? activePilot() : null;
+  if (p) return pilotSuggestions(p);
+  return (recorded.coach || []).map(c => c.question).length ? (recorded.coach || []).map(c => c.question)
+    : ['When is the reading check quiz due?', 'What goes in an empathy map?', 'What changed in the point-of-view exercise?'];
+}
 
 export const assist = {
-  status: (): Promise<AiStatus> => DEMO
+  status: (): Promise<AiStatus> => DEMO && activePilot()
+    ? Promise.resolve({available: false, embeddings: false, gen_model: 'none', embed_model: 'none', runtime: 'browser pilot: computed digest and closest-passage search, no AI'})
+    : DEMO
     ? Promise.resolve({available: false, embeddings: false, gen_model: recorded.model || 'qwen2.5:7b', embed_model: 'bge-m3', runtime: 'recorded answers (public demo)', recorded_at: recorded.recorded_at})
     : api('/api/ai/status'),
   digest: (from = 'v1'): Promise<Digest> => {
     if (!DEMO) return api('/api/digest', {method: 'POST', body: JSON.stringify({from_version: from}), timeoutMs: 120000});
+    const p = activePilot();
+    if (p) return Promise.resolve(pilotDigest(p, from));
     if (recorded.digest) return Promise.resolve({...recorded.digest, recorded_at: recorded.recorded_at});
     return Promise.reject(new Error('No recorded digest in this demo build.'));
   },
   coach: (question: string, about?: string | null): Promise<CoachAnswer> => {
     if (!DEMO) return api('/api/coach', {method: 'POST', body: JSON.stringify({question, about: about || null}), timeoutMs: 120000});
+    const p = activePilot();
+    if (p) return Promise.resolve(pilotCoach(p, question, about));
     const hit = (recorded.coach || []).find(c => norm(c.question) === norm(question) && (c.about || null) === (about || null))
       || (recorded.coach || []).find(c => norm(c.question) === norm(question));
     if (hit) return Promise.resolve({...hit.response, recorded_at: recorded.recorded_at});

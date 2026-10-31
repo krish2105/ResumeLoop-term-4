@@ -1,6 +1,7 @@
 // One interface, two implementations: live (local FastAPI + Ollama) and demo (bundled fixtures,
 // visitor edits kept in this browser). Every screen talks to `client` and never to fetch directly.
 import fixtures from '../demo/fixtures.json';
+import {activePilot, pilotChanges, pilotCourses} from './pilot';
 import {buildPlan, PlanInputError} from './planner';
 import type {CourseInfo, Diff, Plan, Progress, ProgressState} from './types';
 
@@ -42,7 +43,11 @@ export function learnerId(): string {
   try { return localStorage.getItem('rl-learner') || 'demo-learner'; } catch { return 'demo-learner'; }
 }
 const lq = () => `?learner=${encodeURIComponent(learnerId())}`;
-const pkey = () => (learnerId() === 'demo-learner' ? 'progress' : 'progress-' + learnerId());
+// A pilot course keeps its progress apart from the fictional course, keyed by the course file's fingerprint.
+const pkey = () => { const p = DEMO ? activePilot() : null; const base = p ? 'progress-pilot-' + p.sha256.slice(0, 12) : 'progress';
+  return learnerId() === 'demo-learner' ? base : base + '-' + learnerId(); };
+/** Which course the screens show: a pilot course loaded in this browser, or the fictional demo course. */
+export const courseLabel = () => (DEMO && activePilot() ? 'pilot course' : 'fictional course');
 
 // ---------- browser store for the demo ----------
 export const store = {
@@ -58,20 +63,28 @@ export const store = {
 };
 
 type Courses = Record<string, CourseInfo>;
-const demoCourses = fixtures.courses as unknown as Courses;
-const latest = () => demoCourses[Object.keys(demoCourses).sort().at(-1) as string];
-const demoDefault = (): Progress => ({version: 0, updated_at: null, state: {
-  completed: fixtures.demo_learner.completed, budget_minutes: fixtures.demo_learner.budget_minutes,
-  seen_version: fixtures.demo_learner.seen_version, current_action: null, notes: {}}});
+const fictional = fixtures.courses as unknown as Courses;
+const courses = (): Courses => { const p = activePilot(); return p ? pilotCourses(p) : fictional; };
+const latest = () => { const c = courses(); return c[Object.keys(c).at(-1) as string]; };  // versions are listed oldest first
+const demoDefault = (): Progress => {
+  const p = activePilot();
+  return p ? {version: 0, updated_at: null, state: {completed: [], budget_minutes: 60, seen_version: p.course.versions[0].version, current_action: null, notes: {}}}
+    : {version: 0, updated_at: null, state: {completed: fixtures.demo_learner.completed, budget_minutes: fixtures.demo_learner.budget_minutes,
+      seen_version: fixtures.demo_learner.seen_version, current_action: null, notes: {}}};
+};
 
 export const learning = {
   course: (version?: string): Promise<CourseInfo> => DEMO
-    ? Promise.resolve(version ? demoCourses[version] : latest())
+    ? Promise.resolve((version && courses()[version]) || latest())
     : api(`/api/course${version ? `?version=${version}` : ''}`),
-  diff: (from = 'v1'): Promise<Diff> => DEMO ? Promise.resolve(fixtures.diff as Diff) : api(`/api/course/diff?from_version=${from}`),
+  diff: (from = 'v1'): Promise<Diff> => {
+    if (!DEMO) return api(`/api/course/diff?from_version=${from}`);
+    const p = activePilot();
+    return Promise.resolve(p ? pilotChanges(p, from) : fixtures.diff as Diff);
+  },
   plan: async (budget: number, completed: string[], version?: string): Promise<Plan> => {
     if (!DEMO) return api('/api/plan', json({budget_minutes: budget, completed, version}));
-    const course = version ? demoCourses[version] : latest();
+    const course = (version && courses()[version]) || latest();
     try { return {...buildPlan(course.actions, budget, new Set(completed)), version: course.version}; }
     catch (e) { throw new ApiError(422, 'The course source is inconsistent', e instanceof PlanInputError ? e.errors : String(e)); }
   },

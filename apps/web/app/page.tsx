@@ -58,7 +58,7 @@ export default function JourneyPage() {
           {item.state !== 'completed' && <button className="outlineBtn" onClick={() => j.start(j.progress?.state.current_action === item.id ? null : item.id)}>{j.progress?.state.current_action === item.id ? 'Stop' : 'Start now'}</button>}
           <Link className="outlineBtn" href={`/coach?about=${item.id}`}>Ask the coach</Link>
         </div>
-        <p className="muted mono">Source {item.source_ref} · fictional course {j.plan?.version}</p>
+        <p className="muted mono">Source {item.source_ref} · {j.course?.source_type === 'PILOT' ? 'pilot course' : 'fictional course'} {j.plan?.version}</p>
       </section>}
 
       <section className="sideCard" aria-labelledby="stars-h">

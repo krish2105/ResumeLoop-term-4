@@ -1,7 +1,7 @@
 "use client";
 import {useEffect, useState} from 'react';
 import {PageHead} from '@/components/AppShell';
-import {LocalOnly} from '@/components/LocalOnly';
+import {PilotLoader, RollUp} from '@/components/PilotPanel';
 import {Msg} from '@/components/StudioBits';
 import {api, DEMO} from '@/lib/client';
 
@@ -13,8 +13,26 @@ type Learner = {learner_id: string; completed: number; of: number; saves: number
 type Insights = {coach_calls: number; answered: number; declined: number; top_sources: {chunk: string; title: string; citations: number}[]; open_questions: string[]};
 
 export default function CoordinatorPage() {
-  if (DEMO) return <LocalOnly title="Coordinator workspace" />;
+  if (DEMO) return <PilotWorkspace />;
   return <Workspace />;
+}
+
+/** Public site: run a small pilot with no server. Course and progress travel as files people choose to share. */
+function PilotWorkspace() {
+  return <>
+    <PageHead eyebrow="Coordinator" title="Browser pilot" intro="Run a small pilot without a server: share an approved course file, learners plan their catch-up on their own devices, and you combine the progress files they send you." />
+    <section className="panel" aria-labelledby="how-h"><h2 id="how-h">How the pilot works</h2>
+      <ol className="factList">
+        <li>Fill in the template with a course you are allowed to share, check it below and load it.</li>
+        <li>Send learners this site's address, the same course file and a learner code each (L01, L02…). Never use names as codes.</li>
+        <li>Each learner loads the file under Settings, plans with the journey, and downloads a progress file when you ask.</li>
+        <li>Add their files below to see who is behind, who has not seen the latest version, and what they are asking.</li>
+      </ol>
+      <p className="muted">There is no AI in the browser pilot: the digest is computed from the course versions and the coach shows the closest course passage. The local app adds the live model.</p>
+    </section>
+    <div className="sectionGap"><PilotLoader role="coordinator" /></div>
+    <RollUp />
+  </>;
 }
 
 function Workspace() {

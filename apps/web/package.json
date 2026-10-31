@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "typecheck": "tsc --noEmit",
-    "test:parity": "node --no-warnings scripts/planner-parity.ts"
+    "test:parity": "node --no-warnings scripts/planner-parity.ts && node --no-warnings scripts/changes-parity.ts"
   },
   "dependencies": {
     "@react-three/drei": "^10.7.9",

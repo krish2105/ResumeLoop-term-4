@@ -84,6 +84,14 @@ jobs:
           npm install --prefix $RUNNER_TEMP/axe axe-core@4 >/dev/null
           npx --yes --package @playwright/cli playwright-cli --session ci run-code "$(sed "s#AXE_PATH#$RUNNER_TEMP/axe/node_modules/axe-core/axe.min.js#" scripts/accessibility-smoke.js)" | tee $RUNNER_TEMP/axe.txt
           grep -q '"scans_with_violations":0' $RUNNER_TEMP/axe.txt
+      - name: Browser pilot on the public-demo build
+        run: |
+          (cd apps/web && NEXT_DIST_DIR=.next-demo NEXT_PUBLIC_DEMO_MODE=1 npm run build)
+          (cd apps/web && NEXT_DIST_DIR=.next-demo nohup npm run start -- --hostname 127.0.0.1 --port 3001 > $RUNNER_TEMP/demo.log 2>&1 &)
+          for i in $(seq 1 30); do curl -sf -o /dev/null http://127.0.0.1:3001/ && break; sleep 2; done
+          npx --yes --package @playwright/cli playwright-cli --session pilot open http://127.0.0.1:3001
+          npx --yes --package @playwright/cli playwright-cli --session pilot run-code "$(cat scripts/pilot-smoke.js)" | tee $RUNNER_TEMP/pilot.txt
+          grep -q '"kind":"SYNTHETIC ENGINEERING VERIFICATION"' $RUNNER_TEMP/pilot.txt
       - name: Cross-browser smoke suite (WebKit for Safari, Firefox)
         run: |
           for b in webkit firefox; do
