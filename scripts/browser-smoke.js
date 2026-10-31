@@ -12,6 +12,10 @@ async (page) => {
   const settle = () => page.evaluate(async () => { await Promise.all(document.getAnimations().map(a => a.finished.catch(() => null))); await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r))); });
   const text = loc => loc.innerText();
   const toast = page.locator('.toast');
+  const saw = async expected => {  // names what was on screen instead of a bare timeout
+    try { await toast.filter({hasText: expected}).waitFor({timeout: 20000}); }
+    catch { throw Error(`FAILED: expected toast ${expected}; saw ${JSON.stringify(await toast.allInnerTexts())} and alerts ${JSON.stringify(await page.getByRole('alert').allInnerTexts())}`); }
+  };
   await page.addInitScript(() => { window.confirm = () => true; });
   const consoleErrors = [];
   page.on('console', m => { if (m.type() === 'error') consoleErrors.push(m.text()); });
@@ -99,12 +103,12 @@ async (page) => {
   check((await text(toast)).includes('Tick the approval box first'), 'Queue refuses an unapproved message');
   await page.getByRole('checkbox', {name: /I have read this message/}).check();
   await page.getByRole('button', {name: 'Approve and queue'}).click();
-  await toast.filter({hasText: 'Queued locally. Nothing was sent anywhere.'}).waitFor();
+  await saw('Queued locally. Nothing was sent anywhere.');
   check(true, 'Approved message is queued locally and never sent');
   await page.getByRole('checkbox', {name: /Coordinator view/}).check();
   await page.getByRole('textbox', {name: 'Answer'}).first().fill('Fictional answer: use 26 November.');
   await page.getByRole('button', {name: 'Record answer'}).first().click();
-  await toast.filter({hasText: 'Answer recorded.'}).waitFor();
+  await saw('Answer recorded.');
   check(await page.locator('.status.q-answered').count() >= 1, 'Coordinator role-play can answer a queued question');
 
   // ---------- Empathy studio ----------
@@ -119,17 +123,17 @@ async (page) => {
   await page.getByRole('checkbox', {name: 'Agreed to take part'}).check();
   await page.getByRole('checkbox', {name: /anonymised note analysis/}).check();
   await page.getByRole('button', {name: 'Save note'}).click();
-  await toast.filter({hasText: 'Remove emails and phone numbers'}).waitFor();
+  await saw('Remove emails and phone numbers');
   check(true, 'Privacy guard rejects a note with a phone number');
   await page.getByRole('textbox', {name: 'Anonymised note'}).fill('Smoke test note: I checked three places and none agreed on the date.');
   await page.getByRole('button', {name: 'Save note'}).click();
-  await toast.filter({hasText: 'Note saved.'}).waitFor();
+  await saw('Note saved.');
   check(true, 'A consented, anonymised note saves');
   await page.getByText('Add a code by hand').click();
   await page.getByRole('textbox', {name: 'Label'}).fill('Invented');
   await page.getByRole('textbox', {name: 'Exact quote from the note'}).fill('this sentence is not in the note');
   await page.getByRole('button', {name: 'Add code'}).click();
-  await toast.filter({hasText: 'copied exactly'}).waitFor();
+  await saw('copied exactly');
   check(true, 'A code quote that is not in the note is rejected');
   if (ai.available) {
     await page.getByRole('button', {name: 'Suggest codes with AI'}).click();
@@ -141,7 +145,7 @@ async (page) => {
   await page.getByRole('textbox', {name: 'Theme title'}).fill('Conflicting sources of truth');
   await page.getByRole('textbox', {name: 'Insight'}).fill('Returning learners lose time reconciling course sources that disagree');
   await page.getByRole('button', {name: 'Create theme'}).click();
-  await toast.filter({hasText: 'Theme created.'}).waitFor();
+  await saw('Theme created.');
   check(true, 'A theme is created from the empathy map');
   await page.screenshot({path: 'output/playwright/empathy-desktop.png', fullPage: true});
 
@@ -151,14 +155,14 @@ async (page) => {
   const hmwBox = page.getByRole('textbox', {name: 'New How might we question'}).first();
   await hmwBox.fill('Why do dates change so often?');
   await hmwBox.locator('xpath=..').getByRole('button', {name: 'Add'}).click();
-  await toast.filter({hasText: 'How might we'}).waitFor();
+  await saw('How might we');
   check(true, 'A question that does not start with How might we is rejected');
   await hmwBox.fill('How might we show one trusted date?');
   await hmwBox.locator('xpath=..').getByRole('button', {name: 'Add'}).click();
-  await toast.filter({hasText: 'Question added.'}).waitFor();
+  await saw('Question added.');
   await page.getByRole('textbox', {name: 'New idea'}).first().fill('Verified-date badge');
   await page.getByRole('button', {name: 'Add idea'}).first().click();
-  await toast.filter({hasText: 'Idea added.'}).waitFor();
+  await saw('Idea added.');
   await page.getByRole('button', {name: 'Vote', exact: true}).first().click();
   await page.getByRole('button', {name: 'Voted'}).first().waitFor();
   check(await page.getByRole('button', {name: 'Voted'}).first().isDisabled(), 'One vote per person per idea');
@@ -178,7 +182,7 @@ async (page) => {
   check(secs >= 1 && secs < 10, 'Session timer records elapsed seconds');
   await page.getByRole('checkbox', {name: 'Unaided success'}).first().check();
   await page.getByRole('button', {name: 'Save session'}).click();
-  await toast.filter({hasText: 'Session saved.'}).waitFor();
+  await saw('Session saved.');
   check((await text(page.locator('section[aria-labelledby="res"]'))).includes('1 session(s)'), 'Results summarise the recorded session');
 
   // ---------- Ethics ----------
@@ -208,7 +212,7 @@ async (page) => {
   await box('What happened').fill('Opened three apps before finding the quiz date.');
   await page.getByRole('combobox', {name: 'Who or where'}).selectOption('extreme-low');
   await page.getByRole('button', {name: 'Save observation'}).click();
-  await toast.filter({hasText: 'Observation saved.'}).waitFor();
+  await saw('Observation saved.');
   await box('Persona label').fill('The night-shift learner');
   await page.getByRole('button', {name: 'Create persona'}).click();
   await page.getByText('Assumption: no evidence yet').waitFor();
@@ -224,7 +228,7 @@ async (page) => {
   await page.getByRole('textbox', {name: 'Frame 1 caption'}).fill('Opens the app on the train');
   await page.locator('section', {has: page.getByRole('heading', {name: 'Storyboard'})}).getByRole('textbox', {name: 'Title'}).fill('Back on the train');
   await page.getByRole('button', {name: 'Save storyboard'}).click();
-  await toast.filter({hasText: 'Storyboard saved.'}).waitFor();
+  await saw('Storyboard saved.');
   check(true, 'Point-of-view statement and storyboard save');
   await go('/studio/envision');
   await box('Who').fill('A returning learner'); await box('What they can do').fill('start the right next task'); await box('Wow').fill('within two minutes');
@@ -250,7 +254,7 @@ async (page) => {
   await page.getByRole('textbox', {name: 'Prompt (a How might we question)'}).fill('How might we show one trusted date?');
   await page.getByRole('textbox', {name: 'Idea 1'}).fill('Verified badge');
   await page.getByRole('button', {name: 'Save round'}).click();
-  await toast.filter({hasText: 'Round saved.'}).waitFor();
+  await saw('Round saved.');
   check(true, 'Crazy 8s round saves');
   await go('/studio/ethics');
   await box('Risk').fill('Coach states an unsupported deadline');
@@ -264,7 +268,7 @@ async (page) => {
   await box('Concept or framework').fill('Extreme users');
   await page.getByRole('textbox', {name: 'The concept, in your own words'}).fill('Watching people at the edges shows needs that everyone has.');
   await page.getByRole('button', {name: 'Save entry'}).click();
-  await toast.filter({hasText: 'Entry saved.'}).waitFor();
+  await saw('Entry saved.');
   check(await page.getByRole('button', {name: 'Download as Markdown'}).isEnabled(), 'Reflection entry saves and can be downloaded');
   await go('/course');
   await page.getByRole('button', {name: 'Load outline structure'}).click();
@@ -273,10 +277,10 @@ async (page) => {
   await page.getByText('1/16 ready').waitFor();
   await box('Name').fill('Krishna Mathur');
   await page.getByRole('button', {name: 'Add member'}).click();
-  await toast.filter({hasText: 'Member added.'}).waitFor();
+  await saw('Member added.');
   await box('What they did').fill('Ran two interviews');
   await page.getByRole('button', {name: 'Log contribution'}).click();
-  await toast.filter({hasText: 'Contribution logged.'}).waitFor();
+  await saw('Contribution logged.');
   check(await page.locator('.matrix td.mono', {hasText: '1'}).count() >= 1, 'Course hub: rubric self-check and contribution matrix work');
 
   // ---------- Class prep, research ops, synthesis, report ----------
@@ -287,33 +291,33 @@ async (page) => {
   await box('Question').fill('What three parts make a Hill statement?');
   await box('Answer').fill('Who, what and a measurable wow');
   await page.getByRole('button', {name: 'Add card'}).click();
-  await toast.filter({hasText: 'Card added.'}).waitFor();
+  await saw('Card added.');
   await page.getByRole('button', {name: 'Show answer'}).click();
   await page.getByRole('button', {name: 'I knew it'}).click();
   await page.getByText('Nothing due today').waitFor();
   check(true, 'Flashcard self-quiz moves a known card to a later day');
   await box('Session').fill('Session 3: Observe');
   await page.getByRole('button', {name: 'Log session'}).click();
-  await toast.filter({hasText: 'Session logged.'}).waitFor();
+  await saw('Session logged.');
   check(true, 'Participation log saves a session');
   await go('/studio/research');
   await box('Code').fill('P21');
   await page.getByRole('button', {name: 'Add participant'}).click();
-  await toast.filter({hasText: 'Participant added.'}).waitFor();
+  await saw('Participant added.');
   await page.getByRole('combobox', {name: 'Participant'}).selectOption('P21');
   await page.getByRole('button', {name: 'Start interview'}).click();
   await page.getByRole('radio', {name: 'Does'}).click();
   await page.getByRole('textbox', {name: 'What happened or was said'}).fill('Checked three apps before finding the quiz date');
   await page.keyboard.press('Enter');
   await page.getByRole('button', {name: 'Save interview'}).click();
-  await toast.filter({hasText: 'Interview saved.'}).waitFor();
+  await saw('Interview saved.');
   await page.getByRole('button', {name: 'Turn into note and codes'}).click();
-  await toast.filter({hasText: 'Record consent'}).waitFor();
+  await saw('Record consent');
   check(true, 'An interview cannot become research data before consent is recorded');
   await page.getByRole('combobox', {name: 'Consent for P21'}).selectOption('consented');
   await page.getByText('consent ' + new Date().toISOString().slice(0, 10)).waitFor();
   await page.getByRole('button', {name: 'Turn into note and codes'}).click();
-  await toast.filter({hasText: 'Converted to a note with codes'}).waitFor();
+  await saw('Converted to a note with codes');
   check(true, 'After consent, a captured interview becomes a note with coded moments');
   await go('/studio/synthesis');
   await page.locator('.affCard', {hasText: 'Checked three apps'}).first().waitFor();
@@ -331,10 +335,10 @@ async (page) => {
   await page.getByRole('button', {name: 'Check package'}).click();
   await page.getByText(/Replaces “/).waitFor();
   await page.getByRole('button', {name: 'Import and activate'}).click();
-  await toast.filter({hasText: 'Imported and activated'}).waitFor();
+  await saw('Imported and activated');
   await page.getByText('Active now: Imported smoke course').waitFor();
   await page.getByRole('button', {name: 'Use the fictional demo course'}).click();
-  await toast.filter({hasText: 'Back to the fictional demo course'}).waitFor();
+  await saw('Back to the fictional demo course');
   check(true, 'Coordinator imports, activates and reverts a course package');
   await page.getByRole('textbox', {name: 'Package JSON'}).fill('{"course": "x"}');
   await page.getByRole('button', {name: 'Check package'}).click();
@@ -345,7 +349,7 @@ async (page) => {
   await go('/learn');
   await page.getByRole('textbox', {name: /^Your answer to: Which design thinking framework/}).fill('IDEO human-centred design, because it starts from observation.');
   await page.getByRole('button', {name: 'Make flashcard'}).first().click();
-  await toast.filter({hasText: 'Flashcard created from your answer.'}).waitFor();
+  await saw('Flashcard created from your answer.');
   check(true, 'Viva answers become flashcards');
   await go('/plan');
   check(await page.getByRole('button', {name: /Add plan and deadlines to my calendar/}).isEnabled(), 'Plan offers a calendar export');
@@ -385,7 +389,7 @@ async (page) => {
   await go('/review');
   await page.getByRole('textbox', {name: 'Review rationale'}).fill('Browser smoke test; synthetic source checked.');
   await page.getByRole('button', {name: 'Save review'}).click();
-  await toast.filter({hasText: 'Review saved'}).waitFor();
+  await saw('Review saved');
   check(true, 'Review queue still saves a review');
 
   // ---------- Themes, navigation, layout ----------
