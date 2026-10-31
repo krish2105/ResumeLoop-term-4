@@ -1,14 +1,15 @@
 {
  "date": "2026-10-31",
- "environment": "macOS arm64, Python 3.14.7, Node 26.10.0, Playwright CLI 0.1.22 (Chromium), axe-core 4, production Next.js build, throwaway SQLite, Ollama qwen2.5:7b + bge-m3:567m",
+ "build": "7a9397c + docs",
+ "environment": "macOS arm64, Python 3.14.7, Node 26.10.0, Playwright CLI 0.1.22 (Chromium), axe-core 4, production Next.js build (23 pages), throwaway SQLite, Ollama qwen2.5:7b + bge-m3:567m",
  "scope": "SYNTHETIC ENGINEERING VERIFICATION. Fictional data only. Not participant usability evidence and not WCAG certification.",
- "scans": 52,
+ "scans": 80,
  "scans_with_violations": 0,
  "violation_ids": [],
  "needs_manual_review": [
   "color-contrast"
  ],
- "routes": 13,
+ "routes": 20,
  "modes": [
   "light",
   "dark"
@@ -18,5 +19,5 @@
   320
  ],
  "reduced_motion": true,
- "manual_review_notes": "color-contrast: text on translucent panels over the WebGL canvas cannot be computed automatically; check by eye in both themes. Screen-reader, Safari and Firefox checks not performed."
+ "manual_review_notes": "color-contrast: text over the WebGL canvas cannot be computed automatically; check by eye. Screen-reader, Safari and Firefox checks not performed."
 }
