@@ -48,7 +48,7 @@ function ReviewQueue() {
         <div className="filters"><input aria-label="Search cases" placeholder="Search cases and records…" value={search} onChange={e => setSearch(e.target.value)} />
           <select aria-label="Filter by status" value={status} onChange={e => setStatus(e.target.value)}><option value="all">All statuses</option><option value="ready">Ready</option><option value="needs-review">Needs review</option><option value="blocked">Blocked</option><option value="approved">Approved</option><option value="rejected">Rejected</option></select>
           <span>{filtered.length} of {rows.length}</span></div>
-        <div className="tableWrap"><table><thead><tr><th>Case</th><th>Evidence summary</th><th>Demo metric</th><th>Status</th></tr></thead><tbody>
+        <div className="tableWrap" role="region" tabIndex={0} aria-label="Review cases, scroll horizontally for all columns"><table><thead><tr><th>Case</th><th>Evidence summary</th><th>Demo metric</th><th>Status</th></tr></thead><tbody>
           {filtered.map(r => <tr key={r.id} className={selected === r.id ? 'selected' : ''}><td><button className="rowBtn" onClick={() => setSelected(r.id)}><strong>{r.title}</strong><small>{r.id}</small></button></td><td>{r.subtitle}</td><td><strong>{r.metric_value}</strong> <span className="muted">{r.metric_label}</span></td><td><span className={'status ' + r.status}>{r.status.replaceAll('-', ' ')}</span></td></tr>)}
         </tbody></table>
           {!loading && filtered.length === 0 && <p className="empty">No demo cases match this filter.</p>}{loading && <p className="empty">Loading local sample records…</p>}</div>

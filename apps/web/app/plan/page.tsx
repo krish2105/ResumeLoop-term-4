@@ -32,7 +32,7 @@ export default function PlanPage() {
       </section>
       <section className="panel" aria-labelledby="all">
         <h2 id="all">Every task in the course ({plan.version})</h2>
-        <div className="tableWrap"><table><thead><tr><th>Task</th><th>State</th><th>Why</th><th>Done</th></tr></thead><tbody>
+        <div className="tableWrap" role="region" tabIndex={0} aria-label="All course tasks, scroll horizontally for all columns"><table><thead><tr><th>Task</th><th>State</th><th>Why</th><th>Done</th></tr></thead><tbody>
           {plan.items.map(i => <tr key={i.id}><td><strong>{i.title}</strong><small className="block">Session {i.session} · {i.kind} · {i.minutes ?? '?'} min</small></td>
             <td><span className={'status state-' + (i.id === plan.next_action ? 'next' : i.state)}>{i.id === plan.next_action ? 'Next' : STATE_LABEL[i.state]}</span></td>
             <td>{i.reason}</td>

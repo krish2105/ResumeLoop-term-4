@@ -62,3 +62,15 @@ Initial Git publication completed: root commit `29dfb5c6e20659ced07cf12736a6ddc1
 **Verification:** 54 pytest passed; 60/60 planner parity; typecheck; live and demo builds 16/16 pages; npm audit 0. Live Ollama checks of digest, coach (cites/abstains), code suggestions. Browser checks on local and Vercel. Found and fixed a real SQLite cross-thread bug under uvicorn. pip-audit not run.
 
 **Untested and next:** screen readers, Safari/Firefox, phones, new axe/smoke scripts, real fieldwork and sessions, faculty answers. Next: faculty questions (owner), then refresh browser and accessibility automation for the new routes.
+
+### 2026-10-31 — Browser and accessibility automation for the new UI
+
+**User steering:** "Yes, update tests."
+
+**Work:** Rewrote `scripts/browser-smoke.js` for the route-based UI (71 checks) and `scripts/accessibility-smoke.js` (13 routes × light/dark × 1440/320px, reduced motion; axe path substituted at run time). Ran both against a production build, a throwaway SQLite database and live Ollama.
+
+**Found and fixed by the runs:** horizontal overflow at 320px on `/coach`, `/studio/empathy` and `/studio/ideate` (grid items without `minmax(0,1fr)`, non-wrapping form rows); change-banner contrast 4.3:1 in light mode; scrolling tables not keyboard-focusable; prohibited `aria-label` on a plain span. Test-side fixes: content waits instead of network-idle (the 3D scene keeps loading), keyboard Tab for focus-visible, confirm handled by an init script.
+
+**Verified:** smoke 71/71 (AI available); axe 52 scans, 0 violations; remaining manual review: contrast of text over the WebGL canvas. Summaries in `evidence/2026-10-31/`.
+
+**Untested:** VoiceOver/NVDA, Safari, Firefox, real phones, manual canvas contrast.

@@ -15,9 +15,11 @@ Owner chose option C (full 3D journey, night-road art), all ten features, local 
 
 **Changed/new files:** backend `course.py`, `planner.py`, `learning.py`, `storage.py`, `assist.py`, `studio.py`, `ai/llm.py`, `ai/retrieval.py`, `ai/features.py`, `main.py`; tests `test_planner.py`, `test_ai.py`, `test_studio.py`; data `fictional_course.json`, `fictional_studio.json`, `recorded_ai.json`; scripts `export_demo_fixtures.py`, `record_demo_ai.py`; frontend `components/` (AppShell, NightRoad, StoryScene, JourneyBits, StudioBits, AiBadge, LocalOnly), `lib/` (client, planner, assist, studio, stats, road, types, useJourney), all routes under `app/`, `journey.css`, `next.config.mjs`, `demo/fixtures.json`, `.vercelignore`.
 
-**UNTESTED / open:** screen readers, Safari/Firefox, real phones, automated axe scan of the new screens, updated browser smoke script (old one targets the previous UI), cross-tab demo storage, Ollama on other machines. No real participants, sessions or faculty answers; studio evidence counts are zero real items. Not production-ready.
+**Browser + accessibility automation (later on 31 Oct):** rewrote `scripts/browser-smoke.js` (71/71 checks, live Ollama, production build, throwaway DB) and `scripts/accessibility-smoke.js` (52 axe scans, 0 violations; manual review left: contrast of text over the WebGL canvas). Fixed: grid overflow at 320px on coach, empathy and ideate; change-banner contrast 4.3:1; scrolling tables now focusable regions; prohibited aria-label on the vote count. Evidence: `evidence/2026-10-31/`, screenshots `output/playwright/journey-*.png`, `story-desktop.png`, `empathy-desktop.png`.
 
-**Next runnable task:** owner sends faculty questions (groupmates, solo permission, dates, frameworks, ethics). Engineering: rewrite `scripts/browser-smoke.js` and the axe scan for the new routes, then run them in light/dark at 320–1440px.
+**UNTESTED / open:** screen readers, Safari/Firefox, real phones, manual contrast over the 3D canvas, cross-tab demo storage, Ollama on other machines. No real participants, sessions or faculty answers; studio evidence counts are zero real items. Not production-ready.
+
+**Next runnable task:** owner sends faculty questions (groupmates, solo permission, dates, frameworks, ethics). Engineering: manual screen-reader pass (VoiceOver) on the journey, coach and empathy studio; Safari check.
 
 ## 31 October 2026 update — outline re-check and priority ranking (documentation only)
 

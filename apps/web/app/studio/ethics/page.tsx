@@ -57,7 +57,7 @@ export default function EthicsPage() {
     <section className="panel" aria-labelledby="log-h">
       <h2 id="log-h">AI decision log</h2>
       {log && <p>{Object.entries(log.counts).map(([k, v]) => `${v} ${k}`).join(' · ') || 'No AI calls yet.'}{DEMO ? ' (recorded from the local app)' : ''}</p>}
-      <div className="tableWrap"><table><thead><tr><th>When</th><th>Feature</th><th>Model</th><th>Outcome</th><th>Detail</th></tr></thead><tbody>
+      <div className="tableWrap" role="region" tabIndex={0} aria-label="AI decision log, scroll horizontally for all columns"><table><thead><tr><th>When</th><th>Feature</th><th>Model</th><th>Outcome</th><th>Detail</th></tr></thead><tbody>
         {(log?.entries || []).slice(0, 60).map(e => <tr key={e.id}><td>{e.created_at}</td><td>{e.feature}</td><td>{e.model}</td><td><span className={'status ' + (e.status === 'ok' ? 'approved' : 'blocked')}>{e.status}</span></td><td><code>{JSON.stringify(e.detail)}</code></td></tr>)}
       </tbody></table></div>
       <p className="muted">Prompts are stored only as SHA-256 hashes, so the log shows what happened without keeping the text.</p>

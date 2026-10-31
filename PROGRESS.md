@@ -22,7 +22,9 @@ Updated **23 October 2026**. Term starts **10 November 2026**. Solo developer; d
 | Story mode (`/story`) | Built, browser-checked | Six-stop 3D presentation (Empathise → Impact · SDG 4) with live evidence counts; fictional items never count |
 | Public demo | Deployed | Vercel project `resumeloop-demo`, `NEXT_PUBLIC_DEMO_MODE=1`, edits stay in the visitor's browser |
 
-Still not done: real fieldwork and participants, real usability sessions, faculty confirmation of dates/group/frameworks, screen-reader and Safari/Firefox testing, auth/tenancy. The old `scripts/browser-smoke.js` targets the previous single-page UI and has not been updated.
+**Browser and accessibility automation (31 Oct, rewritten for the new routes):** `scripts/browser-smoke.js` → **71/71 checks** on a production build with live Ollama (journey, autosave, stale-tab refusal, list view, digest, coach citations and abstention, approval-gated queue, consent and privacy guards, exact-quote codes, HMW rule, one vote per person, protocol freeze, session timer, story keyboard navigation, imports, review, themes, mobile menu, no overflow on 10 routes at 320/768/1440px, no hydration errors). `scripts/accessibility-smoke.js` → **52 axe scans, 0 violations** (13 routes × light/dark × 1440/320px, reduced motion). Summaries: `evidence/2026-10-31/`. These runs found and fixed three 320px overflow bugs, a 4.3:1 banner contrast and unfocusable scrolling tables.
+
+Still not done: real fieldwork and participants, real usability sessions, faculty confirmation of dates/group/frameworks, screen-reader and Safari/Firefox testing, a manual contrast check of text over the 3D canvas, auth/tenancy.
 
 ## How much is done (22 October milestone)
 
@@ -134,10 +136,10 @@ npm install --prefix /tmp/resumeloop-browser-tools axe-core
 mkdir -p output/playwright
 npx --yes --package @playwright/cli playwright-cli --session resumeloop open http://127.0.0.1:3000
 npx --yes --package @playwright/cli playwright-cli --session resumeloop run-code "$(cat scripts/browser-smoke.js)"
-npx --yes --package @playwright/cli playwright-cli --session resumeloop run-code "$(cat scripts/accessibility-smoke.js)"
+npx --yes --package @playwright/cli playwright-cli --session resumeloop run-code "$(sed "s#AXE_PATH#/tmp/resumeloop-browser-tools/node_modules/axe-core/axe.min.js#" scripts/accessibility-smoke.js)"
 ```
 
-Run these browser commands from the project root with both services running. They create synthetic test records and saved reviews; use an isolated `DEMO_DB_PATH` when preserving a demo database matters. Browser installation may be required by Playwright on a clean machine. Cross-platform browser setup has not been verified.
+Run these browser commands from the project root with both services running, ideally the API on a fresh `DEMO_DB_PATH` and a production frontend build (`npm run build && npm run start`). The smoke script expects an empty database (it checks one vote per person). They create synthetic test records and saved reviews; use an isolated `DEMO_DB_PATH` when preserving a demo database matters. Browser installation may be required by Playwright on a clean machine. Cross-platform browser setup has not been verified.
 
 ## Remaining end-to-end work, in order
 

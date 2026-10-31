@@ -52,7 +52,7 @@ export default function IdeatePage() {
               const votes = s.of('votes', i.id);
               const voted = votes.some(v => v.voter === who);
               return <li key={i.id}><span><strong>{i.title}</strong> <span className="chip">{ALTERNATIVES.find(a => a[0] === i.alternative)?.[1] || 'Other'}</span></span>
-                <span className="rowActions"><span className="voteCount" aria-label={`${votes.length} votes`}>{votes.length} vote{votes.length === 1 ? '' : 's'}</span>
+                <span className="rowActions"><span className="voteCount">{votes.length} vote{votes.length === 1 ? '' : 's'}</span>
                   <button className="outlineBtn" disabled={voted} onClick={() => s.run(() => studio.create('votes', {voter: who}, i.id))}>{voted ? 'Voted' : 'Vote'}</button></span></li>;
             })}</ul>
             <div className="askForm"><label htmlFor={'i-' + h.id} className="sr-only">New idea</label>
@@ -66,7 +66,7 @@ export default function IdeatePage() {
     <section className="panel" aria-labelledby="alt-h">
       <h2 id="alt-h">Compare the alternatives</h2>
       <p>Score each option from 1 (poor) to 5 (strong). Everyone's scores are averaged. A better LMS checklist winning is a valid result.</p>
-      <div className="tableWrap"><table><thead><tr><th>Criterion</th>{ALTERNATIVES.map(([v, l]) => <th key={v}>{l}</th>)}</tr></thead><tbody>
+      <div className="tableWrap" role="region" tabIndex={0} aria-label="Alternative scores, scroll horizontally for all columns"><table><thead><tr><th>Criterion</th>{ALTERNATIVES.map(([v, l]) => <th key={v}>{l}</th>)}</tr></thead><tbody>
         {CRITERIA.map(c => <tr key={c}><td>{c}</td>{ALTERNATIVES.map(([v]) => <td key={v}>
           <select aria-label={`${c} score for ${v}`} value={mine(v, c)} onChange={e => e.target.value && s.run(() => studio.create('scores', {alternative: v, criterion: c, value: Number(e.target.value), scorer: who}))}>
             <option value="">—</option>{[1, 2, 3, 4, 5].map(n => <option key={n} value={n}>{n}</option>)}</select> <small className="muted">avg {avg(v, c)}</small></td>)}</tr>)}

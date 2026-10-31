@@ -45,3 +45,12 @@ output/playwright/*
 .next-demo/
 .vercel
 .next-live/
+!evidence/2026-10-31/
+evidence/2026-10-31/*
+!evidence/2026-10-31/browser-checks.json
+!evidence/2026-10-31/accessibility-summary.json
+!output/playwright/journey-desktop-dark.png
+!output/playwright/journey-desktop-light.png
+!output/playwright/journey-mobile-dark.png
+!output/playwright/story-desktop.png
+!output/playwright/empathy-desktop.png

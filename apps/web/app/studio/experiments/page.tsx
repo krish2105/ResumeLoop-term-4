@@ -54,7 +54,7 @@ function Experiment({exp, sessions, run}: {exp: Item; sessions: Item[]; run: (fn
       <h2 id="res">Results</h2>
       <p>{summary.participants} participant(s), {summary.sessions} session(s).{summary.synthetic ? ' Includes fictional sessions: practice only.' : ''} Small samples are formative evidence, not proof.</p>
       {summary.sessions === 0 ? <p className="empty">No sessions recorded yet.</p> : <>
-        <div className="tableWrap"><table><thead><tr><th>Task</th><th>Condition</th><th>n</th><th>Success</th><th>Median s (range)</th><th>Median wrong</th><th>Median ease</th></tr></thead><tbody>
+        <div className="tableWrap" role="region" tabIndex={0} aria-label="Results by task and condition, scroll horizontally for all columns"><table><thead><tr><th>Task</th><th>Condition</th><th>n</th><th>Success</th><th>Median s (range)</th><th>Median wrong</th><th>Median ease</th></tr></thead><tbody>
           {summary.perTask.flatMap(t => (['a', 'b'] as const).map(k => <tr key={t.task + k}><td>{k === 'a' ? t.name : ''}</td><td>{k.toUpperCase()}</td><td>{t[k].n}</td><td>{t[k].success}/{t[k].n}</td>
             <td>{fmtNum(t[k].medianSeconds)} ({fmtNum(t[k].min)}–{fmtNum(t[k].max)})</td><td>{fmtNum(t[k].medianWrong, 1)}</td><td>{fmtNum(t[k].medianEase, 1)}</td></tr>))}
         </tbody></table></div>
@@ -108,7 +108,7 @@ function SessionRecorder({exp, next, run}: {exp: Item; next: 'AB' | 'BA'; run: (
       <label>Order<select value={order} onChange={e => setOrder(e.target.value as 'AB' | 'BA')}><option>AB</option><option>BA</option></select></label>
     </div>
     <p className="muted">Suggested order for the next participant: {next}. Start the timer when the task is shown and stop it at the agreed end state.</p>
-    <div className="tableWrap"><table><thead><tr><th>Task</th><th>Cond.</th><th>Timer</th><th>Seconds</th><th>Unaided success</th><th>Wrong actions</th><th>Ease 1–7</th></tr></thead><tbody>
+    <div className="tableWrap" role="region" tabIndex={0} aria-label="Session results to record, scroll horizontally for all columns"><table><thead><tr><th>Task</th><th>Cond.</th><th>Timer</th><th>Seconds</th><th>Unaided success</th><th>Wrong actions</th><th>Ease 1–7</th></tr></thead><tbody>
       {ordered.map(r => { const k = key(r); return <tr key={k}><td>{tasks[r.task]}</td><td>{r.condition}</td>
         <td><button className={timing === k ? 'primaryBtn' : 'outlineBtn'} onClick={() => toggle(k)} disabled={!!timing && timing !== k}>{timing === k ? `Stop ${((performance.now() - start.current) / 1000).toFixed(1)}s` : 'Start'}</button><span hidden>{tick}</span></td>
         <td><input type="number" min={0} max={3600} step={0.1} value={r.seconds} onChange={e => set(k, {seconds: Number(e.target.value)})} aria-label={`Seconds for ${tasks[r.task]} ${r.condition}`} /></td>

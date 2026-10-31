@@ -53,7 +53,7 @@ a.outlineBtn,a.primaryBtn{display:inline-flex;align-items:center;text-decoration
 :root[data-theme="dark"] .status.state-completed{background:#184736;color:#9bf2bc}:root[data-theme="dark"] .status.state-next{background:#2e2763;color:#d9d0ff}
 .reviewLayout{display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:18px;align-items:start}
 
-@media(max-width:1100px){.roadList{width:260px}.reviewLayout{grid-template-columns:1fr}}
+@media(max-width:1100px){.roadList{width:260px}.reviewLayout{grid-template-columns:minmax(0,1fr)}}
 @media(max-width:760px){
  .appShell{display:block}.appShell .sidebar{position:static;height:auto;padding:12px 16px}
  .menuToggle{display:inline-flex}.brand{gap:10px}
@@ -96,7 +96,7 @@ details summary{cursor:pointer;font-size:12px;color:var(--muted);margin-top:6px}
 .status.q-queued{background:#ece8ff;color:#3f2fb4}.status.q-answered{background:#e5f6ed;color:#17633e}
 :root[data-theme="dark"] .status.q-queued{background:#2e2763;color:#d9d0ff}:root[data-theme="dark"] .status.q-answered{background:#184736;color:#9bf2bc}
 .rowActions input{flex:1;min-width:160px}
-@media(max-width:1000px){.twoCol{grid-template-columns:1fr}}
+@media(max-width:1000px){.twoCol{grid-template-columns:minmax(0,1fr)}}
 
 /* Studio */
 .fictionBanner{background:var(--warnBg);color:var(--warn);border-radius:10px;padding:10px 14px;margin:0 0 16px}
@@ -126,3 +126,12 @@ td input[type=number]{width:84px}
 .storyCard{left:18px;bottom:18px;width:min(460px,calc(100% - 36px))}
 .storyDots{list-style:none;display:flex;gap:6px;padding:0;margin:10px 0 4px}.storyDots button{min-height:36px;width:36px;border-radius:50%;border:1px solid var(--border);background:var(--surface);color:var(--text);font-weight:700}
 .storyDots button.on{background:var(--accent);color:var(--accentFg);border-color:var(--accent)}
+
+/* Narrow-screen containment (found by the 320px overflow checks) */
+.code,.hmwList,.codeList,.turns,.queueList,.digestList{grid-template-columns:minmax(0,1fr)}
+.rowActions,.askForm,.detailActions{flex-wrap:wrap}
+.askForm input,.rowActions input{min-width:0}
+.askForm select,.rowActions select{max-width:100%}
+.hmwList>li,.code>div{min-width:0;overflow-wrap:anywhere}
+
+.changeBanner{color:var(--text)}

@@ -25,7 +25,8 @@ Updated 23 October 2026. Four project hours/week is the default; all five projec
 - [ ] Conduct first consented interviews and contextual observations with `research/STUDY_KIT.md`; no invented sample population or results.
 
 ## M2 — complete learner recovery workflow
-- [ ] **NEXT (engineering):** rewrite browser smoke + axe scripts for the new routes; run light/dark at 320–1440px; manual screen-reader pass.
+- [x] (31 Oct) Rewrite browser smoke + axe scripts for the new routes; run light/dark at 320–1440px (71/71, 52 scans 0 violations).
+- [ ] **NEXT (engineering):** manual VoiceOver pass on journey, coach and empathy studio; Safari and Firefox check; eyeball contrast over the 3D canvas.
 - [x] (31 Oct) Budget + last completed session → explainable feasible plan → chosen task → saved progress → refresh/resume (3D road + list view).
 - [ ] Versioned timeline/deadline verification and conflict/unknown states; no unsupported deadline assurances.
 - [ ] Fix cross-record review-note carryover, add scoped autosave and status recovery.

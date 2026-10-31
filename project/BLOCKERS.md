@@ -22,7 +22,7 @@ The table below lists the remaining engineering and platform gaps, which are not
 | No authorized course source/version/deadline owner | Cannot offer verified personal recovery plans/deadlines | Student/coordinator: establish rights and typed source contract |
 | Planner reselects completed actions and skips some newly feasible dependents | **Resolved 31 Oct 2026** | New `planner.py` with tests for completed exclusion, unlock chains and invalid graphs |
 | Review-note draft is not scoped/autosaved per record | Carryover fixed 31 Oct (note clears on record change); autosave still absent | Engineering: autosave review notes |
-| New UI not yet covered by browser smoke or axe scripts | Accessibility of 3D/studio screens unverified by automation | Engineering: rewrite scripts for new routes and run light/dark at 320–1440px |
+| New UI not yet covered by browser smoke or axe scripts | **Resolved 31 Oct**: 71/71 smoke, 52 axe scans 0 violations | Remaining: VoiceOver, Safari/Firefox, manual contrast over canvas |
 | Local API unauthenticated, no tenant isolation, unencrypted SQLite/localStorage | Unsafe for real learner data or public service | Engineering: auth/privacy/tenant tests before pilot; keep localhost synthetic |
 | No screen-reader, Safari/Firefox or real-device participant tests | Accessibility not fully established | Engineering/research: assisted manual tests; automated scan limitations documented |
 | Four hours/week default for this project; five projects share 20 hours | Scope risk | Student: prioritize rubric evidence and one vertical slice per session |
