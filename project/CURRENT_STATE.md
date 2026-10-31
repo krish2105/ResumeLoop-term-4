@@ -10,7 +10,9 @@ Last updated: **23 October 2026**. User requested a complete cross-account conti
 
 **Changed:** `services/api/app/ops.py`, `app/ai/retrieval.py`, `app/ai/features.py`, tests `test_ai.py`, `test_ops.py`; `apps/web/next.config.mjs`, `lib/client.ts`; `scripts/browser-smoke.js`; `.github/workflows/ci.yml` (WebKit + Firefox step); `.dockerignore`; `docs/SECURITY_AND_SAAS.md` (threat model); re-recorded `data/eval/replay.json`, `data/sample/recorded_ai.json`, `apps/web/demo/fixtures.json`.
 
-**UNTESTED / open:** Firefox locally (headless launch fails on this Mac: "Could not find profile folder"; CI runs it on Linux); VoiceOver/NVDA; real phones; hosted API, Postgres, SSO; real fieldwork and the reflective paper. Not production-ready.
+**CI:** run 41233135197 on `bd67277` green: api, web, browser. Smoke 142 checks each in Chromium, WebKit and Firefox (Firefox on the runner has no WebGL, so it covers the 2D fallback). Vercel deployed; the live demo serves the CSP with no console errors on /, /coach, /story, /studio/empathy.
+
+**UNTESTED / open:** Firefox on this Mac (headless launch fails: "Could not find profile folder") and Firefox with WebGL; VoiceOver/NVDA; real phones; hosted API, Postgres, SSO; real fieldwork and the reflective paper. Not production-ready.
 
 **Next runnable task:** owner sends the faculty questions (`/course` → Faculty questions) and books the first consented interviews.
 

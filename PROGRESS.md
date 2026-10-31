@@ -4,7 +4,7 @@ Updated **23 October 2026**. Term starts **10 November 2026**. Solo developer; d
 
 ## 31 October 2026 (final round): cross-browser, retrieval, security, Docker
 
-- **Safari bug fixed:** WebKit served a cached copy of progress after a refresh. The API now sends `Cache-Control: no-store` and the client fetches with `cache: 'no-store'`. The smoke suite passes 143/143 in Chromium and WebKit; CI also runs WebKit and Firefox on Linux (Firefox would not launch on this Mac).
+- **Safari bug fixed:** WebKit served a cached copy of progress after a refresh. The API now sends `Cache-Control: no-store` and the client fetches with `cache: 'no-store'`. The smoke suite passes 143/143 in Chromium and WebKit; CI run 41233135197 passes the suite in Chromium, WebKit and Firefox (Firefox there has no WebGL, so it covers the 2D fallback; it would not launch on this Mac).
 - **Retrieval:** questions about a selected task now pin that task's own source passage. A keyword hybrid was measured and rejected: it found more passages but returned hits for 4–6 of 10 off-topic questions. Live eval: answered 97.6% (was 95.1%), cited 97.5%, declined 100%, injection-safe 100%.
 - **Security:** CSP and security headers on web and API, 1 MB request limit (413), `pip-audit` and `npm audit` clean, threat model in [`docs/SECURITY_AND_SAAS.md`](docs/SECURITY_AND_SAAS.md).
 - **Docker:** both images built; `docker compose up` verified end to end. The web image is 1.26 GB (standalone output would shrink it).

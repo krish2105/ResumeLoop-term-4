@@ -1,14 +1,14 @@
 # ResumeLoop scorecard — updated 31 October 2026 (final round)
 
 ## Built in the final round
-1. **Cross-browser:** smoke suite 143/143 in Chromium and WebKit (Safari engine). It found a real Safari bug (stale progress after refresh), now fixed. CI runs WebKit and Firefox too.
+1. **Cross-browser:** smoke suite 143/143 in Chromium and WebKit (Safari engine). It found a real Safari bug (stale progress after refresh), now fixed. CI passes the suite in Chromium, WebKit and Firefox (Firefox without WebGL, so the 2D fallback is covered).
 2. **AI:** task-pinned retrieval; a keyword hybrid was measured and rejected because it weakened abstention. Live answer rate 95.1% → 97.6%; citation 97.5%, declined 100%, injection-safe 100%. Two misses remain (one needs the version diff, one cites a neighbouring passage).
 3. **Security:** CSP and headers on web and API, 1 MB request limit, clean `pip-audit` and `npm audit`, STRIDE threat model with each control's evidence.
 4. **Docker:** both images built and the compose stack verified (auth required, sign-up, roles, persistence).
 
 | Perspective | Five batches | Now | What still caps it |
 |---|---|---|---|
-| CTO (engineering) | 92 | **94** | SQLite; no hosted monitoring; Firefox verified only in CI |
+| CTO (engineering) | 92 | **94** | SQLite; no hosted monitoring; Firefox with WebGL untested |
 | CEO (product and business) | 48 | **48** | No real users, pilot or buyer evidence |
 | AI engineer | 91 | **93** | Fictional 59-question set; 7B local model; quote validity 81% |
 | Course-outline coverage | 99 | **99** | Faculty confirmation of frameworks and dates |
