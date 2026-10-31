@@ -4,6 +4,8 @@ Run from the project root with Ollama running:
     PYTHONPATH=services/api .venv/bin/python scripts/eval_coach.py
 Writes evidence/eval/coach-eval.json and data/eval/replay.json (used by the CI replay test).
 """
+import os
+os.environ.setdefault('RL_FICTIONAL_ONLY', '1')  # demo data and evaluations always use the fictional course
 import json
 import sqlite3
 import tempfile

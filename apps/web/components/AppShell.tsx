@@ -3,6 +3,7 @@ import Link from 'next/link';
 import {usePathname} from 'next/navigation';
 import {createContext, useContext, useEffect, useState} from 'react';
 import {DEMO} from '@/lib/client';
+import {LearnerSwitch} from './LearnerSwitch';
 import {Splitter, useResizable} from './Splitter';
 
 type Mode = 'light' | 'dark' | 'system';
@@ -16,7 +17,7 @@ export const NAV: {heading: string; links: [string, string][]}[] = [
     ['/studio/ideate', 'Ideate'], ['/studio/journeys', 'Journey maps'], ['/studio/prototypes', 'Prototype log'], ['/studio/experiments', 'Experiment lab'], ['/studio/ethics', 'Ethics and governance']]},
   {heading: 'Class prep', links: [['/learn', 'Readings and quizzes']]},
   {heading: 'Present and reflect', links: [['/story', 'Story mode'], ['/reflect', 'Reflection journal'], ['/report', 'Evidence report'], ['/course', 'Course hub']]},
-  {heading: 'Data', links: [['/review', 'Review queue'], ['/imports', 'Imports'], ['/settings', 'Settings']]},
+  {heading: 'Coordinator and data', links: [['/coordinator', 'Coordinator workspace'], ['/review', 'Review queue'], ['/imports', 'Imports'], ['/settings', 'Settings']]},
 ];
 
 export default function AppShell({children}: {children: React.ReactNode}) {
@@ -42,6 +43,7 @@ export default function AppShell({children}: {children: React.ReactNode}) {
   }, [mode, ready]);
   useEffect(() => { document.documentElement.dataset.theme = resolved; }, [resolved]);
   useEffect(() => { setMenuOpen(false); }, [path]);
+  useEffect(() => { if (process.env.NODE_ENV === 'production' && 'serviceWorker' in navigator) navigator.serviceWorker.register('/sw.js').catch(() => {}); }, []);
   const current = NAV.flatMap(g => g.links).find(([href]) => href === path)?.[1] || 'ResumeLoop';
   const fullBleed = path === '/' || path === '/story';
   return <ThemeContext.Provider value={{resolved, reducedMotion}}>
@@ -63,6 +65,7 @@ export default function AppShell({children}: {children: React.ReactNode}) {
           <div className="crumbRow">{side.collapsed && <button className="outlineBtn showSide" onClick={() => side.setCollapsed(false)}>Show menu</button>}
             <div className="breadcrumb">RESUMELOOP <span>/</span> {current}</div></div>
           <div className="toolbar">{DEMO && <span className="pill demoPill">Demo · fictional data</span>}
+            <LearnerSwitch />
             <label htmlFor="theme" className="sr-only">Appearance</label>
             <select id="theme" value={mode} onChange={e => setMode(e.target.value as Mode)}><option value="system">System</option><option value="light">Light (dusk paper)</option><option value="dark">Dark (ember night)</option></select></div>
         </header>

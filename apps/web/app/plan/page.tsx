@@ -3,6 +3,7 @@ import Link from 'next/link';
 import {PageHead} from '@/components/AppShell';
 import {SaveBadge, Warnings} from '@/components/JourneyBits';
 import {STATE_LABEL} from '@/lib/road';
+import {downloadIcs} from '@/lib/ics';
 import {useJourney} from '@/lib/useJourney';
 
 export default function PlanPage() {
@@ -20,6 +21,7 @@ export default function PlanPage() {
         <input id="budget2" type="range" min={0} max={180} step={5} value={j.progress.state.budget_minutes} onChange={e => j.setBudget(Number(e.target.value))} />
         <p>{plan.sequence.length ? `${plan.sequence.length} tasks planned, ${plan.planned_minutes} of ${plan.budget_minutes} minutes used, ${plan.remaining_minutes} left.` : plan.empty_reason}</p>
         <Warnings warnings={plan.warnings} />
+        <button className="outlineBtn" onClick={() => downloadIcs(plan)} disabled={!plan.sequence.length && !plan.items.some(i => i.due)}>Add plan and deadlines to my calendar (.ics)</button>
         {j.progress.state.seen_version !== j.course?.version && <p><Link href="/digest">The course changed since your last visit. See what changed.</Link></p>}
       </section>
       <section className="panel" aria-labelledby="tonight">

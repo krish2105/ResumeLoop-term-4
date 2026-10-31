@@ -138,3 +138,5 @@ select,input,textarea{max-width:100%}
 .checkList li{grid-template-columns:auto minmax(0,1fr) minmax(0,auto)}.checkList li>*{min-width:0}
 .timeline .sectionHead,.sectionHead{flex-wrap:wrap}.timeline li>*{min-width:0}
 @media(max-width:480px){.checkList li{grid-template-columns:minmax(0,1fr)}.checkList li select{width:100%}}
+.learnerSelect{max-width:160px}.fileBtn{position:relative;overflow:hidden}.fileBtn input{position:absolute;inset:0;opacity:0;cursor:pointer}
+@media(max-width:760px){.learnerSelect{max-width:110px}}

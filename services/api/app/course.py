@@ -3,6 +3,8 @@
 Unknown values stay unknown: a missing duration is `None`, never a default.
 """
 import json
+import os
+import sqlite3
 from functools import lru_cache
 from pathlib import Path
 from typing import Literal
@@ -54,18 +56,51 @@ class DemoLearner(BaseModel):
 
 class Course(BaseModel):
     model_config = ConfigDict(extra='forbid')
-    course: str
-    notice: str
-    source_owner: str
-    timezone: str
-    versions: list[CourseVersion]
-    sources: list[Source]
-    demo_learner: DemoLearner
+    course: str = Field(min_length=3, max_length=200)
+    notice: str = Field(default='', max_length=600)
+    source_owner: str = Field(min_length=2, max_length=200)
+    timezone: str = Field(min_length=3, max_length=60)
+    versions: list[CourseVersion] = Field(min_length=1, max_length=50)
+    sources: list[Source] = Field(default_factory=list, max_length=200)
+    demo_learner: DemoLearner = Field(default_factory=lambda: DemoLearner(
+        learner_id='demo-learner', last_completed_session=0, completed=[], budget_minutes=60, seen_version='v1'))
 
 
 @lru_cache(maxsize=1)
-def load_course() -> Course:
+def fictional_course() -> Course:
     return Course.model_validate(json.loads(COURSE_FILE.read_text(encoding='utf-8')))
+
+
+# Active course per database file: a coordinator-imported package when one is active, else the fictional course.
+_active: dict[str, Course | None] = {}
+
+
+def _read_active(path: str) -> Course | None:
+    if not Path(path).exists():
+        return None
+    conn = sqlite3.connect(path)
+    try:
+        row = conn.execute('SELECT package_json FROM course_packages WHERE active=1 ORDER BY rowid DESC LIMIT 1').fetchone()
+    except sqlite3.OperationalError:
+        return None
+    finally:
+        conn.close()
+    return Course.model_validate(json.loads(row[0])) if row else None
+
+
+def load_course() -> Course:
+    if os.environ.get('RL_FICTIONAL_ONLY') == '1':
+        return fictional_course()
+    from . import main
+    key = str(main.STATE)
+    if key not in _active:
+        _active[key] = _read_active(key)
+    return _active[key] or fictional_course()
+
+
+def set_active(course: 'Course | None') -> None:
+    from . import main
+    _active[str(main.STATE)] = course
 
 
 def get_version(version: str) -> CourseVersion:

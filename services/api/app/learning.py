@@ -2,7 +2,7 @@
 import json
 import sqlite3
 
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, Query
 from pydantic import BaseModel, ConfigDict, Field
 
 from .course import SCHEMA_VERSION, diff_versions, get_version, latest_version, load_course
@@ -68,41 +68,47 @@ def plan(x: PlanRequest):
     return {**result, 'version': v.version, 'source_type': 'SYNTHETIC'}
 
 
-def default_progress() -> dict:
-    d = load_course().demo_learner
+LEARNER = Query('demo-learner', pattern=r'^[a-z0-9][a-z0-9-]{2,39}$')
+
+
+def default_progress(learner: str = 'demo-learner') -> dict:
+    c = load_course()
+    if learner != 'demo-learner':
+        return {'completed': [], 'budget_minutes': 60, 'seen_version': c.versions[-1].version, 'current_action': None, 'notes': {}}
+    d = c.demo_learner
     return {'completed': d.completed, 'budget_minutes': d.budget_minutes, 'seen_version': d.seen_version,
             'current_action': None, 'notes': {}}
 
 
 @router.get('/learner/progress')
-def get_progress(conn: sqlite3.Connection = Depends(db)):
-    row = conn.execute('SELECT * FROM learner_progress WHERE learner_id=?', ('demo-learner',)).fetchone()
+def get_progress(learner: str = LEARNER, conn: sqlite3.Connection = Depends(db)):
+    row = conn.execute('SELECT * FROM learner_progress WHERE learner_id=?', (learner,)).fetchone()
     if row is None:
-        return {'version': 0, 'state': default_progress(), 'updated_at': None}
+        return {'version': 0, 'state': default_progress(learner), 'updated_at': None}
     return {'version': row['version'], 'state': json.loads(row['state_json']), 'updated_at': row['updated_at']}
 
 
 @router.put('/learner/progress')
-def put_progress(x: ProgressWrite, conn: sqlite3.Connection = Depends(db)):
+def put_progress(x: ProgressWrite, learner: str = LEARNER, conn: sqlite3.Connection = Depends(db)):
     known = {a.id for v in load_course().versions for a in v.actions}
     unknown = sorted(set(x.state.completed) - known)
     if unknown:
         raise HTTPException(422, {'message': 'Unknown action IDs', 'errors': unknown})
     with conn:
         conn.execute('BEGIN IMMEDIATE')
-        row = conn.execute('SELECT version FROM learner_progress WHERE learner_id=?', ('demo-learner',)).fetchone()
+        row = conn.execute('SELECT version FROM learner_progress WHERE learner_id=?', (learner,)).fetchone()
         current = row['version'] if row else 0
         if current != x.expected_version:
             raise HTTPException(409, {'message': 'Progress changed in another tab. Reload before saving.', 'current_version': current})
         state = json.dumps(x.state.model_dump())
         conn.execute('''INSERT INTO learner_progress (learner_id, version, state_json) VALUES (?,?,?)
             ON CONFLICT(learner_id) DO UPDATE SET version=excluded.version, state_json=excluded.state_json,
-            updated_at=CURRENT_TIMESTAMP''', ('demo-learner', current + 1, state))
-    return get_progress(conn)
+            updated_at=CURRENT_TIMESTAMP''', (learner, current + 1, state))
+    return get_progress(learner, conn)
 
 
 @router.delete('/learner/progress')
-def reset_progress(conn: sqlite3.Connection = Depends(db)):
+def reset_progress(learner: str = LEARNER, conn: sqlite3.Connection = Depends(db)):
     with conn:
-        conn.execute('DELETE FROM learner_progress WHERE learner_id=?', ('demo-learner',))
+        conn.execute('DELETE FROM learner_progress WHERE learner_id=?', (learner,))
     return {'ok': True}

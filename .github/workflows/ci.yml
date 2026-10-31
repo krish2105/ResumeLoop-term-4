@@ -41,7 +41,7 @@ jobs:
       - run: npm ci
       - run: npm run typecheck
       - name: TypeScript planner matches the Python planner
-        run: npm run test:parity
+        run: npm run test:parity && node --no-warnings scripts/ics-check.ts
       - name: Live build
         run: npm run build
       - name: Public demo build

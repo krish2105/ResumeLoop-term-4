@@ -7,6 +7,8 @@ then: PYTHONPATH=services/api .venv/bin/python scripts/export_demo_fixtures.py
 Uses a throwaway SQLite file, the same feature functions as the live API, and the fictional course and
 fictional studio examples only. Every answer keeps its model name; the demo labels them "Recorded answer".
 """
+import os
+os.environ.setdefault('RL_FICTIONAL_ONLY', '1')  # demo data and evaluations always use the fictional course
 import json
 import sqlite3
 import tempfile

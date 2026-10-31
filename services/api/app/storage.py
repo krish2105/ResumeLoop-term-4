@@ -30,6 +30,11 @@ MIGRATIONS: list[tuple[int, str, list[str]]] = [
         'CREATE INDEX IF NOT EXISTS ix_studio_kind ON studio_items (kind, created_at)',
         'CREATE INDEX IF NOT EXISTS ix_studio_parent ON studio_items (parent_id)',
     ]),
+    (3, 'coordinator course packages', [
+        '''CREATE TABLE IF NOT EXISTS course_packages (
+            id TEXT PRIMARY KEY, sha256 TEXT NOT NULL, title TEXT NOT NULL, package_json TEXT NOT NULL,
+            active INTEGER NOT NULL DEFAULT 0, imported_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP)''',
+    ]),
 ]
 
 # Kept for scripts that build a throwaway database without migrations bookkeeping.

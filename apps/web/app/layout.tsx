@@ -10,7 +10,7 @@ const display = Bricolage_Grotesque({subsets: ['latin'], variable: '--font-displ
 const body = Instrument_Sans({subsets: ['latin'], variable: '--font-body', display: 'swap'});
 const mono = IBM_Plex_Mono({subsets: ['latin'], weight: ['400', '500'], variable: '--font-mono', display: 'swap'});
 
-export const metadata: Metadata = {title: 'ResumeLoop', description: 'Find your way back to learning after a missed or interrupted class'};
+export const metadata: Metadata = {title: 'ResumeLoop', description: 'Find your way back to learning after a missed or interrupted class', manifest: '/manifest.webmanifest', icons: {icon: '/icon.svg'}};
 
 export default function RootLayout({children}: Readonly<{children: React.ReactNode}>) {
   return <html lang="en" data-theme="dark" className={`${display.variable} ${body.variable} ${mono.variable}`} suppressHydrationWarning><body><AppShell>{children}</AppShell></body></html>;

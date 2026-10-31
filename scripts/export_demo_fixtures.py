@@ -5,6 +5,8 @@ Course data, diffs and planner parity cases come from the same backend code the 
 Recorded AI answers (if present) are merged from data/sample/recorded_ai.json, produced by
 scripts/record_demo_ai.py against a running local API with Ollama.
 """
+import os
+os.environ.setdefault('RL_FICTIONAL_ONLY', '1')  # demo data and evaluations always use the fictional course
 import json
 import random
 from pathlib import Path

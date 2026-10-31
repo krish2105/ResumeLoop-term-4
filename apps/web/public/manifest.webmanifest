@@ -1,0 +1,10 @@
+{
+  "name": "ResumeLoop",
+  "short_name": "ResumeLoop",
+  "description": "Find your way back to learning after a missed class.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#121011",
+  "theme_color": "#121011",
+  "icons": [{"src": "/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable"}]
+}

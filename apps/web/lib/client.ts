@@ -32,6 +32,13 @@ export async function api<T>(path: string, init?: RequestInit & {timeoutMs?: num
 
 const json = (body: unknown, method = 'POST') => ({method, body: JSON.stringify(body)});
 
+/** The active learner profile on this device (several people can share one laptop in a study session). */
+export function learnerId(): string {
+  try { return localStorage.getItem('rl-learner') || 'demo-learner'; } catch { return 'demo-learner'; }
+}
+const lq = () => `?learner=${encodeURIComponent(learnerId())}`;
+const pkey = () => (learnerId() === 'demo-learner' ? 'progress' : 'progress-' + learnerId());
+
 // ---------- browser store for the demo ----------
 export const store = {
   get<T>(key: string, fallback: T): T {
@@ -63,14 +70,14 @@ export const learning = {
     try { return {...buildPlan(course.actions, budget, new Set(completed)), version: course.version}; }
     catch (e) { throw new ApiError(422, 'The course source is inconsistent', e instanceof PlanInputError ? e.errors : String(e)); }
   },
-  progress: async (): Promise<Progress> => DEMO ? store.get('progress', demoDefault()) : api('/api/learner/progress'),
+  progress: async (): Promise<Progress> => DEMO ? store.get(pkey(), demoDefault()) : api('/api/learner/progress' + lq()),
   saveProgress: async (expected: number, state: ProgressState): Promise<Progress> => {
-    if (!DEMO) return api('/api/learner/progress', json({expected_version: expected, state}, 'PUT'));
-    const current = store.get('progress', demoDefault());
+    if (!DEMO) return api('/api/learner/progress' + lq(), json({expected_version: expected, state}, 'PUT'));
+    const current = store.get(pkey(), demoDefault());
     if (current.version !== expected) throw new ApiError(409, 'Progress changed in another tab. Reload before saving.');
     const next = {version: expected + 1, state, updated_at: new Date().toISOString()};
-    store.set('progress', next);
+    store.set(pkey(), next);
     return next;
   },
-  resetProgress: async () => { if (DEMO) store.set('progress', demoDefault()); else await api('/api/learner/progress', {method: 'DELETE'}); },
+  resetProgress: async () => { if (DEMO) store.set(pkey(), demoDefault()); else await api('/api/learner/progress' + lq(), {method: 'DELETE'}); },
 };
