@@ -28,7 +28,7 @@ export default function IdeatePage() {
   const mine = (alt: string, crit: string) => scores.find(x => x.alternative === alt && x.criterion === crit && x.scorer === who)?.value ?? '';
   const total = (alt: string) => { const v = scores.filter(x => x.alternative === alt).map(x => x.value as number); return v.length ? (v.reduce((a, b) => a + b, 0) / v.length).toFixed(2) : '—'; };
   return <>
-    <PageHead eyebrow="Design studio · weeks 6–7" title="Ideate" intro="Reframe themes as How might we questions, generate ideas, vote, and compare three real alternatives. The alternatives deliberately include options that are not ResumeLoop.">
+    <PageHead art="stop-ideate" eyebrow="Design studio · weeks 6–7" title="Ideate" intro="Reframe themes as How might we questions, generate ideas, vote, and compare three real alternatives. The alternatives deliberately include options that are not ResumeLoop.">
       <label className="nameField">Your name for votes and scores<input value={name} onChange={e => saveName(e.target.value)} placeholder="Optional" /></label>
     </PageHead>
     <Msg text={s.msg} />

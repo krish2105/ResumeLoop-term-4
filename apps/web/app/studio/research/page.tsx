@@ -35,7 +35,7 @@ export default function ResearchPage() {
   const add = () => { if (!text.trim()) return; setMoments(m => [...m, {t: elapsed, tag, text: text.trim()}]); setText(''); input.current?.focus(); };
   const consented = people.filter(p => p.consent === 'consented').length;
   return <>
-    <PageHead eyebrow="Design studio · weeks 2–3, fieldwork" title="Research operations" intro="Track recruitment and consent, then capture interviews live with timestamps and one-key tags. Captured moments become a research note and codes, but only after consent is recorded." />
+    <PageHead art="stop-empathise" eyebrow="Design studio · weeks 2–3, fieldwork" title="Research operations" intro="Track recruitment and consent, then capture interviews live with timestamps and one-key tags. Captured moments become a research note and codes, but only after consent is recorded." />
     <Msg text={s.msg} />
     <div className="statGrid miniStats4">
       <div className="stat"><small>Participants</small><strong>{people.length}</strong><span>goal: 4 learners and 2 coordinators</span></div>

@@ -1,5 +1,6 @@
 "use client";
 import dynamic from 'next/dynamic';
+import {Art} from '@/components/Art';
 import Link from 'next/link';
 import {useEffect, useMemo, useState} from 'react';
 import {useTheme} from '@/components/AppShell';
@@ -27,7 +28,7 @@ export default function JourneyPage() {
   return <div className={'journey2' + (panel.collapsed ? ' panelCollapsed' : '')} style={{'--panelW': `${panel.size}px`} as React.CSSProperties}>
     <h1 className="sr-only">Your recovery journey</h1>
     <section className="stage3d" aria-label="3D view of your road">
-      {webgl === false ? <div className="roadFallback panel"><h2>3D view unavailable</h2><p>This browser cannot draw WebGL. The same plan is in the panel and the list view.</p><Link className="primaryBtn" href="/plan">Open the list view</Link></div>
+      {webgl === false ? <div className="roadFallback panel"><h2>3D view unavailable</h2><Art name="no-webgl-road" sizes="(max-width: 760px) 100vw, 640px" /><p>This browser cannot draw WebGL. The same plan is in the panel and the list view.</p><Link className="primaryBtn" href="/plan">Open the list view</Link></div>
         : j.plan && webgl ? <NightRoad nodes={nodes} selected={selected} onSelect={setSelected} theme={resolved} reducedMotion={reducedMotion} />
         : <div className="roadLoading">{j.loading ? 'Loading your progress…' : 'Preparing the road…'}</div>}
       <div className="hud" aria-hidden="true"><span className="mono">{done}/{nodes.length}</span> tasks behind you</div>

@@ -23,7 +23,7 @@ export default function LearnPage() {
   const card = due[0];
   const grade = (ok: boolean) => card && s.run(() => studio.reviewCard(card.id, ok)).then(() => setFlipped(false));
   return <>
-    <PageHead eyebrow="Class prep · participation 10% and individual quizzes 10%" title="Readings and quizzes" intro="Both 10% components are in-class quizzes on the sessions and readings. Track every reading, write the key ideas in your own words, and drill them with spaced-repetition flashcards.">
+    <PageHead art="initial-hero-dusk-road-concept" eyebrow="Class prep · participation 10% and individual quizzes 10%" title="Readings and quizzes" intro="Both 10% components are in-class quizzes on the sessions and readings. Track every reading, write the key ideas in your own words, and drill them with spaced-repetition flashcards.">
       {readings.length === 0 && <button className="primaryBtn" onClick={() => s.run(() => studio.seedReadings(), 'Reading list loaded from the outline.')}>Load the reading list</button>}
     </PageHead>
     <Msg text={s.msg} />

@@ -21,7 +21,7 @@ export default function ObservePage() {
     ...obs.map(o => ({id: o.id, label: `${o.participant_code || 'Observation'} · ${o.setting}${o.synthetic ? ' (fictional)' : ''}`}))];
   const [picked, setPicked] = useState<string[]>([]);
   return <>
-    <PageHead eyebrow="Design studio · weeks 2–3, observe" title="Observe" intro="Log what people actually do, deliberately including extreme users and analogous settings, then build personas that point back to the evidence behind them." />
+    <PageHead art="stop-empathise" eyebrow="Design studio · weeks 2–3, observe" title="Observe" intro="Log what people actually do, deliberately including extreme users and analogous settings, then build personas that point back to the evidence behind them." />
     <Msg text={s.msg} />
     <section className="panel" aria-labelledby="obs-new">
       <h2 id="obs-new">Log an observation</h2>

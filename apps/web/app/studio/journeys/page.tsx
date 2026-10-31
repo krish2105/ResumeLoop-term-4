@@ -20,7 +20,7 @@ export default function JourneysPage() {
   const [stages, setStages] = useState<Stage[]>(START);
   const set = (i: number, patch: Partial<Stage>) => setStages(x => x.map((st, k) => k === i ? {...st, ...patch} : st));
   return <>
-    <PageHead eyebrow="Design studio · weeks 6–7, journeys" title="Journey maps" intro="Map today's return journey from evidence, then the future journey you are designing. The stage names are hypotheses: rename, add or remove them with participants." />
+    <PageHead art="stop-prototype" eyebrow="Design studio · weeks 6–7, journeys" title="Journey maps" intro="Map today's return journey from evidence, then the future journey you are designing. The stage names are hypotheses: rename, add or remove them with participants." />
     <Msg text={s.msg} />
     <section className="panel" aria-labelledby="new-j">
       <h2 id="new-j">New journey map</h2>

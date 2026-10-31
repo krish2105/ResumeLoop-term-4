@@ -9,7 +9,7 @@ export default function EnvisionPage() {
   const hills = s.of('hills');
   const scenarios = s.of('scenarios');
   return <>
-    <PageHead eyebrow="Design studio · week 6, envision" title="Envision" intro="Write Hill statements (who, what, wow) to fix the outcome you are aiming for, then stress-test it with what-if scenarios." />
+    <PageHead art="stop-ideate" eyebrow="Design studio · week 6, envision" title="Envision" intro="Write Hill statements (who, what, wow) to fix the outcome you are aiming for, then stress-test it with what-if scenarios." />
     <Msg text={s.msg} />
     <section className="panel" aria-labelledby="hill-h">
       <h2 id="hill-h">Hill statements</h2>

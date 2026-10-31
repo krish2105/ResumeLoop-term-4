@@ -1,5 +1,6 @@
 "use client";
 import Link from 'next/link';
+import {Art} from '@/components/Art';
 import {PageHead} from '@/components/AppShell';
 import {SaveBadge, Warnings} from '@/components/JourneyBits';
 import {STATE_LABEL} from '@/lib/road';
@@ -26,7 +27,7 @@ export default function PlanPage() {
       </section>
       <section className="panel" aria-labelledby="tonight">
         <h2 id="tonight">Planned now, in order</h2>
-        {plan.sequence.length === 0 ? <p className="empty">{plan.empty_reason}. Try a larger time budget.</p> :
+        {plan.sequence.length === 0 ? <div className="emptyArt"><Art name="empty-plan" sizes="200px" decorative /><p className="empty">{plan.empty_reason}. Try a larger time budget.</p></div> :
           <ol className="planList">{plan.sequence.map(id => plan.items.find(i => i.id === id)!).map(i => <li key={i.id}>
             <div><strong>{i.title}</strong><small>{i.minutes} min · session {i.session} · {i.reason}</small></div>
             <div className="rowActions"><button className="outlineBtn" onClick={() => j.start(j.progress?.state.current_action === i.id ? null : i.id)}>{j.progress?.state.current_action === i.id ? 'Stop' : 'Start'}</button>

@@ -40,7 +40,7 @@ export default function EmpathyPage() {
     setBusy(false);
   };
   return <>
-    <PageHead eyebrow="Design studio · weeks 2–5" title="Empathy studio" intro="Turn consented, anonymised observation notes into codes, an empathy map and themes. The local AI can suggest codes, but each one must quote the note exactly and stays a suggestion until you accept it." />
+    <PageHead art="stop-define" eyebrow="Design studio · weeks 2–5" title="Empathy studio" intro="Turn consented, anonymised observation notes into codes, an empathy map and themes. The local AI can suggest codes, but each one must quote the note exactly and stays a suggestion until you accept it." />
     <Msg text={s.msg} />
     <FictionBanner items={s.items} />
     {!s.loading && notes.length === 0 && <section className="panel"><h2>Start with your first note</h2>

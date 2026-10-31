@@ -1,5 +1,7 @@
 "use client";
 import Link from 'next/link';
+import {Art} from '@/components/Art';
+import {ART_CREDIT, STOP_ART} from '@/lib/art';
 import {useEffect, useState} from 'react';
 import {useStudio} from '@/components/StudioBits';
 import {computeCounts, STOPS} from '@/lib/story';
@@ -23,25 +25,35 @@ export default function DeckPage() {
       <button className="primaryBtn" onClick={() => window.print()}>Print or save as PDF</button>
       <span className="muted">Print with landscape orientation and no margins for one slide per page.</span>
     </div>
-    <section className="slide cover" aria-label="Title slide">
-      <span className="eyebrow">Design Thinking · UN SDG 4</span>
-      <h1>ResumeLoop</h1>
-      <p className="slideLead">Helping working learners find the one right next task after a missed class.</p>
-      <p className="muted">{team || 'Team names in the Course hub'} · {new Date().toLocaleDateString('en-GB', {day: 'numeric', month: 'long', year: 'numeric'})}</p>
+    <section className="slide cover withArt" aria-label="Title slide">
+      <Art name="stop-cover" className="slideArt" sizes="(max-width: 700px) 100vw, 1000px" decorative eager />
+      <div className="slideText">
+        <span className="eyebrow">Design Thinking · UN SDG 4</span>
+        <h1>ResumeLoop</h1>
+        <p className="slideLead">Helping working learners find the one right next task after a missed class.</p>
+        <p className="muted">{team || 'Team names in the Course hub'} · {new Date().toLocaleDateString('en-GB', {day: 'numeric', month: 'long', year: 'numeric'})}</p>
+      </div>
     </section>
-    {STOPS.map((st, i) => <section key={st.key} className="slide" aria-label={`Slide ${i + 2}: ${st.title}`}>
+    {STOPS.map((st, i) => <section key={st.key} className="slide withArt" aria-label={`Slide ${i + 2}: ${st.title}`}>
+      <Art name={STOP_ART[st.key]} className="slideArt" sizes="(max-width: 700px) 100vw, 1000px" decorative />
+      <div className="slideText">
       <div className="slideHead"><span className="eyebrow">{i + 1} / {STOPS.length}</span>{presenters[st.key] && <span className="tag">{presenters[st.key]}</span>}</div>
       <h2>{st.title}</h2>
       <p className="slideLead">{st.method}</p>
       <ul className="slideFacts">{st.lines(c).map(l => <li key={l}>{l}</li>)}</ul>
       {showNotes && notes[st.key] && <aside className="speaker"><strong>Speaker notes</strong><p>{notes[st.key]}</p></aside>}
+      </div>
     </section>)}
-    <section className="slide" aria-label="Closing slide">
+    <section className="slide withArt" aria-label="Closing slide">
+      <Art name="stop-closing" className="slideArt" sizes="(max-width: 700px) 100vw, 1000px" decorative />
+      <div className="slideText">
       <span className="eyebrow">Recommendation</span>
       <h2>What we ask for next</h2>
       {sdg?.impact_hypothesis ? <p className="slideLead">{sdg.impact_hypothesis}</p> : <p className="slideLead">Write the impact hypothesis in the Course hub SDG canvas.</p>}
       <ul className="slideFacts"><li>Evidence so far: {sdg?.evidence || 'add it in the SDG canvas'}</li><li>Measure: {sdg?.indicator || 'add the indicator in the SDG canvas'}</li>
         <li>Limitations: small purposive sample; fictional course in the prototype</li></ul>
+      <p className="muted artCredit">{ART_CREDIT}</p>
+      </div>
     </section>
   </div>;
 }

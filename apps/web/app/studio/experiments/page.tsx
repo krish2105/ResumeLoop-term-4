@@ -17,7 +17,7 @@ export default function ExperimentsPage() {
     tasks: form.tasks.split('\n').map(t => t.trim()).filter(Boolean), metrics: form.metrics.split('\n').map(t => t.trim()).filter(Boolean)}), 'Experiment drafted. Review it, then freeze the protocol.')
     .then(ok => ok && setForm(BLANK));
   return <>
-    <PageHead eyebrow="Design studio · week 9" title="Experiment lab" intro="Plan a small A/B usability comparison, freeze the protocol before any session, then record timed tasks. Results are descriptive (medians and ranges) because a few sessions cannot show statistical significance." />
+    <PageHead art="stop-test" eyebrow="Design studio · week 9" title="Experiment lab" intro="Plan a small A/B usability comparison, freeze the protocol before any session, then record timed tasks. Results are descriptive (medians and ranges) because a few sessions cannot show statistical significance." />
     <Msg text={s.msg} />
     {exps.length > 0 && <div className="noteTabs">{exps.map(e => <button key={e.id} className={'chipBtn' + (exp?.id === e.id ? ' on' : '')} onClick={() => setSel(e.id)}>{e.title.slice(0, 40)}{e.synthetic ? ' · fictional' : ''}</button>)}</div>}
     {exp ? <Experiment exp={exp} sessions={s.of('sessions', exp.id)} run={s.run} /> : !s.loading && <section className="panel"><h2>No experiments yet</h2><p>Draft one below, or load the fictional examples from the Empathy studio.</p></section>}

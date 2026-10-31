@@ -14,7 +14,7 @@ export default function DefinePage() {
   const [title, setTitle] = useState('');
   const [scenario, setScenario] = useState('');
   return <>
-    <PageHead eyebrow="Design studio · weeks 4–5, define" title="Define" intro="Turn themes into a point-of-view statement (a user, a need and an insight, with no solution in it), then storyboard the moment that matters." />
+    <PageHead art="stop-define" eyebrow="Design studio · weeks 4–5, define" title="Define" intro="Turn themes into a point-of-view statement (a user, a need and an insight, with no solution in it), then storyboard the moment that matters." />
     <Msg text={s.msg} />
     <div className="twoCol">
       <section className="panel" aria-labelledby="pov-h">

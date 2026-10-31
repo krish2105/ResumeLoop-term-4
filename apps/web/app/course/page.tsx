@@ -18,7 +18,7 @@ export default function CoursePage() {
   const groups = [...new Set(rubric.map(r => r.component as string))];
   const ready = rubric.filter(r => r.status === 'ready').length;
   return <>
-    <PageHead eyebrow="Present and reflect" title="Course hub" intro="Assessment weights, a rubric self-check against the outline's criteria, who did what, and the SDG impact canvas for the Week 12 presentation.">
+    <PageHead art="sdg4-lifelong-learning" eyebrow="Present and reflect" title="Course hub" intro="Assessment weights, a rubric self-check against the outline's criteria, who did what, and the SDG impact canvas for the Week 12 presentation.">
       {milestones.length === 0 && <button className="primaryBtn" onClick={() => s.run(() => studio.seedCourseHub(), 'Loaded the assessment components and rubric criteria.')}>Load outline structure</button>}
     </PageHead>
     <Msg text={s.msg} />

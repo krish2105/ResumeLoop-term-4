@@ -2,6 +2,7 @@
 import {useSearchParams} from 'next/navigation';
 import {Suspense, useEffect, useState} from 'react';
 import {PageHead} from '@/components/AppShell';
+import {Art} from '@/components/Art';
 import {api, DEMO} from '@/lib/client';
 
 export default function LoginPage() {
@@ -29,9 +30,11 @@ function Login() {
   };
   if (DEMO || required === false) return <>
     <PageHead eyebrow="Account" title="No sign-in needed here" intro={DEMO ? 'The public demo runs in your browser with fictional data only.' : 'This local app runs in single-user mode. Set RL_AUTH=required on the API to turn on accounts and organisations.'} />
+    <Art name="initial-paper-cut-light-style" dark="initial-paper-cut-dark-style" className="authArt" sizes="(max-width: 760px) 100vw, 560px" decorative eager />
   </>;
   return <>
     <PageHead eyebrow="Account" title={mode === 'in' ? 'Sign in' : 'Create an organisation'} intro="Each organisation's courses, research notes and learner progress are kept separate from every other organisation." />
+    <div className="authLayout">
     <section className="panel authCard">
       <form className="editor" onSubmit={submit} noValidate>
         <label className="fieldLabel" htmlFor="em">Email</label><input id="em" type="email" autoComplete="email" value={email} onChange={e => setEmail(e.target.value)} />
@@ -42,5 +45,7 @@ function Login() {
       </form>
       <button className="textBtn" onClick={() => { setMode(m => m === 'in' ? 'up' : 'in'); setMsg(''); }}>{mode === 'in' ? 'New here? Create an organisation' : 'Have an account? Sign in'}</button>
     </section>
+    <Art name="initial-paper-cut-light-style" dark="initial-paper-cut-dark-style" className="authArt" sizes="(max-width: 760px) 100vw, 560px" decorative eager />
+    </div>
   </>;
 }

@@ -26,7 +26,7 @@ export default function SynthesisPage() {
     [!codes.some(c => owner(c)?.synthetic), 'No fictional examples are mixed into themes'],
   ];
   return <>
-    <PageHead eyebrow="Design studio · weeks 4–5, synthesis" title="Synthesis board" intro="Cluster accepted codes into themes by dragging cards, or use the Move menu on each card. The trace below shows every theme back to its quotes and participants, so each claim in your report is defensible." />
+    <PageHead art="stop-define" eyebrow="Design studio · weeks 4–5, synthesis" title="Synthesis board" intro="Cluster accepted codes into themes by dragging cards, or use the Move menu on each card. The trace below shows every theme back to its quotes and participants, so each claim in your report is defensible." />
     <Msg text={s.msg} />
     <section className="panel" aria-labelledby="aff-h">
       <h2 id="aff-h">Affinity board ({codes.length} accepted codes)</h2>

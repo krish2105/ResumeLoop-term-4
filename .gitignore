@@ -61,3 +61,8 @@ backups/
 !evidence/2026-11-01/
 evidence/2026-11-01/*
 !evidence/2026-11-01/*.json
+
+# Generated image originals stay local; only optimised files in apps/web/public ship (see design/images/build.sh)
+design/images/incoming/*
+!design/images/incoming/README.txt
+design/images/og-share-background.jpg

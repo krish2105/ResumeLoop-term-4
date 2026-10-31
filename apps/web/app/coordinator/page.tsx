@@ -1,5 +1,6 @@
 "use client";
 import {useEffect, useState} from 'react';
+import {Art} from '@/components/Art';
 import {PageHead} from '@/components/AppShell';
 import {PilotLoader, RollUp} from '@/components/PilotPanel';
 import {Msg} from '@/components/StudioBits';
@@ -22,6 +23,7 @@ function PilotWorkspace() {
   return <>
     <PageHead eyebrow="Coordinator" title="Browser pilot" intro="Run a small pilot without a server: share an approved course file, learners plan their catch-up on their own devices, and you combine the progress files they send you." />
     <section className="panel" aria-labelledby="how-h"><h2 id="how-h">How the pilot works</h2>
+      <Art name="pilot-how-it-works" className="artBand" sizes="(max-width: 760px) 100vw, 1000px" />
       <ol className="factList">
         <li>Fill in the template with a course you are allowed to share, check it below and load it.</li>
         <li>Send learners this site's address, the same course file and a learner code each (L01, L02…). Never use names as codes.</li>

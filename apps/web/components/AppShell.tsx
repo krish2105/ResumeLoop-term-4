@@ -3,6 +3,8 @@ import Link from 'next/link';
 import {usePathname} from 'next/navigation';
 import {createContext, useContext, useEffect, useState} from 'react';
 import {DEMO} from '@/lib/client';
+import type {ArtName} from '@/lib/art';
+import {Art} from './Art';
 import {activePilot} from '@/lib/pilot';
 import {LearnerSwitch} from './LearnerSwitch';
 import {Splitter, useResizable} from './Splitter';
@@ -78,6 +80,7 @@ export default function AppShell({children}: {children: React.ReactNode}) {
   </ThemeContext.Provider>;
 }
 
-export function PageHead({eyebrow, title, intro, children}: {eyebrow: string; title: string; intro: string; children?: React.ReactNode}) {
-  return <div className="hero"><div><span className="eyebrow">{eyebrow}</span><h1>{title}</h1><p>{intro}</p></div>{children}</div>;
+export function PageHead({eyebrow, title, intro, children, art}: {eyebrow: string; title: string; intro: string; children?: React.ReactNode; art?: ArtName}) {
+  return <div className={'hero' + (art ? ' heroArt' : '')}><div><span className="eyebrow">{eyebrow}</span><h1>{title}</h1><p>{intro}</p>{art && children}</div>
+    {art ? <Art name={art} className="heroPicture" sizes="(max-width: 760px) 100vw, 420px" decorative eager /> : children}</div>;
 }

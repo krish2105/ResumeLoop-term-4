@@ -11,7 +11,7 @@ export default function PrototypesPage() {
   const s = useStudio();
   const protos = [...s.of('prototypes')].reverse();
   return <>
-    <PageHead eyebrow="Design studio · week 8, prototype" title="Prototype log" intro="Record each version, what changed and why, and the feedback that caused it. Rubrics reward iteration you can trace back to evidence." />
+    <PageHead art="stop-prototype" eyebrow="Design studio · week 8, prototype" title="Prototype log" intro="Record each version, what changed and why, and the feedback that caused it. Rubrics reward iteration you can trace back to evidence." />
     <Msg text={s.msg} />
     <section className="panel" aria-labelledby="pv-h">
       <h2 id="pv-h">Log a version</h2>
