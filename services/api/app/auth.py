@@ -11,7 +11,6 @@ import re
 import secrets
 import time
 import uuid
-from collections import defaultdict, deque
 
 from fastapi import APIRouter, Depends, HTTPException, Request
 from fastapi.responses import JSONResponse
@@ -24,7 +23,7 @@ router = APIRouter(prefix='/api')
 SESSION_SECONDS = 12 * 3600
 ROLES = {'learner': 1, 'coordinator': 2, 'admin': 3}
 EMAIL = re.compile(r'^[^@\s]{1,64}@[^@\s]{1,190}\.[A-Za-z]{2,}$')
-_failures: dict[str, deque] = defaultdict(lambda: deque(maxlen=10))
+LOCKOUT_WINDOW, LOCKOUT_AFTER = 300, 5  # seconds, failed attempts per email
 OPEN = ('/api/health', '/api/auth/signup', '/api/auth/login', '/docs', '/openapi.json')
 
 
@@ -129,12 +128,16 @@ def signup(x: Signup, conn=Depends(db)):
 
 @router.post('/auth/login')
 def login(x: Credentials, conn=Depends(db)):
-    recent = [t for t in _failures[x.email] if time.time() - t < 300]
-    if len(recent) >= 5:
+    # Failures live in the database (email hashed), so restarting the API does not reset the limit.
+    key, now = hashlib.sha256(x.email.encode()).hexdigest(), time.time()
+    with conn:
+        conn.execute('DELETE FROM sign_in_failures WHERE at < ?', (now - LOCKOUT_WINDOW,))
+    if conn.execute('SELECT COUNT(*) FROM sign_in_failures WHERE email_sha256=?', (key,)).fetchone()[0] >= LOCKOUT_AFTER:
         raise HTTPException(429, 'Too many attempts. Wait five minutes and try again.')
     row = conn.execute('SELECT id, password_hash FROM users WHERE email=?', (x.email,)).fetchone()
     if row is None or not verify_password(x.password, row['password_hash']):
-        _failures[x.email].append(time.time())
+        with conn:
+            conn.execute('INSERT INTO sign_in_failures VALUES (?, ?)', (key, now))
         raise HTTPException(401, 'Email or password is incorrect')
     m = conn.execute('SELECT org_id, role FROM memberships WHERE user_id=? ORDER BY role', (row['id'],)).fetchone()
     tenancy.set_context(m['org_id'], {'email': x.email})
@@ -176,7 +179,8 @@ def add_member(x: Member, conn=Depends(db)):
 
 
 # ---------- Data rights ----------
-TENANT_TABLES = ('studio_items', 'learner_progress', 'escalations', 'course_packages', 'ai_log')
+TENANT_TABLES = ('studio_items', 'learner_progress', 'escalations', 'course_packages', 'ai_log',
+                 'demo_records', 'demo_reviews', 'demo_imports')
 
 
 @router.get('/account/export', dependencies=[Depends(require('admin'))])

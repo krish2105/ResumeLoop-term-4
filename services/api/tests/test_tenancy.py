@@ -95,5 +95,45 @@ def test_migration_4_keeps_existing_single_user_data(tmp_path):
         conn.execute('INSERT INTO schema_migrations (version, name) VALUES (?, ?)', (v, name))
     conn.execute("INSERT INTO learner_progress (learner_id, version, state_json) VALUES ('demo-learner', 3, '{}')")
     conn.commit()
-    assert storage.migrate(conn) == [4]
+    assert storage.migrate(conn) == [4, 5]
     assert conn.execute('SELECT org_id, version FROM learner_progress').fetchone() == ('local', 3)
+
+
+def test_sign_in_limit_survives_an_api_restart(client, auth):
+    auth('lock@uni.example', 'Lock org')
+    for _ in range(5):
+        assert client.post('/api/auth/login', json={'email': 'lock@uni.example', 'password': 'wrong password!'}).status_code == 401
+    from fastapi.testclient import TestClient
+    from app import main
+    fresh = TestClient(main.app)  # a new client shares only the database file, like a restarted API
+    assert fresh.post('/api/auth/login', json={'email': 'lock@uni.example', 'password': PW}).status_code == 429
+    import sqlite3
+    stored = sqlite3.connect(main.STATE).execute('SELECT email_sha256 FROM sign_in_failures').fetchall()
+    assert stored and all('@' not in r[0] for r in stored)
+
+
+def test_csv_review_sandbox_is_per_organisation(client, auth):
+    a, b = auth('a3@uni.example', 'Sandbox A'), auth('b3@uni.example', 'Sandbox B')
+    rid = client.get('/api/demo/records', headers=a).json()[0]['id']
+    assert client.post('/api/demo/reviews', json={'record_id': rid, 'status': 'blocked', 'note': 'Org A only'}, headers=a).status_code == 200
+    assert next(r for r in client.get('/api/demo/records', headers=b).json() if r['id'] == rid)['status'] != 'blocked'
+    assert client.get('/api/demo/reviews', headers=b).json() == []
+    from app.main import SAMPLE
+    csv_text = SAMPLE.read_text(encoding='utf-8')
+    receipt = client.post('/api/demo/import', json={'csv_text': csv_text}, headers=a).json()
+    assert client.get(f"/api/demo/imports/{receipt['id']}", headers=b).status_code == 404
+    assert client.post('/api/demo/import', json={'csv_text': csv_text}, headers=b).json()['replayed'] is False
+    assert client.get('/api/account/export', headers=a).json()['data']['demo_reviews'][0]['note'] == 'Org A only'
+
+
+def test_old_sandbox_tables_gain_org_id_and_keep_rows(tmp_path):
+    import sqlite3
+    from app import main
+    path = tmp_path / 'old.sqlite3'
+    old = sqlite3.connect(path)
+    old.execute("CREATE TABLE demo_records (id TEXT PRIMARY KEY, title TEXT NOT NULL, subtitle TEXT NOT NULL, metric_value TEXT NOT NULL, metric_label TEXT NOT NULL, status TEXT NOT NULL, evidence TEXT NOT NULL, source_type TEXT NOT NULL DEFAULT 'SYNTHETIC')")
+    old.execute("INSERT INTO demo_records (id,title,subtitle,metric_value,metric_label,status,evidence) VALUES ('X1','t','s','1','m','approved','e')")
+    old.commit(); old.close()
+    main.STATE = path
+    with main.connect() as db:
+        assert dict(db.execute('SELECT org_id, status FROM demo_records').fetchone()) == {'org_id': 'local', 'status': 'approved'}

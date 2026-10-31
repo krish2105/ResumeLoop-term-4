@@ -61,6 +61,10 @@ MIGRATIONS: list[tuple[int, str, list[str]]] = [
         'DROP TABLE escalations',
         'ALTER TABLE escalations_v2 RENAME TO escalations',
     ]),
+    (5, 'sign-in failures persist across restarts', [
+        '''CREATE TABLE IF NOT EXISTS sign_in_failures (email_sha256 TEXT NOT NULL, at REAL NOT NULL)''',
+        'CREATE INDEX IF NOT EXISTS ix_sign_in_failures ON sign_in_failures (email_sha256, at)',
+    ]),
 ]
 
 # Kept for scripts that build a throwaway database without migrations bookkeeping.

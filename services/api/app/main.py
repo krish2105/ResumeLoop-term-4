@@ -1,6 +1,7 @@
 """ResumeLoop local development API. NOT FOR CUSTOMER DATA OR PUBLIC EXPOSURE.
 
-Dataset/demo reviewers operate on synthetic records; no authentication or tenant isolation.
+Demo reviewers operate on synthetic records. With RL_AUTH=required every route, including /api/demo/*, is scoped to the
+signed-in organisation.
 """
 import csv
 import json
@@ -14,6 +15,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field, ConfigDict
 from .domain import domain_example
 from .imports import CSVImport, DemoCase, HEADERS, InvalidCSV, validate_csv
+from .tenancy import org
 
 APP_NAME = "ResumeLoop"
 HERE=Path(__file__).resolve()
@@ -32,26 +34,46 @@ def connect():
     db.row_factory=sqlite3.Row
     try:
         db.execute('PRAGMA journal_mode = WAL')
-        db.execute("CREATE TABLE IF NOT EXISTS demo_records (id TEXT PRIMARY KEY, title TEXT NOT NULL, subtitle TEXT NOT NULL, metric_value TEXT NOT NULL, metric_label TEXT NOT NULL, status TEXT NOT NULL, evidence TEXT NOT NULL, source_type TEXT NOT NULL DEFAULT 'SYNTHETIC')")
-        db.execute('CREATE TABLE IF NOT EXISTS demo_reviews (id INTEGER PRIMARY KEY AUTOINCREMENT, record_id TEXT NOT NULL, status TEXT NOT NULL, note TEXT NOT NULL, created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP)')
-        db.execute('''CREATE TABLE IF NOT EXISTS demo_imports (
-            id TEXT PRIMARY KEY, sha256 TEXT NOT NULL, schema_version TEXT NOT NULL,
-            raw_csv TEXT NOT NULL, snapshot_json TEXT NOT NULL, receipt_json TEXT NOT NULL,
-            created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
-            UNIQUE(sha256, schema_version))''')
+        ensure_demo_tables(db)
         yield db
     finally:
         db.close()
+
+DEMO_TABLES = {
+    'demo_records': """CREATE TABLE IF NOT EXISTS demo_records (org_id TEXT NOT NULL DEFAULT 'local', id TEXT NOT NULL, title TEXT NOT NULL,
+        subtitle TEXT NOT NULL, metric_value TEXT NOT NULL, metric_label TEXT NOT NULL, status TEXT NOT NULL, evidence TEXT NOT NULL,
+        source_type TEXT NOT NULL DEFAULT 'SYNTHETIC', PRIMARY KEY (org_id, id))""",
+    'demo_reviews': """CREATE TABLE IF NOT EXISTS demo_reviews (id INTEGER PRIMARY KEY AUTOINCREMENT, org_id TEXT NOT NULL DEFAULT 'local',
+        record_id TEXT NOT NULL, status TEXT NOT NULL, note TEXT NOT NULL, created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP)""",
+    'demo_imports': """CREATE TABLE IF NOT EXISTS demo_imports (id TEXT PRIMARY KEY, org_id TEXT NOT NULL DEFAULT 'local', sha256 TEXT NOT NULL,
+        schema_version TEXT NOT NULL, raw_csv TEXT NOT NULL, snapshot_json TEXT NOT NULL, receipt_json TEXT NOT NULL,
+        created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP, UNIQUE (org_id, sha256, schema_version))""",
+}
+
+
+def ensure_demo_tables(db):
+    """The CSV review sandbox predates organisations: rebuild its tables with org_id, keeping old rows under 'local'."""
+    for table, ddl in DEMO_TABLES.items():
+        cols = [r[1] for r in db.execute(f'PRAGMA table_info({table})')]
+        if cols and 'org_id' not in cols:
+            with db:
+                db.execute(f'ALTER TABLE {table} RENAME TO {table}_v0')
+                db.execute(ddl)
+                db.execute(f'INSERT INTO {table} ({", ".join(cols)}) SELECT {", ".join(cols)} FROM {table}_v0')
+                db.execute(f'DROP TABLE {table}_v0')
+        else:
+            db.execute(ddl)
+
 
 def clean_row(row):
     return DemoCase.model_validate(row).model_dump()
 
 def initialize(db):
-    if db.execute('SELECT COUNT(*) FROM demo_records').fetchone()[0]: return
+    if db.execute('SELECT COUNT(*) FROM demo_records WHERE org_id=?', (org(),)).fetchone()[0]: return
     with SAMPLE.open(encoding='utf-8',newline='') as f:
         for row in csv.DictReader(f):
             v=clean_row(row)
-            db.execute('INSERT INTO demo_records (id,title,subtitle,metric_value,metric_label,status,evidence) VALUES (?,?,?,?,?,?,?)', tuple(v[x] for x in HEADERS))
+            db.execute('INSERT INTO demo_records (org_id,id,title,subtitle,metric_value,metric_label,status,evidence) VALUES (?,?,?,?,?,?,?,?)', (org(), *(v[x] for x in HEADERS)))
         db.commit()
 
 class Review(BaseModel):
@@ -69,13 +91,13 @@ def health():
 def records():
     with connect() as db:
         initialize(db)
-        return [dict(x) for x in db.execute('SELECT * FROM demo_records ORDER BY id').fetchall()]
+        return [dict(x) for x in db.execute('SELECT * FROM demo_records WHERE org_id=? ORDER BY id', (org(),)).fetchall()]
 
 @app.get('/api/demo/summary')
 def summary():
     with connect() as db:
         initialize(db)
-        rows=db.execute('SELECT status,COUNT(*) n FROM demo_records GROUP BY status').fetchall()
+        rows=db.execute('SELECT status,COUNT(*) n FROM demo_records WHERE org_id=? GROUP BY status', (org(),)).fetchall()
         return {'counts':{r['status']:r['n'] for r in rows},'total':sum(r['n'] for r in rows),'source_type':'SYNTHETIC','note':'Counts of demo review cases, not business KPIs'}
 
 @app.get('/api/demo/domain')
@@ -85,16 +107,16 @@ def domain():return domain_example()
 def review(x:Review):
     with connect() as db:
         initialize(db)
-        if db.execute('SELECT 1 FROM demo_records WHERE id=?',(x.record_id,)).fetchone() is None: raise HTTPException(404,'Unknown demo record')
+        if db.execute('SELECT 1 FROM demo_records WHERE id=? AND org_id=?',(x.record_id,org())).fetchone() is None: raise HTTPException(404,'Unknown demo record')
         with db:
-            db.execute('INSERT INTO demo_reviews (record_id,status,note) VALUES(?,?,?)',(x.record_id,x.status,x.note))
-            db.execute('UPDATE demo_records SET status=? WHERE id=?',(x.status,x.record_id))
+            db.execute('INSERT INTO demo_reviews (org_id,record_id,status,note) VALUES(?,?,?,?)',(org(),x.record_id,x.status,x.note))
+            db.execute('UPDATE demo_records SET status=? WHERE id=? AND org_id=?',(x.status,x.record_id,org()))
         return {'ok':True,'record_id':x.record_id,'status':x.status,'source':'SYNTHETIC'}
 
 @app.get('/api/demo/reviews')
 def reviews():
     with connect() as db:
-        return [dict(x) for x in db.execute('SELECT * FROM demo_reviews ORDER BY id DESC LIMIT 100').fetchall()]
+        return [dict(x) for x in db.execute('SELECT * FROM demo_reviews WHERE org_id=? ORDER BY id DESC LIMIT 100', (org(),)).fetchall()]
 
 def validated_import(x: CSVImport):
     try:
@@ -111,13 +133,13 @@ def preview_import(x: CSVImport):
 @app.get('/api/demo/imports')
 def import_history():
     with connect() as db:
-        return [json.loads(row['receipt_json']) for row in db.execute('SELECT receipt_json FROM demo_imports ORDER BY rowid DESC LIMIT 100')]
+        return [json.loads(row['receipt_json']) for row in db.execute('SELECT receipt_json FROM demo_imports WHERE org_id=? ORDER BY rowid DESC LIMIT 100', (org(),))]
 
 
 @app.get('/api/demo/imports/{import_id}')
 def import_detail(import_id: str):
     with connect() as db:
-        row = db.execute('SELECT * FROM demo_imports WHERE id=?', (import_id,)).fetchone()
+        row = db.execute('SELECT * FROM demo_imports WHERE id=? AND org_id=?', (import_id, org())).fetchone()
         if row is None:
             raise HTTPException(404, 'Unknown import')
         return {**json.loads(row['receipt_json']), 'rows': json.loads(row['snapshot_json'])}
@@ -131,26 +153,26 @@ def import_demo(x: CSVImport):
         initialize(db)
         with db:
             db.execute('BEGIN IMMEDIATE')
-            previous = db.execute('SELECT receipt_json FROM demo_imports WHERE sha256=? AND schema_version=?', (source['sha256'], source['schema_version'])).fetchone()
+            previous = db.execute('SELECT receipt_json FROM demo_imports WHERE sha256=? AND schema_version=? AND org_id=?', (source['sha256'], source['schema_version'], org())).fetchone()
             if previous:
                 return {**json.loads(previous['receipt_json']), 'replayed': True}
-            existing = {r['id'] for r in db.execute('SELECT id FROM demo_records')}
-            reviewed = {r['record_id'] for r in db.execute('SELECT DISTINCT record_id FROM demo_reviews')}
+            existing = {r['id'] for r in db.execute('SELECT id FROM demo_records WHERE org_id=?', (org(),))}
+            reviewed = {r['record_id'] for r in db.execute('SELECT DISTINCT record_id FROM demo_reviews WHERE org_id=?', (org(),))}
             rows = source['rows']
             for row in rows:
-                db.execute('''INSERT INTO demo_records (id,title,subtitle,metric_value,metric_label,status,evidence)
-                    VALUES (?,?,?,?,?,?,?) ON CONFLICT(id) DO UPDATE SET title=excluded.title,
+                db.execute('''INSERT INTO demo_records (org_id,id,title,subtitle,metric_value,metric_label,status,evidence)
+                    VALUES (?,?,?,?,?,?,?,?) ON CONFLICT(org_id,id) DO UPDATE SET title=excluded.title,
                     subtitle=excluded.subtitle,metric_value=excluded.metric_value,metric_label=excluded.metric_label,
-                    status=CASE WHEN EXISTS(SELECT 1 FROM demo_reviews WHERE record_id=excluded.id)
-                        THEN demo_records.status ELSE excluded.status END,evidence=excluded.evidence''', tuple(row[h] for h in HEADERS))
+                    status=CASE WHEN EXISTS(SELECT 1 FROM demo_reviews WHERE record_id=excluded.id AND org_id=excluded.org_id)
+                        THEN demo_records.status ELSE excluded.status END,evidence=excluded.evidence''', (org(), *(row[h] for h in HEADERS)))
             receipt = {'ok': True, 'id': str(uuid.uuid4()), 'sha256': source['sha256'],
                 'schema_version': source['schema_version'], 'source_type': 'SYNTHETIC',
                 'upserted': len(rows), 'created': sum(r['id'] not in existing for r in rows),
                 'updated': sum(r['id'] in existing for r in rows),
                 'review_statuses_preserved': sum(r['id'] in reviewed for r in rows),
                 'created_at': db.execute("SELECT strftime('%Y-%m-%dT%H:%M:%SZ','now')").fetchone()[0]}
-            db.execute('INSERT INTO demo_imports (id,sha256,schema_version,raw_csv,snapshot_json,receipt_json) VALUES (?,?,?,?,?,?)',
-                (receipt['id'], source['sha256'], source['schema_version'], x.csv_text, json.dumps(rows), json.dumps(receipt)))
+            db.execute('INSERT INTO demo_imports (id,org_id,sha256,schema_version,raw_csv,snapshot_json,receipt_json) VALUES (?,?,?,?,?,?,?)',
+                (receipt['id'], org(), source['sha256'], source['schema_version'], x.csv_text, json.dumps(rows), json.dumps(receipt)))
     return {**receipt, 'replayed': False}
 
 
