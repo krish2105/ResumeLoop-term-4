@@ -1,6 +1,6 @@
 # Security review and threat model
 
-Reviewed 2026-10-31 against the code at this commit. ResumeLoop is a prototype: it runs on the owner's computer with a
+Reviewed 2026-10-31 and updated 2026-11-01 against the code at this commit. ResumeLoop is a prototype: it runs on the owner's computer with a
 fictional course, and the public Vercel link is a browser-only demo with no API behind it. Nothing here makes it safe to
 store real learner records without the institution's approval.
 
@@ -21,12 +21,12 @@ store real learner records without the institution's approval.
 ## Threats and controls (STRIDE)
 | Threat | Control | Evidence |
 |---|---|---|
-| **Spoofing**: guessing a password | scrypt (n=2^14) with a per-user salt; sign-in rate limit per email (429) | `app/auth.py`, `tests/test_tenancy.py` |
+| **Spoofing**: guessing a password | scrypt (n=2^14) with a per-user salt; sign-in limit of 5 failures per email in 5 minutes (429), stored in SQLite by hashed email so a restart does not reset it | `app/auth.py`, migration 5, `tests/test_tenancy.py`, checked in Docker across a restart |
 | **Spoofing**: stolen session token | Random tokens stored only as SHA-256 hashes; 12-hour expiry; logout deletes the session | `app/auth.py` |
 | **Tampering**: two tabs overwriting progress | Optimistic version check, stale writes get 409 and the UI asks for a reload | `tests/test_planner.py`, smoke "Stale tab write is refused" |
 | **Tampering**: invalid course packages | Pydantic schema, duplicate-id checks, prerequisite-graph validation, preview before import | `app/coordinator.py`, `tests/test_coordinator.py` |
 | **Repudiation** | Audit log for imports, resets, member changes, escalation answers, export and delete | `app/tenancy.py`, `/api/account/audit` |
-| **Information disclosure**: cross-tenant reads | Org id set per request from the session; every query filters by `org_id`; denial tests for each router | `tests/test_tenancy.py` |
+| **Information disclosure**: cross-tenant reads | Org id set per request from the session; every query filters by `org_id`, including the CSV review sandbox (`/api/demo/*`, scoped 2026-11-01); denial tests for each router | `tests/test_tenancy.py` |
 | **Information disclosure**: cached learner data | API sends `Cache-Control: no-store`; the client fetches with `cache: 'no-store'` (Safari had served a stale GET after refresh) | `app/ops.py`, `tests/test_ops.py`, WebKit smoke |
 | **Information disclosure**: personal data in research notes | Notes, observations and interviews reject emails and phone numbers; interviews need recorded consent before they become data | `app/studio.py`, `tests/test_studio*.py` |
 | **Information disclosure**: logs | Access logs hold method, route, status and latency only; the AI log stores prompt hashes | `app/ops.py`, `app/ai/features.py` |
@@ -34,6 +34,8 @@ store real learner records without the institution's approval.
 | **Elevation of privilege** | Roles admin > coordinator > learner enforced server-side with `require(role)` on coordinator and admin routes | `app/auth.py`, `tests/test_tenancy.py` |
 | **Prompt injection** in questions or sources | Answers must cite retrieved passages; dates, durations and status words must appear in the cited text; abstain otherwise. 8 injection cases in the gold set, all safe | `app/ai/features.py`, `evidence/eval/coach-eval.json` |
 | **Clickjacking, MIME sniffing, XSS impact** | Web: CSP (`default-src 'self'`, `object-src 'none'`, `frame-ancestors 'none'`), `X-Frame-Options: DENY`, `nosniff`, Referrer-Policy, Permissions-Policy. API: `default-src 'none'` | `apps/web/next.config.mjs`, `app/ops.py` |
+| **Broken sign-in flow (availability)** | CORS is the outermost middleware, so 401 and 413 responses carry CORS headers and the app can send a signed-out learner to sign in (before, the browser saw a blocked request) | `app/main.py`, `tests/test_tenancy.py` |
+| **Container breakout impact** | Both images run as non-root users (`app`, `node`); the web image ships only Next's standalone server (441 MB, was 1.26 GB) | `services/api/Dockerfile`, `apps/web/Dockerfile` |
 | **Unsafe external effects** | Nothing is emailed or sent. Escalations need learner approval, are idempotent per org, and stay in a local queue | `app/assist.py`, `tests/test_ai.py` |
 
 ## Dependency scans (2026-10-31)
@@ -45,7 +47,7 @@ store real learner records without the institution's approval.
 - The 3D labels load glyph data from jsDelivr, so the CSP allows that one host.
 - The body limit trusts `Content-Length`; a hosted deployment should also cap bodies at the proxy.
 - No TLS, WAF, SSO, secrets manager, Postgres row-level security or external penetration test; the API is not hosted.
-- Rate limiting is in-process and resets on restart.
+- The sign-in limit is per email, not per IP, so it does not stop slow password spraying across many accounts.
 - Screen-reader testing is automated (axe) only; no VoiceOver or NVDA session has been run.
 
 ## Gates before any real data

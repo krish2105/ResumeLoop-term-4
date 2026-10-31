@@ -2,6 +2,18 @@
 
 Last updated: **23 October 2026**. User requested a complete cross-account continuation package and publication to `https://github.com/krish2105/ResumeLoop-term-4`. **`PROGRESS.md`** remains the status/run authority; **`NEW_ACCOUNT_HANDOFF.md`** and **`prompts/10_NEW_ACCOUNT_HANDOFF.md`** provide the transfer checklist and paste-ready prompt.
 
+## 1 November 2026 — remaining gaps closed (latest)
+
+**VERIFIED (commands run):** `pytest` → **107 passed** (new: sandbox cross-tenant denial and legacy-table upgrade, sign-in limit across a new client, CORS on 401 — confirmed failing on the old middleware order — change-log citation, compound number words, version-claim guard). `scripts/eval_coach.py` run twice with temperature 0 and seed 7 → identical: answer 0.976, citation 0.975, abstain 1.0, injection 1.0, quote 0.824, digest 1.0. Browser smoke **146/146 in Chromium and WebKit** locally; axe 112 scans 0 violations; axe WCAG 2.2 AA on 10 routes in an emulated touch iPhone, 0 violations. CI run 41239178208 on `b9213f3` green: 145 checks each in Chromium, WebKit, Firefox (no Ollama in CI). Vercel deployed; live demo on emulated iPhone: 3D renders, 16px fields, no overflow, no console errors. Docker on Colima: non-root `app`/`node`, web image 441 MB, signed-out `/story` → `/login?next=%2Fstory`, sign-up through the form, journey plan and 3D canvas load, 5 failed logins → 429 that survives `docker compose restart api`; stack and Colima stopped.
+
+**Bugs found and fixed:** 401s without CORS headers (accounts mode never redirected to sign-in); facts guard read "twenty-five minutes" as "5 min"; model hallucinated which reading version 2 added (now declined); 3D labels ran off phone screens; saved panel width could be overwritten by the default on load.
+
+**Changed:** `services/api/app/main.py`, `auth.py`, `storage.py` (migration 5), `ai/features.py`, `ai/llm.py`; tests `test_tenancy.py`, `test_ai.py`; `data/eval/coach_gold.json` (accepts `CL-s4-exercise` for "What changed about this task?"); `apps/web/components/scene/primitives.tsx`, `components/Splitter.tsx`, `app/screens.css`, `next.config.mjs`, `Dockerfile`; `services/api/Dockerfile`; `scripts/browser-smoke.js`; docs.
+
+**UNTESTED / open:** iPhone Simulator (needs full Xcode: install it, then `sudo xcode-select -s /Applications/Xcode.app/Contents/Developer`); real phones; VoiceOver/NVDA; Firefox with WebGL; hosted API, Postgres, SSO; real fieldwork and reflection. Not production-ready.
+
+**Next runnable task:** owner sends the faculty questions (`/course` → Faculty questions) and books the first consented interviews.
+
 ## 31 October 2026 (final round) — cross-browser, retrieval, security, Docker (latest)
 
 **VERIFIED (commands run):** `pytest` → **101 passed** (new: task-pinned retrieval, security headers and 413 body limit). `scripts/eval_coach.py` live (qwen2.5:7b, bge-m3:567m) → answer 0.976, citation 0.975, abstain 1.0, injection 1.0, quote 0.812, digest before repair 0.857. Browser smoke **143/143 in Chromium and in WebKit** on fresh databases; axe 112 scans, 0 violations under the new CSP. `pip-audit` no known vulnerabilities; `npm audit` 0. `docker compose build` + `up` on Colima: health `auth_required: true`, 401 without token, sign-up issues a token, coordinator route 200 for admin, session survives an API restart, `/login` renders with no console errors; stack and Colima stopped afterwards.

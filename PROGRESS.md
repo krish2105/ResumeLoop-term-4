@@ -2,6 +2,14 @@
 
 Updated **23 October 2026**. Term starts **10 November 2026**. Solo developer; default allocation **4 hours/week** from 20 hours shared across five projects. Cross-account continuation instructions are in [`NEW_ACCOUNT_HANDOFF.md`](NEW_ACCOUNT_HANDOFF.md).
 
+## 1 November 2026: remaining gaps closed
+
+- **Tenancy:** the CSV review sandbox (`/api/demo/*`) is now scoped per organisation and included in export and delete; the sign-in limit is stored in SQLite (migration 5) and survives restarts.
+- **Accounts mode bug fixed:** signed-out 401s lacked CORS headers, so the browser reported a blocked request instead of sending the learner to sign in. Verified in Docker: signed-out redirect, sign-up through the form, journey and 3D road load.
+- **Coach:** answers "what changed about this task?" from the computed change log (`CL-<task>`); the facts guard now reads "twenty-five minutes"; version claims need a passage about versions. Model calls use temperature 0 and a fixed seed, so two evaluation runs gave identical results: answered 97.6%, cited 97.5%, declined 100%, injection-safe 100%, no wrong answers.
+- **Phones:** checked in WebKit emulating an iPhone (no Xcode here for the Simulator): no overflow on 24 routes at 393 and 320px, 3D labels wrap inside the canvas, 16px touch fields stop iOS zoom, axe clean on 10 touch routes. Smoke suite has 146 checks.
+- **Docker:** standalone web image 441 MB (was 1.26 GB); both containers run as non-root.
+
 ## 31 October 2026 (final round): cross-browser, retrieval, security, Docker
 
 - **Safari bug fixed:** WebKit served a cached copy of progress after a refresh. The API now sends `Cache-Control: no-store` and the client fetches with `cache: 'no-store'`. The smoke suite passes 143/143 in Chromium and WebKit; CI run 41233135197 passes the suite in Chromium, WebKit and Firefox (Firefox there has no WebGL, so it covers the 2D fallback; it would not launch on this Mac).

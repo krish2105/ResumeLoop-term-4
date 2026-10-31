@@ -30,4 +30,7 @@
 | 2026-10-31 | Vercel builds from GitHub `main` with root `apps/web` | Fixes failing checks; push deploys the demo | Hosting changes |
 | 2026-10-31 | Coach pins the selected task's own source passage; no keyword hybrid | Measured on the gold set: hybrid lifted recall but returned passages for 4–6 of 10 off-topic questions; pinning fixes "this task" questions without weakening abstention | A larger real question set shows other misses |
 | 2026-10-31 | API responses are `Cache-Control: no-store`; CSP and security headers on web and API | Safari served stale progress after refresh; defence in depth for a hosted deployment | A nonce-based CSP replaces `'unsafe-inline'` |
+| 2026-11-01 | Model calls use temperature 0 and seed 7 | Evaluation must be reproducible; the earlier 0.1 temperature moved results between runs | A model that ignores seeds |
+| 2026-11-01 | The coach may cite a computed change log (`CL-<task>`) for the selected task | "What changed?" is a fact the code already knows; the model only phrases it | Never: the change log stays deterministic |
+| 2026-11-01 | Prefer a decline over a plausible answer when a version claim is not in the cited passage | The eval found a hallucinated "added in version 2" answer that passed the other guards | A larger real question set shows too many declines |
 

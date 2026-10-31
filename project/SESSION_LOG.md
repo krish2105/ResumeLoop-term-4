@@ -109,3 +109,11 @@ Initial Git publication completed: root commit `29dfb5c6e20659ced07cf12736a6ddc1
 
 **Verification:** 101 pytest; live eval 97.6/97.5/100/100; smoke 143/143 in Chromium and WebKit; axe 112 scans with 0 violations; pip-audit and npm audit clean; compose stack checked end to end. Firefox not verified locally. Scorecard ≈ 75 overall.
 
+### 2026-11-01 — Remaining gaps closed
+
+**User steering:** do the remaining end-to-end work.
+
+**Work:** scoped the CSV review sandbox per organisation; persistent sign-in limit (migration 5); task change log in the coach; facts-guard compound numbers; version-claim guard; deterministic model calls; standalone non-root Docker images; CORS-on-401 fix found while testing the sign-in flow in Docker; phone fixes from iPhone emulation (label wrapping, 16px touch fields, target size); splitter restore fix found by CI in WebKit.
+
+**Verification:** 107 pytest; eval repeatable at 97.6/97.5/100/100 with no wrong answers; smoke 146 locally and 145 in CI in three browsers; axe clean on desktop and touch; Docker flow checked in a browser. iPhone Simulator not available (no Xcode). Scorecard ≈ 76.
+

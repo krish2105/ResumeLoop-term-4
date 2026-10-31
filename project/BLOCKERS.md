@@ -24,7 +24,7 @@ The table below lists the remaining engineering and platform gaps, which are not
 | Review-note draft is not scoped/autosaved per record | Carryover fixed 31 Oct (note clears on record change); autosave still absent | Engineering: autosave review notes |
 | New UI not yet covered by browser smoke or axe scripts | **Resolved 31 Oct**: 71/71 smoke, 52 axe scans 0 violations | Remaining: VoiceOver, Safari/Firefox, manual contrast over canvas |
 | No hosted API, TLS, Postgres or independent security review; SQLite unencrypted | Unsafe for real learner data | Accounts, tenant isolation and a threat model exist (31 Oct); see `docs/SECURITY_AND_SAAS.md` gates before any real data |
-| No screen-reader or real-device participant tests; Firefox unverified locally | Accessibility not fully established | Safari engine verified 31 Oct (WebKit 143/143); Firefox runs in CI only. Remaining: VoiceOver/NVDA and phones |
+| No screen-reader or real-device tests | Accessibility not fully established | WebKit, Firefox (CI) and iPhone emulation verified 1 Nov. iPhone Simulator needs full Xcode (owner installs it and runs `sudo xcode-select -s /Applications/Xcode.app/Contents/Developer`). Remaining: VoiceOver/NVDA and real phones |
 | Four hours/week default for this project; five projects share 20 hours | Scope risk | Student: prioritize rubric evidence and one vertical slice per session |
 | Original Design Kit resource link returned 404 | Starter source pointer stale | Resolved for method research using verified primary method pages; no dataset downloaded |
 | Port 8000 belongs to another service on this machine | Default launch fails | Resolved locally with port 8014 and explicit environment configuration |

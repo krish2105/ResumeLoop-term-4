@@ -1,4 +1,25 @@
-# ResumeLoop scorecard — updated 31 October 2026 (final round)
+# ResumeLoop scorecard — updated 1 November 2026
+
+## Built since the last score
+1. **Tenancy and accounts:** CSV review sandbox scoped per organisation; persistent sign-in limit; signed-out 401s now carry CORS headers (a real bug found in Docker: the sign-in redirect never happened).
+2. **AI:** task change log as a citable source; compound-number fix in the facts guard; version-claim guard turned the one hallucination into a decline; deterministic model calls make the evaluation repeatable. Answered 97.6%, cited 97.5%, declined 100%, injection-safe 100%, and no wrong answers among 41.
+3. **Phones:** iPhone emulation in WebKit across 24 routes; 3D labels wrap; no iOS focus zoom; top-bar targets at least 24px; touch checks in the smoke suite (146 checks; CI green in Chromium, WebKit and Firefox).
+4. **Docker:** 441 MB web image (was 1.26 GB), non-root containers, full sign-in flow checked in a browser.
+
+| Perspective | 31 Oct final | Now | What still caps it |
+|---|---|---|---|
+| CTO (engineering) | 94 | **95** | SQLite; no hosted monitoring; no real-device or screen-reader run |
+| CEO (product and business) | 48 | **48** | No real users, pilot or buyer evidence |
+| AI engineer | 93 | **95** | Fictional 59-question set; 7B local model; one mis-citation; quote validity 82% |
+| Course-outline coverage | 99 | **99** | Faculty confirmation of frameworks and dates |
+| Design Thinking professor (if submitted today) | 50 | **50** | Real fieldwork, sessions and your own reflection (85–95 with them) |
+| Real MVP | 80 | **82** | A real authorised course with 3–5 learners for two weeks |
+| Real SaaS | 60 | **63** | Hosted API, Postgres, SSO, TLS, billing, independent security review |
+| **Overall (weighted for this unit)** | ≈ 75 | **≈ 76** | The software is finished for this unit; the remaining marks are your research and writing |
+
+---
+
+## Final round — 31 October 2026
 
 ## Built in the final round
 1. **Cross-browser:** smoke suite 143/143 in Chromium and WebKit (Safari engine). It found a real Safari bug (stale progress after refresh), now fixed. CI passes the suite in Chromium, WebKit and Firefox (Firefox without WebGL, so the 2D fallback is covered).
