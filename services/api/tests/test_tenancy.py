@@ -16,6 +16,8 @@ def auth(client, monkeypatch):
 
 def test_signed_out_requests_are_refused_but_health_is_open(client, auth):
     assert client.get('/api/health').json()['auth_required'] is True
+    refused = client.get('/api/course', headers={'Origin': 'http://localhost:3000'})
+    assert refused.status_code == 401 and refused.headers['access-control-allow-origin'] == 'http://localhost:3000'
     assert client.get('/api/studio/notes').status_code == 401
     assert client.get('/api/studio/notes', headers={'Authorization': 'Bearer forged'}).status_code == 401
 

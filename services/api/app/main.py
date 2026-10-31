@@ -23,7 +23,6 @@ ROOT=HERE.parents[3]
 SAMPLE=ROOT / 'data' / 'sample' / 'demo_cases.csv'
 STATE=Path(os.environ.get('DEMO_DB_PATH', str(ROOT / 'services' / 'api' / '.state' / 'demo.sqlite3')))
 app=FastAPI(title=APP_NAME+' local starter API',version='0.1.0')
-app.add_middleware(CORSMiddleware,allow_origins=[o for o in os.environ.get('RL_CORS_ORIGINS','http://localhost:3000,http://127.0.0.1:3000').split(',') if o],allow_credentials=False,allow_methods=['*'],allow_headers=['*'],expose_headers=['X-Request-ID'])
 VALID_STATUS={'ready','needs-review','blocked','approved','rejected'}
 
 @contextmanager
@@ -186,6 +185,9 @@ from .ops import access_middleware, router as ops_router  # noqa: E402
 
 app.middleware('http')(auth_middleware)
 app.middleware('http')(access_middleware)
+# Added last so it is outermost: 401 and 413 responses from the inner middleware still carry CORS headers,
+# otherwise the browser reports a network error instead of sending the learner to sign in.
+app.add_middleware(CORSMiddleware,allow_origins=[o for o in os.environ.get('RL_CORS_ORIGINS','http://localhost:3000,http://127.0.0.1:3000').split(',') if o],allow_credentials=False,allow_methods=['*'],allow_headers=['*'],expose_headers=['X-Request-ID'])
 app.include_router(auth_router)
 app.include_router(ops_router)
 app.include_router(learning_router)

@@ -21,6 +21,8 @@ const csp = [
 const nextConfig = {
   // Lets the demo build use its own folder while the dev server uses .next.
   distDir: process.env.NEXT_DIST_DIR || '.next',
+  // The Docker image ships only the traced server files (NEXT_OUTPUT=standalone); Vercel and CI build normally.
+  ...(process.env.NEXT_OUTPUT === 'standalone' ? {output: 'standalone'} : {}),
   poweredByHeader: false,
   async headers() {
     return [{source: '/:path*', headers: [
