@@ -22,8 +22,11 @@ async (page) => {
 
   // ---------- Journey: 3D road + accessible list ----------
   await go('/');
-  await page.locator('.stage3d canvas').waitFor({timeout: 30000});
-  check(true, '3D canvas renders on the journey');
+  // Headless browsers without a GPU (Firefox on CI) have no WebGL: then the journey must show its 2D fallback.
+  const webgl = await page.evaluate(() => { const c = document.createElement('canvas'); return !!(c.getContext('webgl2') || c.getContext('webgl')); });
+  const road = webgl ? page.locator('.stage3d canvas') : page.getByRole('heading', {name: '3D view unavailable'});
+  await road.waitFor({timeout: 30000});
+  check(true, webgl ? '3D canvas renders on the journey' : 'Without WebGL the journey shows the 2D fallback and list link');
   const stars = page.getByRole('region', {name: 'Stars on your road'}).getByRole('button');
   check(await stars.count() >= 10, 'Every course task is listed as a focusable star button');
   const help = page.locator('#budget-help');
@@ -391,7 +394,7 @@ async (page) => {
   await page.reload();
   await page.waitForFunction(() => document.documentElement.dataset.theme === 'light');
   check(true, 'Light (dawn) theme survives refresh');
-  await page.locator('.stage3d canvas').waitFor();
+  await road.waitFor();
   await page.screenshot({path: 'output/playwright/journey-desktop-light.png'});
   await page.getByRole('combobox', {name: 'Appearance'}).selectOption('system');
   await page.emulateMedia({colorScheme: 'dark', reducedMotion: 'reduce'});
@@ -407,7 +410,7 @@ async (page) => {
   await page.waitForURL(/\/story$/);
   check(true, 'Mobile menu opens and navigates');
   await go('/');
-  await page.locator('.stage3d canvas').waitFor();
+  await road.waitFor();
   await page.screenshot({path: 'output/playwright/journey-mobile-dark.png', fullPage: true});
   for (const route of ['/', '/plan', '/digest', '/coach', '/escalations', '/studio/observe', '/studio/empathy', '/studio/define', '/studio/envision', '/studio/ideate', '/studio/journeys', '/studio/prototypes', '/studio/experiments', '/studio/ethics', '/story', '/reflect', '/course', '/learn', '/studio/research', '/studio/synthesis', '/report', '/coordinator', '/deck', '/privacy']) {
     for (const width of [320, 768, 1440]) {
