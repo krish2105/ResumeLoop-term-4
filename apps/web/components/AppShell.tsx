@@ -12,8 +12,9 @@ export const useTheme = () => useContext(ThemeContext);
 
 export const NAV: {heading: string; links: [string, string][]}[] = [
   {heading: 'Learner', links: [['/', 'Journey'], ['/plan', 'Plan (list view)'], ['/digest', 'What changed'], ['/coach', 'Coach'], ['/escalations', 'Coordinator queue']]},
-  {heading: 'Design studio', links: [['/studio/observe', 'Observe'], ['/studio/empathy', 'Empathy studio'], ['/studio/define', 'Define'], ['/studio/envision', 'Envision'],
+  {heading: 'Design studio', links: [['/studio/research', 'Research ops'], ['/studio/observe', 'Observe'], ['/studio/empathy', 'Empathy studio'], ['/studio/define', 'Define'], ['/studio/envision', 'Envision'],
     ['/studio/ideate', 'Ideate'], ['/studio/journeys', 'Journey maps'], ['/studio/prototypes', 'Prototype log'], ['/studio/experiments', 'Experiment lab'], ['/studio/ethics', 'Ethics and governance']]},
+  {heading: 'Class prep', links: [['/learn', 'Readings and quizzes']]},
   {heading: 'Present and reflect', links: [['/story', 'Story mode'], ['/reflect', 'Reflection journal'], ['/course', 'Course hub']]},
   {heading: 'Data', links: [['/review', 'Review queue'], ['/imports', 'Imports'], ['/settings', 'Settings']]},
 ];

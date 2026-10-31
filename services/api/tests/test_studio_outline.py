@@ -49,3 +49,24 @@ def test_course_hub_seed_is_idempotent_and_dates_stay_unverified(client):
     milestones = client.get('/api/studio/milestones').json()
     assert sum(m['weight'] for m in milestones) == 100 and all(m['status'] == 'unverified' for m in milestones)
     assert len(client.get('/api/studio/rubric').json()) == 16
+
+
+def test_readings_seed_and_spaced_repetition(client):
+    assert client.post('/api/studio-examples/readings').json()['loaded'] == 22
+    assert client.post('/api/studio-examples/readings').json()['loaded'] == 0
+    card = client.post('/api/studio/flashcards', json={'body': {'front': 'What is a Hill?', 'back': 'Who, what, wow'}}).json()
+    up = client.post(f"/api/studio/flashcards/{card['id']}/review", json={'correct': True, 'today': '2026-11-10'}).json()
+    assert up['box'] == 2 and up['due'] == '2026-11-12' and up['correct'] == 1
+    down = client.post(f"/api/studio/flashcards/{card['id']}/review", json={'correct': False, 'today': '2026-11-12'}).json()
+    assert down['box'] == 1 and down['due'] == '2026-11-13' and down['reviews'] == 2
+
+
+def test_interview_capture_needs_consent_then_becomes_note_and_codes(client):
+    iv = client.post('/api/studio/interviews', json={'body': {'participant_code': 'P07', 'date': '2026-11-14', 'guide': 'learner',
+        'moments': [{'t': 30, 'tag': 'does', 'text': 'Opened three apps to find the date'}, {'t': 95, 'tag': 'feels', 'text': 'Felt behind before starting'}]}}).json()
+    assert client.post(f"/api/studio/interviews/{iv['id']}/to-note").status_code == 409
+    client.post('/api/studio/participants', json={'body': {'code': 'P07', 'segment': 'learner', 'user_type': 'extreme-low', 'consent': 'consented', 'consent_date': '2026-11-13'}})
+    r = client.post(f"/api/studio/interviews/{iv['id']}/to-note").json()
+    assert r['codes'] == 2 and '[00:30]' in r['note']['text']
+    assert client.post(f"/api/studio/interviews/{iv['id']}/to-note").status_code == 409
+    assert client.post('/api/studio/participants', json={'body': {'code': 'P08', 'segment': 'learner', 'user_type': 'mainstream', 'note': 'email a@b.co'}}).status_code == 422

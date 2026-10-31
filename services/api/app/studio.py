@@ -282,6 +282,80 @@ class SdgCanvas(Base):
     risks: str = Short
 
 
+class Reading(Base):
+    week: int | None = Field(default=None, ge=1, le=12)
+    title: str = Field(min_length=3, max_length=200)
+    authors: str = Field(default='', max_length=200)
+    year: int | None = Field(default=None, ge=1990, le=2030)
+    source_kind: Literal['article', 'case', 'book']
+    required: bool = False
+    status: Literal['to-read', 'reading', 'done'] = 'to-read'
+    summary: str = Field(default='', max_length=3000)
+    key_concepts: str = Field(default='', max_length=600)
+    questions: str = Field(default='', max_length=600)
+
+
+class Flashcard(Base):
+    reading_id: str | None = None
+    front: str = Field(min_length=3, max_length=300)
+    back: str = Field(min_length=1, max_length=800)
+    box: int = Field(default=1, ge=1, le=5)
+    due: str = Field(default='2000-01-01', pattern=r'^\d{4}-\d{2}-\d{2}$')
+    reviews: int = Field(default=0, ge=0)
+    correct: int = Field(default=0, ge=0)
+
+
+class Participation(Base):
+    session_date: str = Field(pattern=r'^\d{4}-\d{2}-\d{2}$')
+    session_label: str = Field(min_length=2, max_length=120)
+    prepared: bool = False
+    readings_done: int = Field(default=0, ge=0, le=20)
+    contributions: str = Field(default='', max_length=1000)
+    questions_asked: int = Field(default=0, ge=0, le=50)
+    quiz_feeling: int | None = Field(default=None, ge=1, le=5)
+
+
+class Participant(Base):
+    code: str = Field(pattern=r'^P\d{2,3}$')
+    segment: Literal['learner', 'coordinator', 'other']
+    user_type: Literal['extreme-high', 'extreme-low', 'mainstream', 'analogous']
+    consent: Literal['invited', 'consented', 'declined', 'withdrawn'] = 'invited'
+    consent_date: str | None = Field(default=None, pattern=r'^\d{4}-\d{2}-\d{2}$')
+    planned: str = Field(default='', max_length=80)
+    done: bool = False
+    note: str = Field(default='', max_length=400)
+
+    @field_validator('note')
+    @classmethod
+    def no_contact(cls, v: str) -> str:
+        if CONTACT.search(v):
+            raise ValueError('Keep contact details outside ResumeLoop')
+        return v
+
+
+class Moment(BaseModel):
+    model_config = ConfigDict(extra='forbid', str_strip_whitespace=True)
+    t: int = Field(ge=0, le=36000)
+    tag: Literal['says', 'does', 'thinks', 'feels', 'need', 'note']
+    text: str = Field(min_length=1, max_length=600)
+
+
+class Interview(Base):
+    participant_code: str = Field(pattern=r'^P\d{2,3}$')
+    date: str = Field(pattern=r'^\d{4}-\d{2}-\d{2}$')
+    guide: Literal['learner', 'coordinator']
+    duration_s: int = Field(default=0, ge=0, le=36000)
+    moments: list[Moment] = Field(default_factory=list, max_length=200)
+    converted_note_id: str | None = None
+
+    @field_validator('moments')
+    @classmethod
+    def no_contact_moments(cls, v):
+        if any(CONTACT.search(m.text) for m in v):
+            raise ValueError('Remove emails and phone numbers from interview notes')
+        return v
+
+
 KINDS: dict[str, tuple[type[BaseModel], str | None]] = {
     'notes': (Note, None), 'codes': (Code, 'notes'), 'themes': (Theme, None), 'hmw': (Hmw, 'themes'),
     'ideas': (Idea, 'hmw'), 'votes': (Vote, 'ideas'), 'scores': (Score, None),
@@ -291,6 +365,8 @@ KINDS: dict[str, tuple[type[BaseModel], str | None]] = {
     'prototypes': (Prototype, None), 'risks': (Risk, None), 'roleplays': (Roleplay, None), 'reflections': (Reflection, None),
     'members': (Member, None), 'contributions': (Contribution, None), 'milestones': (Milestone, None),
     'rubric': (RubricCheck, None), 'sdg': (SdgCanvas, None),
+    'readings': (Reading, None), 'flashcards': (Flashcard, None), 'participation': (Participation, None),
+    'participants': (Participant, None), 'interviews': (Interview, None),
 }
 
 
@@ -492,3 +568,88 @@ def seed_course_hub(conn: sqlite3.Connection = Depends(db)):
     insert(conn, 'sdg', None, validate(SdgCanvas, {'goal': 'SDG 4 Quality Education (proposed, confirm with faculty)',
                                                    'targets': '4.3 equal access to education; 4.4 skills for youth and adults'}))
     return {'ok': True, 'loaded': n + 1}
+
+
+READINGS = [  # Bibliographic references from the unit outline (sections 2.4 and 2.7); no course text is reproduced.
+    (None, 'The Field Guide to Human-Centered Design', 'IDEO', 2019, 'book', True),
+    (1, 'Use Design Thinking to Navigate Ambiguity', 'Harvard Business Review', 2025, 'article', True),
+    (2, 'AI Wars in 2025', 'HBS case 725-484', 2025, 'case', True),
+    (3, 'How People Are Really Using Gen AI in 2025', 'Harvard Business Review', 2025, 'article', True),
+    (4, 'Innovation: Our Shared Responsibility', 'Anthony, Cobban, Painchaud, Parker', 2020, 'article', True),
+    (4, 'The Kind of Creative Thinking That Fuelled WeChat\'s Success', 'Birkinshaw, Ke, de Diego', 2019, 'article', True),
+    (4, 'How LinkedIn Redesigned Its HQ for Hybrid Work', 'Britz, Norwood', 2022, 'article', True),
+    (4, 'An Art and a Science: How to Apply Design Thinking in Data Science Challenges', 'Parzen, Lin, Ng, Li', 2023, 'case', True),
+    (5, 'AI-Generated "Workshop" Is Destroying Productivity', 'Harvard Business Review', 2025, 'article', True),
+    (5, 'SBR: IBM Design Thinking Case Study', 'Datar, Migdal, Hamilton', 2021, 'case', True),
+    (6, '5 Critical Skills Leaders Need in the Age of AI', 'Harvard Business Review', 2025, 'article', True),
+    (7, 'The Right Way to Lead Design Thinking', 'Bason, Austin', 2019, 'article', True),
+    (7, 'What Happens When Data Scientists and Designers Work Together', 'Malmgren, Wettersten', 2018, 'article', True),
+    (7, 'Design Thinking and Innovation at Apple', 'Case study', None, 'case', True),
+    (8, 'SBR 2: SAP Design Thinking Case Study', 'Saucedo, Shiv', 2016, 'case', True),
+    (9, 'Hope and Grit: How Human-Centered Product Design Enhanced Student Mental Health', 'Rochlin', 2022, 'case', True),
+    (10, 'Moderna: Democratizing Artificial Intelligence', 'Bojinov, Lakhani, Hildebrandt, Weber', 2025, 'case', True),
+    (11, 'Leveraging AI in Business: 3 Real-World Examples', 'Article', None, 'article', True),
+    (None, 'Design Thinking', 'Brown', 2008, 'article', False),
+    (None, 'Design for Action', 'Martin, Brown', 2015, 'article', False),
+    (None, 'Design Thinking Comes of Age', 'Kolko', 2015, 'article', False),
+    (None, 'AI and Strategy: Lessons from Real-World Cases', 'Chan Kim, Mauborgne, Mi', 2025, 'article', False),
+]
+
+
+@examples_router.post('/readings')
+def seed_readings(conn: sqlite3.Connection = Depends(db)):
+    if conn.execute("SELECT 1 FROM studio_items WHERE kind='readings'").fetchone():
+        return {'ok': True, 'loaded': 0}
+    for week, title, authors, year, kind, required in READINGS:
+        insert(conn, 'readings', None, validate(Reading, {'week': week, 'title': title, 'authors': authors, 'year': year,
+                                                          'source_kind': kind, 'required': required}))
+    return {'ok': True, 'loaded': len(READINGS)}
+
+
+class Grade(BaseModel):
+    model_config = ConfigDict(extra='forbid')
+    correct: bool
+    today: str = Field(pattern=r'^\d{4}-\d{2}-\d{2}$')
+
+
+LEITNER_DAYS = {1: 1, 2: 2, 3: 4, 4: 8, 5: 16}
+
+
+@router.post('/flashcards/{item_id}/review')
+def review_card(item_id: str, x: Grade, conn: sqlite3.Connection = Depends(db)):
+    """Leitner spaced repetition: correct moves a card up a box (longer gap); wrong sends it back to box 1."""
+    from datetime import date, timedelta
+    card = json.loads(get_row(conn, 'flashcards', item_id)['body_json'])
+    box = min(5, card['box'] + 1) if x.correct else 1
+    due = (date.fromisoformat(x.today) + timedelta(days=LEITNER_DAYS[box])).isoformat()
+    card.update(box=box, due=due, reviews=card['reviews'] + 1, correct=card['correct'] + int(x.correct))
+    with conn:
+        conn.execute('UPDATE studio_items SET body_json=?, updated_at=CURRENT_TIMESTAMP WHERE id=?', (json.dumps(validate(Flashcard, card)), item_id))
+    return out(get_row(conn, 'flashcards', item_id))
+
+
+@router.post('/interviews/{item_id}/to-note')
+def interview_to_note(item_id: str, conn: sqlite3.Connection = Depends(db)):
+    """Turn a captured interview into a research note plus coded moments (needs recorded consent)."""
+    iv = json.loads(get_row(conn, 'interviews', item_id)['body_json'])
+    if iv.get('converted_note_id'):
+        raise HTTPException(409, 'Already converted to a note')
+    p = conn.execute("SELECT body_json FROM studio_items WHERE kind='participants' AND json_extract(body_json,'$.code')=?", (iv['participant_code'],)).fetchone()
+    if p is None or json.loads(p['body_json'])['consent'] != 'consented':
+        raise HTTPException(409, 'Record consent for this participant in the tracker first')
+    text = '\n'.join(f"[{m['t'] // 60:02d}:{m['t'] % 60:02d}] {m['text']}" for m in iv['moments'])
+    if len(text) < 20:
+        raise HTTPException(422, 'Capture a few moments before converting')
+    note = insert(conn, 'notes', None, validate(Note, {'participant_code': iv['participant_code'], 'context': f"Interview {iv['date']} ({iv['guide']} guide)",
+                                                       'text': text, 'consent': {'participation': True, 'anonymised_notes': True, 'quotes': False}, 'synthetic': False}))
+    for m in iv['moments']:
+        if m['tag'] in CATEGORIES_SET:
+            insert(conn, 'codes', note['id'], {'label': m['text'][:60], 'quote': m['text'][:600], 'category': m['tag'], 'status': 'accepted',
+                                                'origin': 'human', 'theme_id': None, 'contributor': None})
+    iv['converted_note_id'] = note['id']
+    with conn:
+        conn.execute('UPDATE studio_items SET body_json=?, updated_at=CURRENT_TIMESTAMP WHERE id=?', (json.dumps(iv), item_id))
+    return {'note': note, 'codes': sum(m['tag'] in CATEGORIES_SET for m in iv['moments'])}
+
+
+CATEGORIES_SET = {'says', 'does', 'thinks', 'feels', 'need'}

@@ -6,9 +6,24 @@ import {api, ApiError, DEMO, store} from './client';
 export type Item = {id: string; kind: string; parent_id: string | null; created_at: string; updated_at: string; [k: string]: any}; // eslint-disable-line @typescript-eslint/no-explicit-any
 export const KINDS = ['notes', 'codes', 'themes', 'hmw', 'ideas', 'votes', 'scores', 'experiments', 'sessions',
   'observations', 'personas', 'povs', 'storyboards', 'hills', 'scenarios', 'journeys', 'sprints', 'prototypes', 'risks', 'roleplays',
-  'reflections', 'members', 'contributions', 'milestones', 'rubric', 'sdg'] as const;
+  'reflections', 'members', 'contributions', 'milestones', 'rubric', 'sdg', 'readings', 'flashcards', 'participation', 'participants', 'interviews'] as const;
 export type Kind = typeof KINDS[number];
 
+const LEITNER: Record<number, number> = {1: 1, 2: 2, 3: 4, 4: 8, 5: 16};
+// Bibliographic references from the unit outline (mirrors studio.py READINGS).
+export const READING_LIST: [number | null, string, string, number | null, string, boolean][] = [
+  [null, 'The Field Guide to Human-Centered Design', 'IDEO', 2019, 'book', true], [1, 'Use Design Thinking to Navigate Ambiguity', 'Harvard Business Review', 2025, 'article', true],
+  [2, 'AI Wars in 2025', 'HBS case 725-484', 2025, 'case', true], [3, 'How People Are Really Using Gen AI in 2025', 'Harvard Business Review', 2025, 'article', true],
+  [4, 'Innovation: Our Shared Responsibility', 'Anthony, Cobban, Painchaud, Parker', 2020, 'article', true], [4, "The Kind of Creative Thinking That Fuelled WeChat's Success", 'Birkinshaw, Ke, de Diego', 2019, 'article', true],
+  [4, 'How LinkedIn Redesigned Its HQ for Hybrid Work', 'Britz, Norwood', 2022, 'article', true], [4, 'An Art and a Science: How to Apply Design Thinking in Data Science Challenges', 'Parzen, Lin, Ng, Li', 2023, 'case', true],
+  [5, 'AI-Generated "Workshop" Is Destroying Productivity', 'Harvard Business Review', 2025, 'article', true], [5, 'SBR: IBM Design Thinking Case Study', 'Datar, Migdal, Hamilton', 2021, 'case', true],
+  [6, '5 Critical Skills Leaders Need in the Age of AI', 'Harvard Business Review', 2025, 'article', true], [7, 'The Right Way to Lead Design Thinking', 'Bason, Austin', 2019, 'article', true],
+  [7, 'What Happens When Data Scientists and Designers Work Together', 'Malmgren, Wettersten', 2018, 'article', true], [7, 'Design Thinking and Innovation at Apple', 'Case study', null, 'case', true],
+  [8, 'SBR 2: SAP Design Thinking Case Study', 'Saucedo, Shiv', 2016, 'case', true], [9, 'Hope and Grit: How Human-Centered Product Design Enhanced Student Mental Health', 'Rochlin', 2022, 'case', true],
+  [10, 'Moderna: Democratizing Artificial Intelligence', 'Bojinov, Lakhani, Hildebrandt, Weber', 2025, 'case', true], [11, 'Leveraging AI in Business: 3 Real-World Examples', 'Article', null, 'article', true],
+  [null, 'Design Thinking', 'Brown', 2008, 'article', false], [null, 'Design for Action', 'Martin, Brown', 2015, 'article', false],
+  [null, 'Design Thinking Comes of Age', 'Kolko', 2015, 'article', false], [null, 'AI and Strategy: Lessons from Real-World Cases', 'Chan Kim, Mauborgne, Mi', 2025, 'article', false],
+];
 // Mirrors services/api/app/studio.py COMPONENTS / RUBRIC (from the outline, as recorded in docs/ASSESSMENT.md).
 export const COURSE_HUB = {
   components: [['Class participation (in-class quizzes)', 10], ['Individual assignments (reading quizzes)', 10],
@@ -111,6 +126,35 @@ export const studio = {
     for (const n of examples!.notes) await studio.create('notes', {...n, consent: {participation: true, anonymised_notes: true, quotes: true}, synthetic: true});
     await studio.create('experiments', {...examples!.experiment, frozen_at: null, protocol_sha256: null, synthetic: true});
     return {loaded: examples!.notes.length + 1, notice: examples!.notice};
+  },
+  seedReadings: async (): Promise<{loaded: number}> => {
+    if (!DEMO) return api('/api/studio-examples/readings', {method: 'POST'});
+    if (all().some(i => i.kind === 'readings')) return {loaded: 0};
+    for (const [week, title, authors, year, source_kind, required] of READING_LIST) await studio.create('readings', {week, title, authors, year, source_kind, required, status: 'to-read', summary: '', key_concepts: '', questions: ''});
+    return {loaded: READING_LIST.length};
+  },
+  reviewCard: async (id: string, correct: boolean): Promise<Item> => {
+    const today = new Date().toISOString().slice(0, 10);
+    if (!DEMO) return api(`/api/studio/flashcards/${id}/review`, {method: 'POST', body: JSON.stringify({correct, today})});
+    const card = all().find(i => i.id === id) || fail(404, 'Unknown card');
+    const box = correct ? Math.min(5, card.box + 1) : 1;
+    const due = new Date(Date.parse(today) + LEITNER[box] * 86400000).toISOString().slice(0, 10);
+    return studio.update('flashcards', id, {box, due, reviews: card.reviews + 1, correct: card.correct + (correct ? 1 : 0)});
+  },
+  interviewToNote: async (id: string): Promise<{codes: number}> => {
+    if (!DEMO) return api(`/api/studio/interviews/${id}/to-note`, {method: 'POST'});
+    const iv = all().find(i => i.id === id) || fail(404, 'Unknown interview');
+    if (iv.converted_note_id) fail(409, 'Already converted to a note');
+    const p = all().find(i => i.kind === 'participants' && i.code === iv.participant_code);
+    if (!p || p.consent !== 'consented') fail(409, 'Record consent for this participant in the tracker first');
+    const text = iv.moments.map((m: {t: number; text: string}) => `[${String(Math.floor(m.t / 60)).padStart(2, '0')}:${String(m.t % 60).padStart(2, '0')}] ${m.text}`).join('\n');
+    if (text.length < 20) fail(422, 'Capture a few moments before converting');
+    const note = await studio.create('notes', {participant_code: iv.participant_code, context: `Interview ${iv.date} (${iv.guide} guide)`, text,
+      consent: {participation: true, anonymised_notes: true, quotes: false}, synthetic: false});
+    let codes = 0;
+    for (const m of iv.moments) if (['says', 'does', 'thinks', 'feels', 'need'].includes(m.tag)) { await studio.create('codes', {label: m.text.slice(0, 60), quote: m.text, category: m.tag, status: 'accepted', origin: 'human', theme_id: null}, note.id); codes++; }
+    await studio.update('interviews', id, {converted_note_id: note.id});
+    return {codes};
   },
   seedCourseHub: async (): Promise<{loaded: number}> => {
     if (!DEMO) return api('/api/studio-examples/course-hub', {method: 'POST'});
