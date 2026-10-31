@@ -41,7 +41,7 @@ async (page) => {
   await page.getByRole('heading', {name: 'Pilot course in this browser'}).waitFor();
   const fp = (await page.locator('.meta.mono').first().innerText()).match(/Fingerprint (\w+)/)[1];
   check(fp.length === 12, 'The loaded course shows its fingerprint');
-  check((await page.locator('.sideFoot').innerText()).includes('Browser pilot'), 'The sidebar says a browser pilot is active');
+  check((await page.locator('.demoPill').textContent()) === 'Browser pilot', 'The top bar says a browser pilot is active');
 
   // ---------- Learner plans, reads the digest and asks the coach ----------
   await page.goto(BASE + '/');
@@ -97,7 +97,7 @@ async (page) => {
   await page.getByRole('heading', {name: 'Start a browser pilot'}).waitFor();
   await page.goto(BASE + '/');
   await help.filter({hasText: 'tasks lit'}).waitFor();
-  check(!(await page.locator('.sideFoot').innerText()).includes('Browser pilot'), 'Leaving the pilot brings back the fictional demo course');
+  check((await page.locator('.demoPill').textContent()) === 'Demo · fictional data', 'Leaving the pilot brings back the fictional demo course');
 
   // ---------- Phone width ----------
   await page.setViewportSize({width: 320, height: 800});

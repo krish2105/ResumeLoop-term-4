@@ -14,6 +14,8 @@ type Theme = {resolved: 'light' | 'dark'; reducedMotion: boolean};
 const ThemeContext = createContext<Theme>({resolved: 'dark', reducedMotion: false});
 export const useTheme = () => useContext(ThemeContext);
 
+/** Screens that need the local API; the public site leaves them out of the menu. */
+export const LOCAL_ONLY = ['/review', '/imports'];
 export const NAV: {heading: string; links: [string, string][]}[] = [
   {heading: 'Learner', links: [['/', 'Journey'], ['/plan', 'Plan (list view)'], ['/digest', 'What changed'], ['/coach', 'Coach'], ['/escalations', 'Coordinator queue']]},
   {heading: 'Design studio', links: [['/studio/research', 'Research ops'], ['/studio/observe', 'Observe'], ['/studio/empathy', 'Empathy studio'], ['/studio/synthesis', 'Synthesis board'], ['/studio/define', 'Define'], ['/studio/envision', 'Envision'],
@@ -25,6 +27,7 @@ export const NAV: {heading: string; links: [string, string][]}[] = [
 
 export default function AppShell({children}: {children: React.ReactNode}) {
   const path = usePathname();
+  const nav = DEMO ? NAV.map(g => ({...g, links: g.links.filter(([href]) => !LOCAL_ONLY.includes(href))})) : NAV;
   const [mode, setMode] = useState<Mode>('system');
   const [resolved, setResolved] = useState<'light' | 'dark'>('dark');
   const [reducedMotion, setReducedMotion] = useState(false);
@@ -58,18 +61,17 @@ export default function AppShell({children}: {children: React.ReactNode}) {
         <div className="brand"><span className="brandMark" aria-hidden="true">R</span><div><strong>ResumeLoop</strong><small>Find your way back to learning</small></div>
           <button className="menuToggle outlineBtn" aria-expanded={menuOpen} aria-controls="main-nav" onClick={() => setMenuOpen(o => !o)}>{menuOpen ? 'Close' : 'Menu'}</button></div>
         <nav id="main-nav" aria-label="Main navigation">
-          {NAV.map(group => <div key={group.heading} className="navGroup"><div className="navHeading">{group.heading}</div>
+          {nav.map(group => <div key={group.heading} className="navGroup"><div className="navHeading">{group.heading}</div>
             {group.links.map(([href, label]) => <Link key={href} href={href} className={path === href ? 'nav active' : 'nav'} aria-current={path === href ? 'page' : undefined}>{label}</Link>)}
           </div>)}
         </nav>
-        <div className="sideFoot"><strong>{DEMO ? (pilotName ? 'Browser pilot' : 'Public demo') : 'Local app'}</strong><p>{DEMO ? (pilotName ? `${pilotName}. No AI; your progress stays in this browser until you download it.` : 'Fictional course and recorded AI answers. Your edits stay in this browser.') : 'Fictional course data. AI runs on this computer through Ollama.'}</p></div>
       </aside>
       <Splitter r={side} label="Resize sidebar" controls="sidebar" />
       <main className="main" id="main-content" tabIndex={-1}>
         <header className="topbar">
           <div className="crumbRow">{side.collapsed && <button className="outlineBtn showSide" onClick={() => side.setCollapsed(false)}>Show menu</button>}
             <div className="breadcrumb">RESUMELOOP <span>/</span> {current}</div></div>
-          <div className="toolbar">{DEMO && <span className="pill demoPill">Demo · fictional data</span>}
+          <div className="toolbar">{DEMO && <span className="pill demoPill" title={pilotName || undefined}>{pilotName ? 'Browser pilot' : 'Demo · fictional data'}</span>}
             <LearnerSwitch />
             <label htmlFor="theme" className="sr-only">Appearance</label>
             <select id="theme" value={mode} onChange={e => setMode(e.target.value as Mode)}><option value="system">System</option><option value="light">Light (dusk paper)</option><option value="dark">Dark (ember night)</option></select></div>
@@ -82,5 +84,5 @@ export default function AppShell({children}: {children: React.ReactNode}) {
 
 export function PageHead({eyebrow, title, intro, children, art}: {eyebrow: string; title: string; intro: string; children?: React.ReactNode; art?: ArtName}) {
   return <div className={'hero' + (art ? ' heroArt' : '')}><div><span className="eyebrow">{eyebrow}</span><h1>{title}</h1><p>{intro}</p>{art && children}</div>
-    {art ? <Art name={art} className="heroPicture" sizes="(max-width: 760px) 100vw, 420px" decorative eager /> : children}</div>;
+    {art ? <Art name={art} className="heroPicture" sizes="(max-width: 760px) 100vw, 560px" decorative eager /> : children}</div>;
 }

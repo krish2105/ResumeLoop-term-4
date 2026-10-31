@@ -7,7 +7,7 @@ import {API, DEMO} from '@/lib/client';
 type RecordRow = {id: string; title: string; subtitle: string; metric_value: string; metric_label: string; status: string; evidence: string; source_type: string};
 
 export default function ReviewPage() {
-  if (DEMO) return <LocalOnly title="Review queue" />;
+  if (DEMO) return <LocalOnly />;
   return <ReviewQueue />;
 }
 

@@ -175,13 +175,14 @@ select,input,textarea{max-width:100%}
 [data-theme=dark] .artLight{display:none}[data-theme=dark] .artDark{display:block}
 /* The art is light paper; in the dark theme it is dimmed a little so it does not glare (a dark pair needs no dimming). */
 [data-theme=dark] .art:not(.artDark):not(.artLight){filter:brightness(.86) saturate(.95)}
-.heroArt{display:grid;grid-template-columns:minmax(0,1fr) minmax(220px,380px);gap:24px;align-items:center}
+.heroArt{display:grid;grid-template-columns:minmax(0,1fr) minmax(300px,560px);gap:clamp(20px,3vw,40px);align-items:center}
 .heroPicture{width:100%}
-@media(max-width:760px){.heroArt{grid-template-columns:minmax(0,1fr)}.heroPicture{max-height:200px}.heroPicture .art{height:200px;object-fit:cover;object-position:left center}}
+@media(max-width:1100px){.heroArt{grid-template-columns:minmax(0,1fr) minmax(260px,420px)}}
+@media(max-width:760px){.heroArt{grid-template-columns:minmax(0,1fr)}.heroPicture{max-height:240px}.heroPicture .art{height:240px;object-fit:cover;object-position:left center}}
 .artBand{margin:16px 0 4px}
-.emptyArt{display:grid;grid-template-columns:minmax(120px,200px) minmax(0,1fr);gap:18px;align-items:center}
+.emptyArt{display:grid;grid-template-columns:minmax(140px,280px) minmax(0,1fr);gap:24px;align-items:center}
 .emptyArt .artFrame{border:0;background:transparent}
-@media(max-width:480px){.emptyArt{grid-template-columns:minmax(0,1fr)}.emptyArt .artFrame{max-width:180px}}
+@media(max-width:480px){.emptyArt{grid-template-columns:minmax(0,1fr)}.emptyArt .artFrame{max-width:220px}}
 .roadFallback .artFrame{margin:12px 0}
 .artCredit{font-size:12px}
 /* Slides: the art fills the slide and the text sits in the empty paper on the right, always on light paper. */
@@ -199,7 +200,7 @@ select,input,textarea{max-width:100%}
 }
 @media print{.slide.withArt{-webkit-print-color-adjust:exact;print-color-adjust:exact}}
 .authLayout{display:grid;grid-template-columns:minmax(0,460px) minmax(0,1fr);gap:24px;align-items:start}
-.authArt{max-width:560px}
+.authArt{max-width:680px}
 @media(max-width:860px){.authLayout{grid-template-columns:minmax(0,1fr)}.authArt{order:-1;max-height:220px}.authArt .art{height:220px;object-fit:cover;object-position:left center}}
 .notFound{display:grid;gap:16px;max-width:760px}
 
