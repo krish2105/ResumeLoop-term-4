@@ -378,7 +378,8 @@ async (page) => {
   await panelSep.focus(); await page.keyboard.press('ArrowLeft');
   check(Number(await panelSep.getAttribute('aria-valuenow')) === p0 + 16, 'Road panel widens from the keyboard');
   await page.reload(); await page.locator('.journey2').waitFor();
-  check(Number(await page.getByRole('separator', {name: 'Resize the road panel'}).getAttribute('aria-valuenow')) === p0 + 16, 'Panel width persists after refresh');
+  const restoredWidth = await page.waitForFunction(w => document.querySelector('[role=separator][aria-label="Resize the road panel"]')?.getAttribute('aria-valuenow') === String(w), p0 + 16, {timeout: 10000}).then(() => true, () => false);
+  check(restoredWidth, 'Panel width persists after refresh');
 
   // ---------- Original journeys still work ----------
   await go('/imports');

@@ -6,13 +6,17 @@ import {useCallback, useEffect, useRef, useState} from 'react';
 export function useResizable(key: string, {initial, min, max, edge}: {initial: number; min: number; max: number; edge: 'left' | 'right'}) {
   const [size, setSize] = useState(initial);
   const [collapsed, setCollapsed] = useState(false);
+  const restored = useRef(false);  // never write the default size over a saved one before it has been read
   useEffect(() => {
     try {
       const saved = JSON.parse(localStorage.getItem('rl-size-' + key) || 'null');
       if (saved && typeof saved.size === 'number') { setSize(Math.min(max, Math.max(min, saved.size))); setCollapsed(!!saved.collapsed); }
     } catch { /* ignore */ }
   }, [key, min, max]);
-  useEffect(() => { try { localStorage.setItem('rl-size-' + key, JSON.stringify({size, collapsed})); } catch { /* ignore */ } }, [key, size, collapsed]);
+  useEffect(() => {
+    if (!restored.current) { restored.current = true; return; }  // first run still holds the default size
+    try { localStorage.setItem('rl-size-' + key, JSON.stringify({size, collapsed})); } catch { /* ignore */ }
+  }, [key, size, collapsed]);
   const clamp = useCallback((n: number) => Math.min(max, Math.max(min, Math.round(n))), [min, max]);
   return {size, collapsed, setCollapsed, setSize: (n: number) => setSize(clamp(n)), clamp, min, max, initial, edge};
 }
