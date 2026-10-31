@@ -36,19 +36,35 @@ export function useJourney() {
     return () => { live = false; };
   }, [progress, course]);
 
+  const pending = useRef<ProgressState | null>(null);
+  const write = useCallback(async (state: ProgressState, keepalive = false) => {
+    try {
+      const saved = await learning.saveProgress(versionRef.current, state, keepalive);
+      versionRef.current = saved.version;
+      setSave('saved');
+    } catch (e) {
+      setSave(e instanceof ApiError && e.status === 409 ? 'conflict' : 'error');
+    }
+  }, []);
   const persist = useCallback((state: ProgressState) => {
     if (timer.current) clearTimeout(timer.current);
     setSave('saving');
-    timer.current = setTimeout(async () => {
-      try {
-        const saved = await learning.saveProgress(versionRef.current, state);
-        versionRef.current = saved.version;
-        setSave('saved');
-      } catch (e) {
-        setSave(e instanceof ApiError && e.status === 409 ? 'conflict' : 'error');
-      }
-    }, 450);
-  }, []);
+    pending.current = state;
+    timer.current = setTimeout(() => { pending.current = null; write(state); }, 450);
+  }, [write]);
+  // A refresh or tab close inside the debounce window must not lose the change: flush it with keepalive.
+  useEffect(() => {
+    const flush = () => {
+      if (!pending.current) return;
+      if (timer.current) clearTimeout(timer.current);
+      const state = pending.current; pending.current = null;
+      write(state, true);
+    };
+    const onHide = () => { if (document.visibilityState === 'hidden') flush(); };
+    window.addEventListener('pagehide', flush);
+    document.addEventListener('visibilitychange', onHide);
+    return () => { window.removeEventListener('pagehide', flush); document.removeEventListener('visibilitychange', onHide); };
+  }, [write]);
 
   const update = useCallback((change: (s: ProgressState) => ProgressState) => {
     setProgress(prev => {

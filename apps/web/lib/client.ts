@@ -76,8 +76,8 @@ export const learning = {
     catch (e) { throw new ApiError(422, 'The course source is inconsistent', e instanceof PlanInputError ? e.errors : String(e)); }
   },
   progress: async (): Promise<Progress> => DEMO ? store.get(pkey(), demoDefault()) : api('/api/learner/progress' + lq()),
-  saveProgress: async (expected: number, state: ProgressState): Promise<Progress> => {
-    if (!DEMO) return api('/api/learner/progress' + lq(), json({expected_version: expected, state}, 'PUT'));
+  saveProgress: async (expected: number, state: ProgressState, keepalive = false): Promise<Progress> => {
+    if (!DEMO) return api('/api/learner/progress' + lq(), {...json({expected_version: expected, state}, 'PUT'), keepalive});
     const current = store.get(pkey(), demoDefault());
     if (current.version !== expected) throw new ApiError(409, 'Progress changed in another tab. Reload before saving.');
     const next = {version: expected + 1, state, updated_at: new Date().toISOString()};

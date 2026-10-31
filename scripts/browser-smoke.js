@@ -36,8 +36,9 @@ async (page) => {
   check((await text(help)) !== before && (await slider.inputValue()) === '90', 'Keyboard changes the time budget, re-plans and autosaves');
   await page.screenshot({path: 'output/playwright/journey-desktop-dark.png'});
   const next = await text(page.getByRole('region', {name: 'Selected task'}).getByRole('heading'));
+  const putDone = page.waitForResponse(r => r.url().includes('/api/learner/progress') && r.request().method() === 'PUT');
   await page.getByRole('button', {name: 'Mark complete'}).click();
-  await page.getByRole('status').filter({hasText: 'Saved'}).waitFor();
+  await putDone;
   await page.reload(); await page.locator('.journey2').waitFor();
   await stars.first().waitFor();
   check(await stars.filter({hasText: next}).filter({hasText: 'Completed'}).count() === 1, 'Completed task persists after refresh');
