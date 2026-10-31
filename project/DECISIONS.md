@@ -33,4 +33,6 @@
 | 2026-11-01 | Model calls use temperature 0 and seed 7 | Evaluation must be reproducible; the earlier 0.1 temperature moved results between runs | A model that ignores seeds |
 | 2026-11-01 | The coach may cite a computed change log (`CL-<task>`) for the selected task | "What changed?" is a fact the code already knows; the model only phrases it | Never: the change log stays deterministic |
 | 2026-11-01 | Prefer a decline over a plausible answer when a version claim is not in the cited passage | The eval found a hallucinated "added in version 2" answer that passed the other guards | A larger real question set shows too many declines |
+| 2026-11-01 | Pilot runs in the browser with files instead of a hosted API | Owner's choice: no cost, no account, no learner data on a server; progress travels only as files people choose to send | A pilot needs live coordinator views or more than a handful of learners |
+| 2026-11-01 | Pilot coach shows the two closest passages instead of one | Without a model nothing combines passages; the date for the quiz was in the second-ranked passage | A hosted model is approved |
 

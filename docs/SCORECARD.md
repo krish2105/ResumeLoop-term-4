@@ -1,4 +1,23 @@
-# ResumeLoop scorecard — updated 1 November 2026
+# ResumeLoop scorecard — updated 1 November 2026 (browser pilot)
+
+## Built in this round
+1. **Browser pilot:** a real course can now be piloted on the public site with no server: approved course file, in-browser plan, computed digest, closest-passage coach, progress files under codes, coordinator class view and CSV. 19-check pilot test in Chromium and WebKit, run in CI.
+2. **Academic material:** framework section with eight references checked against publishers or DOIs, and a 14-day fieldwork sprint tied to the rubric.
+
+| Perspective | Before | Now | What still caps it |
+|---|---|---|---|
+| CTO (engineering) | 95 | **95** | SQLite; no hosted monitoring; no real-device or screen-reader run |
+| CEO (product and business) | 48 | **48** | No real users, pilot or buyer evidence |
+| AI engineer | 95 | **95** | Fictional 59-question set; 7B local model |
+| Course-outline coverage | 99 | **99** | Faculty confirmation of frameworks and dates |
+| Design Thinking professor (if submitted today) | 50 | **55** | The framework is now grounded; the research itself is still missing. The sprint plan's estimates: 70–75 after interviews and synthesis, 80–85 after co-design and testing, 85–95 with the pilot and your reflection |
+| Real MVP | 82 | **86** | Pilot-ready with no server; 90 needs 3–5 real learners using it for one to two weeks |
+| Real SaaS | 63 | **63** | Hosted API, Postgres, SSO, TLS, billing, independent security review |
+| **Overall (weighted for this unit)** | ≈ 76 | **≈ 77** | The rest is your fieldwork (`docs/FIELDWORK_SPRINT.md`) |
+
+---
+
+## Remaining gaps closed — 1 November 2026
 
 ## Built since the last score
 1. **Tenancy and accounts:** CSV review sandbox scoped per organisation; persistent sign-in limit; signed-out 401s now carry CORS headers (a real bug found in Docker: the sign-in redirect never happened).

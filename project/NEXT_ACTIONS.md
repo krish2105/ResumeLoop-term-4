@@ -29,6 +29,8 @@ Updated 23 October 2026. Four project hours/week is the default; all five projec
 - [x] (31 Oct) Ember dusk redesign, resizable panels, 3D rebuild, nine outline-aligned screens; 109/109 smoke, 80 axe scans 0 violations.
 - [x] (31 Oct) Safari (WebKit) smoke 143/143 after fixing a stale-cache bug; WebKit and Firefox added to CI.
 - [x] (1 Nov) Standalone non-root Docker images (441 MB web); CSV sandbox tenancy; persistent sign-in limit; phone fixes from iPhone emulation.
+- [x] (1 Nov) Browser pilot on the public site; framework document; fieldwork sprint plan.
+- [ ] **NEXT (owner):** follow `docs/FIELDWORK_SPRINT.md`; run the browser pilot with 3–5 learners on a course you may share.
 - [ ] **NEXT (engineering, owner-assisted):** install Xcode for the iPhone Simulator, then a real-phone and VoiceOver pass on journey, coach, empathy studio and reflection journal; eyeball contrast over the 3D canvas.
 - [ ] **NEXT (owner):** use the Course hub and Reflection journal from the first session; record real observations only after consent.
 - [x] (31 Oct) Budget + last completed session → explainable feasible plan → chosen task → saved progress → refresh/resume (3D road + list view).

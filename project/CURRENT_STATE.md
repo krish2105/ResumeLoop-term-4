@@ -2,6 +2,16 @@
 
 Last updated: **23 October 2026**. User requested a complete cross-account continuation package and publication to `https://github.com/krish2105/ResumeLoop-term-4`. **`PROGRESS.md`** remains the status/run authority; **`NEW_ACCOUNT_HANDOFF.md`** and **`prompts/10_NEW_ACCOUNT_HANDOFF.md`** provide the transfer checklist and paste-ready prompt.
 
+## 1 November 2026 (later) — browser pilot and academic plan (latest)
+
+**VERIFIED (commands run):** `scripts/pilot-smoke.js` against a `NEXT_PUBLIC_DEMO_MODE=1` build on port 3001 → **19/19 in Chromium and in WebKit**, no console errors (refuses a cyclic, unknown-source course file; needs the permission tick; fingerprint; empty pilot progress that persists; computed digest of 7 changes; coach cites S3-p2 for the quiz date and declines an off-topic question; learner code refuses a name; progress file has no notes; roll-up shows two learners and refuses a file for another course; CSV; leaving the pilot restores the fictional course; no overflow at 320px). axe WCAG 2.2 AA on 11 pilot scans, light and dark → 0 violations. Live build: smoke 146/146, axe 112 scans 0 violations. `npm run test:parity` → 60/60 planner cases and 7/7 change descriptions match Python. pytest 107 passed. References in `docs/FRAMEWORK.md` checked against publishers, DOIs or library records.
+
+**Changed:** new `apps/web/lib/pilot.ts`, `lib/changes.ts`, `components/PilotPanel.tsx`, `scripts/changes-parity.ts`, `scripts/pilot-smoke.js`, `docs/FRAMEWORK.md`, `docs/FIELDWORK_SPRINT.md`; edited `lib/client.ts`, `lib/assist.ts`, `lib/types.ts`, `app/coordinator/page.tsx`, `app/settings/page.tsx`, `app/coach/page.tsx`, `app/page.tsx`, `components/AppShell.tsx`, `package.json`, `.github/workflows/ci.yml`, `docs/SOURCES.md`, `README.md`.
+
+**UNTESTED / open:** a real pilot (no learners yet); the iPhone Simulator (Xcode not installed: `/Applications/Xcode.app` is absent, so `xcode-select -s` has nothing to select); VoiceOver/NVDA; real fieldwork and reflection.
+
+**Next runnable task:** owner sends the faculty questions, then follows `docs/FIELDWORK_SPRINT.md` from day 1.
+
 ## 1 November 2026 — remaining gaps closed (latest)
 
 **VERIFIED (commands run):** `pytest` → **107 passed** (new: sandbox cross-tenant denial and legacy-table upgrade, sign-in limit across a new client, CORS on 401 — confirmed failing on the old middleware order — change-log citation, compound number words, version-claim guard). `scripts/eval_coach.py` run twice with temperature 0 and seed 7 → identical: answer 0.976, citation 0.975, abstain 1.0, injection 1.0, quote 0.824, digest 1.0. Browser smoke **146/146 in Chromium and WebKit** locally; axe 112 scans 0 violations; axe WCAG 2.2 AA on 10 routes in an emulated touch iPhone, 0 violations. CI run 41239178208 on `b9213f3` green: 145 checks each in Chromium, WebKit, Firefox (no Ollama in CI). Vercel deployed; live demo on emulated iPhone: 3D renders, 16px fields, no overflow, no console errors. Docker on Colima: non-root `app`/`node`, web image 441 MB, signed-out `/story` → `/login?next=%2Fstory`, sign-up through the form, journey plan and 3D canvas load, 5 failed logins → 429 that survives `docker compose restart api`; stack and Colima stopped.

@@ -117,3 +117,11 @@ Initial Git publication completed: root commit `29dfb5c6e20659ced07cf12736a6ddc1
 
 **Verification:** 107 pytest; eval repeatable at 97.6/97.5/100/100 with no wrong answers; smoke 146 locally and 145 in CI in three browsers; axe clean on desktop and touch; Docker flow checked in a browser. iPhone Simulator not available (no Xcode). Scorecard ≈ 76.
 
+### 2026-11-01 (later) — Browser pilot and academic plan
+
+**User steering:** raise the professor and real-MVP scores to 90; chose a browser-only pilot over hosting the API.
+
+**Work:** explained that both scores are capped by real evidence that cannot be generated. Built the browser pilot (course file checks, in-browser digest and coach, progress files, coordinator roll-up); TypeScript change diff with a Python parity check; pilot e2e test in CI; framework document with checked references; fieldwork sprint plan.
+
+**Verification:** pilot smoke 19/19 in Chromium and WebKit; axe clean on pilot screens; live smoke 146/146; parity and pytest green. Professor ≈ 55 and MVP ≈ 86 until fieldwork and a real pilot exist.
+

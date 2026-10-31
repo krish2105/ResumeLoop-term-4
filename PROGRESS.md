@@ -2,6 +2,11 @@
 
 Updated **23 October 2026**. Term starts **10 November 2026**. Solo developer; default allocation **4 hours/week** from 20 hours shared across five projects. Cross-account continuation instructions are in [`NEW_ACCOUNT_HANDOFF.md`](NEW_ACCOUNT_HANDOFF.md).
 
+## 1 November 2026 (later): browser pilot and the academic plan
+
+- **Browser pilot (public site, no server):** a coordinator loads an approved course file at `/coordinator` (same checks as the server import, a permission confirmation and a fingerprint); learners load the same file under Settings; the plan, a computed digest and a closest-passage coach run in the browser; learners download progress under a code and the coordinator combines the files into a class view and CSV. `scripts/pilot-smoke.js` (19 checks) passes in Chromium and WebKit and runs in CI; `npm run test:parity` also checks the TypeScript change diff against Python.
+- **Academic side:** [`docs/FRAMEWORK.md`](docs/FRAMEWORK.md) (framework, SDG 4, thematic analysis, small-round testing, eight checked references) and [`docs/FIELDWORK_SPRINT.md`](docs/FIELDWORK_SPRINT.md) (14 days, about 10 hours, each step tied to a screen and a rubric item).
+
 ## 1 November 2026: remaining gaps closed
 
 - **Tenancy:** the CSV review sandbox (`/api/demo/*`) is now scoped per organisation and included in export and delete; the sign-in limit is stored in SQLite (migration 5) and survives restarts.

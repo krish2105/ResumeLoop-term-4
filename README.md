@@ -28,6 +28,8 @@
 - `AGENTS.md` — authoritative agent instructions; read every fresh session.
 - `prompts/00_MASTER_WORK_PROMPT.md` — full Work handoff. More focused prompts in `prompts/`.
 - `docs/ASSESSMENT.md` — unit outcomes, evidence matrix, marks and risks.
+- `docs/FRAMEWORK.md` — design thinking framework, SDG 4 link and checked references, mapped to the rubric.
+- `docs/FIELDWORK_SPRINT.md` — the two-week, ~10-hour fieldwork and pilot plan that the academic marks depend on.
 - `docs/ARCHITECTURE.md` and `docs/PIPELINE.md` — E2E system and research flow.
 - `docs/PRD.md` — features, acceptance criteria and phased product scope.
 - `docs/DATA_AND_RESEARCH.md` — sources, licensing, experiment designs and leakage rules.
