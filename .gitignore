@@ -54,3 +54,6 @@ evidence/2026-10-31/*
 !output/playwright/journey-mobile-dark.png
 !output/playwright/story-desktop.png
 !output/playwright/empathy-desktop.png
+!evidence/eval/
+evidence/eval/*
+!evidence/eval/coach-eval.json
