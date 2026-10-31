@@ -8,7 +8,9 @@ Last updated: **23 October 2026**. User requested a complete cross-account conti
 
 **Built:** `/learn`, `/studio/research`, `/studio/synthesis`, `/report`, paper assembler, sign test, `CoachEval` panel, five new typed collections, CI `browser` job (no Ollama, fallback paths).
 
-**UNTESTED / open:** first run of the CI browser job; VoiceOver, Safari/Firefox, phones; real fieldwork. Not production-ready.
+**CI:** run 41222265046 on `98be0b0` green for all three jobs (api, web, browser). The first browser run caught a 320px overflow on `/course` that only appeared with Linux fallback fonts; fixed.
+
+**UNTESTED / open:** VoiceOver, Safari/Firefox, phones; real fieldwork. Not production-ready.
 
 ## 31 October 2026 evening — Ember dusk redesign and outline screens
 
