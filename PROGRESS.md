@@ -11,6 +11,9 @@ The owner chose the **Ember dusk** palette after comparing four contrast-checked
 - **New screens mapped to the outline:** Observe (extreme/mainstream/analogous observations, evidence-linked personas), Define (point-of-view statements, 6-frame storyboard), Envision (IBM-style Hills who/what/wow, what-if scenarios), Ideate gains a timed Crazy 8s round, Journey maps (current vs future, feeling curve), Prototype log (versions with I like / I wish / question / what if feedback), Ethics gains an AI risk register (likelihood × impact) and governance role-play, Reflection journal (§3.5 three-part template, AI-use disclosure, Markdown download, never AI-written), Course hub (assessment weights with unverified dates, 16-criterion rubric self-check, team contribution matrix, SDG impact canvas). Story mode counts evidence from all of them.
 - **Verification:** 80 pytest; browser smoke **109/109** (live Ollama); axe **80 scans, 0 violations** (20 routes × light/dark × 1440/320px). Runs found and fixed: journey maps vanishing (a body field shadowed the collection name), stale select values in forms, four 320px overflow causes, risk-matrix ARIA structure, an unfocusable scrolling strip.
 - **Deployment:** the Vercel project now builds from `apps/web` on every push to `main` (the earlier red ✗ was the repo root being built).
+- **CI:** `.github/workflows/ci.yml` runs API tests, fixture reproducibility, typecheck, planner parity, live and demo builds and `npm audit` on every push.
+- **Scorecard:** honest scores from seven perspectives and the path to 85+ are in [`docs/SCORECARD.md`](docs/SCORECARD.md).
+- **Later fixes the same evening:** side panel no longer clips its cards, calmer type scale, 3D labels keep a constant on-screen size, story mode labels only the active stop, speaker notes per stop.
 
 ## 31 October 2026 build: spatial journey prototype
 

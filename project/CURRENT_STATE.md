@@ -10,7 +10,9 @@ Last updated: **23 October 2026**. User requested a complete cross-account conti
 
 **Changed:** `app/theme.css`, `app/screens.css` (new), tokenised `globals.css`/`journey.css`, `components/Splitter.tsx`, `components/scene/primitives.tsx`, rewritten `NightRoad.tsx`, `StoryScene.tsx`, journey and story pages, `AppShell.tsx` (resizable, new nav), new pages `studio/observe|define|envision|journeys|prototypes`, `reflect`, `course`, components `QuickForm`, `CrazyEights`, `RiskRegister`; backend `studio.py` (17 new typed collections, course-hub seed, metadata-wins serialisation); tests `test_studio_outline.py`; smoke/axe scripts extended.
 
-**UNTESTED / open:** VoiceOver/NVDA, Safari/Firefox, phones, manual contrast over the 3D canvas, the public Vercel build of this commit (check the deployment status after push). No real participants, sessions or faculty answers. Not production-ready.
+**Follow-up fixes:** right panel clipping (grid column now `minmax(0,1fr)`), smaller type scale, constant-pixel 3D labels (`ScreenLabel`), story labels only for the active stop, speaker notes, plural wording, GitHub Actions CI, `docs/SCORECARD.md` (overall ≈ 60/100; academic score limited by missing real fieldwork).
+
+**UNTESTED / open:** VoiceOver/NVDA, Safari/Firefox, phones, manual contrast over the 3D canvas, first CI run result (check after push). No real participants, sessions or faculty answers. Not production-ready.
 
 ## 31 October 2026 build — spatial journey prototype
 
