@@ -2523,5 +2523,49 @@
    }
   }
  ],
- "recorded_ai": {}
+ "recorded_ai": {},
+ "studio_examples": {
+  "notice": "FICTIONAL EXAMPLES ONLY. Invented to show how the studio works. Not interviews, not participants, not research data. Never cite these as findings.",
+  "notes": [
+   {
+    "participant_code": "P01",
+    "context": "Fictional example: evening learner, phone",
+    "text": "I missed session two because of a late shift. When I came back I opened the LMS, the group chat and my email, and none of them agreed on the quiz date. I spent twenty minutes just working out what I had missed. I felt behind before I even started. What I need is one place that tells me the next thing to do."
+   },
+   {
+    "participant_code": "P02",
+    "context": "Fictional example: weekend learner, laptop",
+    "text": "I keep a paper list of tasks, but it goes out of date when the course page changes. Last time I did a reading that had been removed. I asked a classmate instead of the coordinator because I did not want to bother anyone. I would trust a plan if it showed where each task came from."
+   },
+   {
+    "participant_code": "P03",
+    "context": "Fictional example: coordinator",
+    "text": "Every week I answer the same three questions about deadlines. Students email me at midnight before a quiz. When a date changes I post an announcement, but people who were away never see it. I would like questions to arrive with the task they refer to, so I can answer once and point others to it."
+   },
+   {
+    "participant_code": "P04",
+    "context": "Fictional example: learner using a screen reader",
+    "text": "The course page has a big table of weeks and it takes me a long time to find the current one. I usually only have half an hour on the train. I just want to start something useful in that half hour. Visual timelines are hard for me unless there is a list version."
+   }
+  ],
+  "experiment": {
+   "title": "Fictional example: find the next task after missing a session",
+   "hypothesis": "Learners find the correct next task faster and with fewer wrong actions with ResumeLoop than with the current course page.",
+   "conditions": [
+    "A: current course page",
+    "B: ResumeLoop"
+   ],
+   "tasks": [
+    "Find the next task you can finish in 30 minutes",
+    "Find which quiz date is authoritative",
+    "Save progress and resume after a refresh"
+   ],
+   "metrics": [
+    "unaided success",
+    "seconds to complete",
+    "wrong actions",
+    "ease rating 1 to 7"
+   ]
+  }
+ }
 }

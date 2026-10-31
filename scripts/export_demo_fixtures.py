@@ -51,6 +51,7 @@ def main():
         'demo_learner': c.demo_learner.model_dump(),
         'planner_parity': parity_cases(),
         'recorded_ai': json.loads(RECORDED.read_text(encoding='utf-8')) if RECORDED.exists() else {},
+        'studio_examples': json.loads((ROOT / 'data' / 'sample' / 'fictional_studio.json').read_text(encoding='utf-8')),
     }
     OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text(json.dumps(data, indent=1) + '\n', encoding='utf-8')

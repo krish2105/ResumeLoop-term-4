@@ -97,3 +97,27 @@ details summary{cursor:pointer;font-size:12px;color:var(--muted);margin-top:6px}
 :root[data-theme="dark"] .status.q-queued{background:#2e2763;color:#d9d0ff}:root[data-theme="dark"] .status.q-answered{background:#184736;color:#9bf2bc}
 .rowActions input{flex:1;min-width:160px}
 @media(max-width:1000px){.twoCol{grid-template-columns:1fr}}
+
+/* Studio */
+.fictionBanner{background:var(--warnBg);color:var(--warn);border-radius:10px;padding:10px 14px;margin:0 0 16px}
+.noteTabs{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0 14px}.chipBtn.on{background:var(--accent);color:var(--accentFg);border-color:var(--accent)}
+.noteCard{border-top:1px solid var(--border);padding-top:12px}.noteText{color:var(--text)!important;line-height:1.7;font-size:15px}
+.codeList{list-style:none;padding:0;display:grid;gap:10px}.code{border:1px solid var(--border);border-radius:12px;padding:10px 12px;display:grid;gap:8px}
+.code.suggested{border-style:dashed;border-color:var(--accent)}.code.rejected{opacity:.6}
+blockquote{margin:6px 0 0;padding-left:10px;border-left:3px solid var(--border);color:var(--muted);font-size:13px}
+.cat{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.8px;border-radius:6px;padding:2px 6px;background:var(--pill)}
+.formGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px 14px;margin:12px 0}.formGrid label{display:grid;gap:6px;font-size:12px;font-weight:700;color:var(--muted)}.formGrid .wide{grid-column:1/-1}
+.formGrid input,.formGrid textarea,.formGrid select{width:100%}
+.empathyMap{display:grid;grid-template-columns:1fr 1fr;gap:8px}.quad{border:1px solid var(--border);border-radius:12px;padding:10px;min-height:110px}.quad h3{font-size:12px;margin:0 0 6px;text-transform:uppercase;letter-spacing:.8px;color:var(--muted)}
+.quad ul,.needs,.themeList{padding-left:16px;font-size:12px;line-height:1.5;margin:0}.quad small,.needs small,.themeList small{color:var(--muted)}
+.themeList p{margin:2px 0 8px}.consent{border:1px solid var(--border);border-radius:12px;padding:6px 14px;margin:12px 0}
+.nameField{display:grid;gap:6px;font-size:11px;font-weight:700;color:var(--muted)}
+.themeBlock h2{margin-top:6px}.suggestBox{background:var(--wash);border-radius:12px;padding:10px 14px;margin:10px 0}.suggestBox ul{margin:8px 0 0;padding-left:18px}
+.hmwList{display:grid;gap:14px;padding-left:20px;margin-top:14px}.ideaList{list-style:none;padding:0;display:grid;gap:6px;margin:8px 0}.ideaList li{display:flex;justify-content:space-between;gap:10px;align-items:center;border:1px solid var(--border);border-radius:10px;padding:6px 10px;flex-wrap:wrap}
+.voteCount{font-size:12px;font-weight:700}
+.chart{margin:16px 0}.chart figcaption{font-size:12px;color:var(--muted);margin-bottom:6px}.chart svg{width:100%;height:auto}
+.chartLabel,.chartValue{font-size:12px;fill:var(--text)}.barA{fill:transparent;stroke:var(--accent);stroke-width:2}.barB{fill:var(--accent)}
+.kv{display:grid;grid-template-columns:150px minmax(0,1fr);gap:10px;font-size:13px;line-height:1.55}.kv dt{color:var(--muted);font-weight:700}.kv dd{margin:0}
+.miniStats{grid-template-columns:repeat(2,minmax(0,1fr))}
+td input[type=number]{width:84px}
+@media(max-width:760px){.formGrid,.empathyMap,.kv{grid-template-columns:1fr}}

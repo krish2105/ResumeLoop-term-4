@@ -27,7 +27,8 @@ VALID_STATUS={'ready','needs-review','blocked','approved','rejected'}
 @contextmanager
 def connect():
     STATE.parent.mkdir(parents=True,exist_ok=True)
-    db=sqlite3.connect(str(STATE),timeout=20)
+    # One connection per request; FastAPI may run a sync dependency and its endpoint on different threads.
+    db=sqlite3.connect(str(STATE),timeout=20,check_same_thread=False)
     db.row_factory=sqlite3.Row
     try:
         db.execute('PRAGMA journal_mode = WAL')
@@ -153,6 +154,9 @@ def import_demo(x: CSVImport):
 
 from .assist import router as assist_router  # noqa: E402  (routers import connect lazily)
 from .learning import router as learning_router  # noqa: E402
+from .studio import examples_router, router as studio_router  # noqa: E402
 
 app.include_router(learning_router)
 app.include_router(assist_router)
+app.include_router(examples_router)
+app.include_router(studio_router)
